@@ -7,15 +7,12 @@ Arquitetura centralizada e self-hosted, que permite que usuários criem, editem,
  - Nicolas Pitz - Engenheiro de Qualidade;
  - Gabriela Riedel - Scrum Master;
 
-
 ## MVP
 
 ### O problema
-
 O excesso de informação. Com a ascensão dos agentes de IA, a solução ideal é um repositório centralizado e multiplataforma, onde usuário e IA colaboram sobre a mesma base de dados em tempo real criando uma simbiose das suas ideias com seus agentes.
 
 ### Usuários
-
 O público alvo são pessoas que já têm agentes de IA integrados no seu dia a dia
 
 ### O que fará
@@ -25,12 +22,11 @@ O público alvo são pessoas que já têm agentes de IA integrados no seu dia a 
 - Processar documentos automaticamente para busca semântica
 
 ## Governança
-
 Quem pode abrir PR
 
 `R) Todos`
 
-Quem pode aprovar pull requests 
+Quem pode aprovar PR 
 
 `R) Um par`
 
