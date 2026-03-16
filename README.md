@@ -1,5 +1,9 @@
-# Markup
-Arquitetura centralizada e self-hosted, que permite que usuários criem, editem, organizem e versionem documentos markdown em uma estrutura hierárquica por projetos e categorias. O sistema deve funcionar como um hub central de conhecimento oferecendo operações completas de criação, leitura, atualização, exclusão e controle de versões, além de manter organização por caminhos lógicos semelhantes a diretórios.
+# Markupp
+Markupp é um projeto que propõe uma arquitetura centralizada e self-hosted que permite que usuários criem, editem, organizem e versionem documentos markdown em uma estrutura hierárquica por projetos e categorias. 
+
+O sistema deve funcionar como um hub central de conhecimento oferecendo operações completas de criação, leitura, atualização, exclusão e controle de versões, além de manter organização por caminhos lógicos semelhantes a diretórios.
+
+Com a ascensão dos agentes de IA, a solução ideal é um repositório centralizado e multiplataforma, onde usuário e IA colaboram sobre a mesma base de dados em tempo real criando uma simbiose das suas ideias com seus agentes.
 
 ## Equipe:
  - Renato Freitas - Arquiteto de Software;
@@ -8,32 +12,28 @@ Arquitetura centralizada e self-hosted, que permite que usuários criem, editem,
  - Gabriela Riedel - Scrum Master;
 
 ## MVP
-
 ### O problema
-O excesso de informação. Com a ascensão dos agentes de IA, a solução ideal é um repositório centralizado e multiplataforma, onde usuário e IA colaboram sobre a mesma base de dados em tempo real criando uma simbiose das suas ideias com seus agentes.
+Excesso de informação descentralizada e dados desestruturados sem métodos de busca de conteúdo. Nossa solução tem o objetivo de resolver esta dor.
 
-### Usuários
-O público alvo são pessoas que já têm agentes de IA integrados no seu dia a dia
+### Público Alvo
+- Usuários que já têm agentes de IA integrados no seu dia a dia.
+- Times que precisam centralizar documentos. 
 
 ### O que fará
-- Prover um ambiente centralizado para criação, edição e organização de documentos Markdown
-- Estruturar o conhecimento em hierarquia lógica
+- Prover um ambiente centralizado para criação, edição e organização de documentos Markdown.
+- Estruturar o conhecimento em hierarquia lógica.
 - Expor uma API REST que permita integração com clientes
 - Processar documentos automaticamente para busca semântica
 
 ## Governança
-Quem pode abrir PR
+**Q: Quem pode abrir PR?**
+> `A: Todos.`
 
-`R) Todos`
+**Q: Quem pode aprovar PR?** 
+> `A: Um par.`
 
-Quem pode aprovar PR 
+**Q: Politica da main**
+> `A: Só aceita merge com PR aprovado por par.`
 
-`R) Um par`
-
-Politica da main
-
-`R) Só aceita merge com PR aprovado por par`
-
-Commits
-
-`R) Seguem o padrão conventional commits em português`
+**Q: Commits**
+> `A: Seguem o padrão conventional commits em português.`
