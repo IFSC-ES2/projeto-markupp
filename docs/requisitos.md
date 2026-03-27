@@ -7,8 +7,8 @@
 - Busca léxica nos título dos arquivos
 - Busca semântica e léxica no conteúdo dos arquivos
 - Servir os arquivos
-- Atualizar indices
 - Armazenar indices em banco vetorial
-- Organizar arquivos armazenados em estrutura lógica
+- Atualizar indices
+- Organizar arquivos armazenados em estrutura lógica e/ou hierárquica
 - Permite usuário criar taxonomia
-- Arquivo markdown pode ser categorizado com uma dessas taxonomias
+- Permite usuário classificar arquivos com taxonomias
