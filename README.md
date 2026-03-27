@@ -32,12 +32,13 @@ Excesso de informação descentralizada e dados desestruturados sem métodos de 
 **Q: Quem pode aprovar PR?** 
 > `A: Um par.`
 
-## DoD
-- Cobertura de testes unitários mínima de 80%
-- Feature revisada e aprovada por pares
-
 **Q: Politica da main**
 > `A: Só aceita merge com PR aprovado por par.`
 
 **Q: Commits**
 > `A: Seguem o padrão conventional commits em português.`
+
+
+## DoD
+- Cobertura de testes unitários mínima de 80%
+- Feature revisada e aprovada por pares
