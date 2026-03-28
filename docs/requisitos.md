@@ -1,17 +1,19 @@
-# Levantamento de Requisitos
+# Requisitos
 
-### Requisitos Funcionais
- 
-- RF1: Permite salvar dados em markdown;
-- RF2: Permite adicionar arquivos no frontend;
-- RF3: Permite excluir arquivos no frontend;
-- RF4: Permite renomear arquivos no frontend;
-- RF5: Permite editar markdown;
-
-### Requisitos Não Funcionais
-- RNF1: Deve estar disponível 99% do tempo;
-- RNF2: Teremos Login para Usuário;
-- RNF3: Deve ter para Desktop;
-- RNF4: Deve suportar milhares de requisições;
-- RNF5: Deve ter problemas de segurança mínimos e não destrutivos ao final;
-
+- Criar arquivos markdown
+- Visualizar arquivos markdown
+- Editar arquivos markdown
+- Excluir arquivos markdown
+- Renomear arquivos markdown
+- Organizar arquivos em estrutura hierárquica (pastas/caminhos lógicos)
+- Navegar pela estrutura de arquivos no frontend
+- Busca léxica nos títulos dos arquivos
+- Busca semântica e léxica no conteúdo dos arquivos
+- Indexar arquivos markdown em banco vetorial
+- Atualizar índices automaticamente
+- Criar taxonomias personalizadas
+- Classificar arquivos com taxonomias
+- O sistema deve ser acessível via navegador web
+- O backend deve expor uma API REST
+- O sistema deve ser self-hosted
+- Os documentos devem ser armazenados de forma centralizada
