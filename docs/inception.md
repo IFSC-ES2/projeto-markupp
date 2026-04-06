@@ -11,7 +11,10 @@ Anotações pessoais e conteúdos gerados por agentes de IA ficam espalhados em 
 
 ## Proposta de valor
 
-Um segundo cérebro centralizado e self-hosted onde o usuário e seus agentes de IA compartilham a mesma base de anotações em markdown, acessível via interface web e API REST.
+- Elimina a dispersão de anotações entre ferramentas diferentes, reduzindo perda de contexto
+- Permite que agentes de IA acessem e contribuam na mesma base que o usuário, criando um fluxo contínuo entre humano e máquina
+- Self-hosted garante controle total sobre os dados sem depender de serviços terceiros
+- Markdown como formato universal torna o conteúdo portável e compatível
 
 ## Objetivos do semestre
 
