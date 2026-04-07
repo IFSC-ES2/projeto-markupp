@@ -4,7 +4,7 @@
 
 - main: branch de produção, só recebe merges da dev
 - dev: branch de desenvolvimento, todas as features são mergeadas aqui primeiro
-- docs/, feature/, fix/, etc: branches de trabalho criadas a partir da dev
+- branches de trabalho: criadas a partir da dev, seguindo o padrão `<tipo>/<descricao-curta>`, onde `<tipo>` deve ser um dos seguintes: `docs`, `feature`, `fix`, `hotfix` ou `chore`
 
 ## Fluxo
 
