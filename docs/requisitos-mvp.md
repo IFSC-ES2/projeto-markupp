@@ -30,5 +30,5 @@ Validar a base da solução: um hub centralizado onde o usuário consegue criar,
 
 ## Critérios de decisão
 
-- Entra no MVP o que é necessário para o usuário conseguir usar o sistema de forma básica (criar, ver, editar, apagar anotações)
+- Entra no MVP o que é necessário para o usuário conseguir usar o sistema de forma básica (criar, ver, editar, renomear e apagar anotações)
 - Fica de fora o que agrega valor mas depende do CRUD funcionando primeiro (busca, taxonomia, organização)
