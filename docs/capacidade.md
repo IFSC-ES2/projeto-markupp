@@ -15,7 +15,7 @@ Próximo marco: Entrega 3 - 9/4/2026
 
 - Disponibilidade: horas de aula dedicadas ao projeto + finais de semana
 - Restrições: imprevistos de finais de semana
- 
+
 ### Nicolas Pitz - Engenheiro de Qualidade
 
 - Disponibilidade: horas de aulas dedicadas ao projeto + tempo livre em finais de semana
