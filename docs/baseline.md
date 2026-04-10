@@ -102,7 +102,7 @@ Nossa disponibilidade até o próximo marco do projeto — **Entrega 3, em 09/04
 | Gabriela Riedel | Scrum Master            | Horas de aula + 2h semanais |
 | Nícolas Pitz    | Engenheiro de Qualidade | Horas de aula + finais de semana |
 
-> **Período coberto por esta linha de base:** início do semestre a 09/04/2026
+> **Período coberto por esta linha de base:** início do semestre até 09/04/2026
 > **Próximo marco:** Entrega 3 — Estimativas e Métricas (Baseline)
 
 ---
