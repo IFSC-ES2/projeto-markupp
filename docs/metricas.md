@@ -6,7 +6,7 @@
 
 - Classificação: produto
 - Objetivo: quanto do código está coberto por testes
-- Definição: linhas exercitadas por testes / total de linhas (%)
+- Definição: funções chamadas por testes / total de funções (%)
 - Fonte: ferramenta de cobertura no CI
 - Frequência: a cada PR mergeado
 - Responsável: Nicolas Pitz
