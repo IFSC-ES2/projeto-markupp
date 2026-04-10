@@ -13,8 +13,8 @@ Próximo marco: Entrega 3 - 9/4/2026
 
 ### Nícolas Arthur - DevOps/Infra
 
-- Disponibilidade: 
-- Restrições:
+- Disponibilidade: horas de aula dedicadas ao projeto + finais de semana
+- Restrições: imprevistos de finais de semana
  
 ### Nicolas Pitz - Engenheiro de Qualidade
 
