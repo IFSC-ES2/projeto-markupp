@@ -98,7 +98,7 @@ Nossa disponibilidade até o próximo marco do projeto — **Entrega 3, em 09/04
 | Membro          | Papel                   | Disponibilidade             |
 |-----------------|-------------------------|-----------------------------|
 | Renato Freitas  | Arquiteto de Software   | Horas de aula + 2h semanais |
-| Nícolas Arthur  | DevOps / Infra          | Horas de aula + finais de semanas |
+| Nícolas Arthur  | DevOps / Infra          | Horas de aula + finais de semana |
 | Gabriela Riedel | Scrum Master            | Horas de aula + 2h semanais |
 | Nícolas Pitz    | Engenheiro de Qualidade | Horas de aula + finais de semana |
 
