@@ -148,4 +148,4 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 
 ---
 
-*Este documento representa a linha de base do planejamento do projeto Markupp, registrada na Entrega 3. Usaremos ele como referência para acompanhamento, controle e comparação com o progresso real ao longo das sprints seguintes.*
+*Este documento representa a linha de base do planejamento do projeto Markupp, registrada na Entrega 3. Usaremos este documento como referência para acompanhamento, controle e comparação com o progresso real ao longo das sprints seguintes.*
