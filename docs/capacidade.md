@@ -18,8 +18,8 @@ Próximo marco: Entrega 3 - 9/4/2026
  
 ### Nicolas Pitz - Engenheiro de Qualidade
 
-- Disponibilidade: 
-- Restrições: 
+- Disponibilidade: horas de aulas dedicadas ao projeto + tempo livre em finais de semana
+- Restrições: imprevistos em dias de aulas e finais de semana
 
 ### Gabriela Riedel - Scrum Master
 
