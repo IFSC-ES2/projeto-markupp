@@ -23,8 +23,8 @@ Próximo marco: Entrega 3 - 9/4/2026
 
 ### Gabriela Riedel - Scrum Master
 
-- Disponibilidade: 
-- Restrições: 
+- Disponibilidade: horas de aulas dedicadas ao projeto + 1h a 2h semanais
+- Restrições: rotina diária imprevisível
 
 ## Restrições gerais
 
