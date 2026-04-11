@@ -1,5 +1,3 @@
-
-
 # Registro da Abordagem de Estimativas
 
 ## Técnica de Estimativa Utilizada
