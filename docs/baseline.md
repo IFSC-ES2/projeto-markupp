@@ -113,23 +113,23 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 
 | ID  | Item                                                               | Tipo    | Previsão para o Período      |
 |-----|--------------------------------------------------------------------|---------|------------------------------|
-| #8  | [INIT] Versão inicial do projeto (Scaffolding)                     | Feature | ⚠️ Em andamento              |
-| #9  | [INIT][1] Arquitetura Backend                                      | Feature | ⚠️ Em andamento              |
-| #10 | [INIT][2] Arquitetura Frontend                                     | Feature | ⚠️ Em andamento              |
-| #11 | [INIT][3] Ferramentas Iniciais                                     | Feature | ⚠️ Em andamento              |
-| #13 | Definir rotas da API do backend                                    | Feature | ⚠️ Em andamento              |
-| #14 | Configurar Provedor de Blob Storage (S3-compatible/Docker)         | Task    | ❌ Não iniciado               |
-| #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown          | Feature | ❌ Não iniciado               |
-| #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    | ❌ Não iniciado               |
-| #16 | Implementar Endpoint GET /files/{id} para Recuperação de Conteúdo  | Task    | ❌ Não iniciado               |
-| #1  | [RF2] Criação de Arquivos via Frontend                             | Feature | ❌ Não iniciado               |
-| #5  | [RF3] Exclusão de Arquivos via Frontend                            | Feature | ❌ Não iniciado               |
-| #6  | [RF4] Renomear Arquivos via Frontend                               | Feature | ❌ Não iniciado               |
-| #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature | ❌ Não iniciado               |
+| #8  | [INIT] Versão inicial do projeto (Scaffolding)                     | Feature |  Em andamento               |
+| #9  | [INIT][1] Arquitetura Backend                                      | Feature |  Em andamento               |
+| #10 | [INIT][2] Arquitetura Frontend                                     | Feature |  Em andamento               |
+| #11 | [INIT][3] Ferramentas Iniciais                                     | Feature |  Em andamento               |
+| #13 | Definir rotas da API do backend                                    | Feature |  Em andamento               |
+| #14 | Configurar Provedor de Blob Storage (S3-compatible/Docker)         | Task    |  Não iniciado               |
+| #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown          | Feature |  Não iniciado               |
+| #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    |  Não iniciado               |
+| #16 | Implementar Endpoint GET /files/{id} para Recuperação de Conteúdo  | Task    |  Não iniciado               |
+| #1  | [RF2] Criação de Arquivos via Frontend                             | Feature |  Não iniciado               |
+| #5  | [RF3] Exclusão de Arquivos via Frontend                            | Feature |  Não iniciado               |
+| #6  | [RF4] Renomear Arquivos via Frontend                               | Feature |  Não iniciado               |
+| #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature |  Não iniciado               |
 
 **Legenda:**
-- ⚠️ **Em andamento** — iniciado no período, conclusão prevista para a Sprint 1
-- ❌ **Não iniciado** — fora do escopo deste período, previsto para sprints futuras
+-  **Em andamento** — iniciado no período, conclusão prevista para a Sprint 1
+-  **Não iniciado** — fora do escopo deste período, previsto para sprints futuras
 
 > **Observação:** revisaremos este baseline ao final da Sprint 1, quando as estimativas da seção (c) estiverem definidas e o progresso real puder ser comparado com esta previsão inicial.
 
