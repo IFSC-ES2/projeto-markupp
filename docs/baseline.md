@@ -50,13 +50,11 @@ Vamos definir as estimativas via T-Shirt Sizing em uma sessão de refinamento an
 
 | ID  | Item                                                      | Tamanho (T-Shirt) |
 |-----|-----------------------------------------------------------|-------------------|
-| #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown | A preencher       |
-| #1  | [RF2] Criação de Arquivos via Frontend                    | A preencher       |
-| #5  | [RF3] Exclusão de Arquivos via Frontend                   | A preencher       |
-| #6  | [RF4] Renomear Arquivos via Frontend                      | A preencher       |
-| #7  | [RF5] Edição de Conteúdo Markdown                         | A preencher       |
-
-> Após a sessão de refinamento descrita na seção (d), atualizaremos este documento com os tamanhos definidos, gerando uma nova versão da linha de base.
+| #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown | XL       |
+| #1  | [RF2] Criação de Arquivos via Frontend                    | L        |
+| #5  | [RF3] Exclusão de Arquivos via Frontend                   | M        |
+| #6  | [RF4] Renomear Arquivos via Frontend                      | M        |
+| #7  | [RF5] Edição de Conteúdo Markdown                         | XL       |
 
 ---
 
