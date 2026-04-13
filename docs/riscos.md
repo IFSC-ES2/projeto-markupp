@@ -10,25 +10,25 @@ Vamos separar os tópicos em:
 ### 1.1 Escopo
 | ID | Descrição | Causa | Consequência/Impacto Esperado | Probabilidade | Prioridade |  Estratégia de Mitigação |  Responsável pelo Acompanhamento | 
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| RES-1 | Complexidade na criação/entrega da interface gráfica web | Features mais profundas e complexas do que o esperado. | Grande volume de Tasks e possível atraso do prazo | Média | Média | Otimizar requisitos e criar mockup/protótipo para validação da interface gráfica. | A definir. |  
+| RES-1 | Complexidade na criação/entrega da interface gráfica web | Features mais profundas e complexas do que o esperado. | Grande volume de Tasks e possível atraso do prazo | Média | Média | Otimizar requisitos e criar mockup/protótipo para validação da interface gráfica. | Nicolas Pitz |  
 
 ### 1.2 Prazo
 | ID | Descrição | Causa | Consequência/Impacto Esperado | Probabilidade | Prioridade |  Estratégia de Mitigação |  Responsável pelo Acompanhamento | 
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| RPR-1 | Backlog volumoso e poucas horas de trabalho semanais. | O projeto tem tarefas abrangentemente complexas e os desenvolvedores responsáveis tem poucas horas de trabalho semanal em conjunto pois todos trabalham e estudam durante a semana. | Atraso na entrega de Tasks, possível atraso do prazo e qualidade afetada | Média | Média | Gerenciamento de Sprints por categoria de entrega (Ex: Sprint-1 - Foco na Modelagem) | A definir. |  
+| RPR-1 | Backlog volumoso e poucas horas de trabalho semanais. | O projeto tem tarefas abrangentemente complexas e os desenvolvedores responsáveis tem poucas horas de trabalho semanal em conjunto pois todos trabalham e estudam durante a semana. | Atraso na entrega de Tasks, possível atraso do prazo e qualidade afetada | Média | Média | Gerenciamento de Sprints por categoria de entrega (Ex: Sprint-1 - Foco na Modelagem) | Gabriela |  
 
 ### 1.3 Equipe
 | ID | Descrição | Causa | Consequência/Impacto Esperado | Probabilidade | Prioridade |  Estratégia de Mitigação |  Responsável pelo Acompanhamento | 
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| REQ-1 | Membro da Equipe ficar ausente do projeto (Turnover) | Situações que podem ocorrer com o discente: Trancar o curso, cancelar a disciplina, se ausentar por injurías/doenças  | Atraso na entrega de Tasks, possível atraso do prazo e qualidade afetada | Baixa | Alta | Cada desenvolvedor documentar o andamento de suas tarefas | A definir. |  
-| REQ-2 | Curva de Aprendizado das tecnologias escolhidas | Foram selecionadas tecnologias que necessitam que o desenvolvedor se adapte | Atraso na entrega de Tasks, possível atraso do prazo e qualidade afetada | Média | Alta | Agrupar tasks por tecnologia/usuário | A definir. |  
+| REQ-1 | Membro da Equipe ficar ausente do projeto (Turnover) | Situações que podem ocorrer com o discente: Trancar o curso, cancelar a disciplina, se ausentar por injurías/doenças  | Atraso na entrega de Tasks, possível atraso do prazo e qualidade afetada | Baixa | Alta | Cada desenvolvedor documentar o andamento de suas tarefas | Renato e Gabriela |  
+| REQ-2 | Curva de Aprendizado das tecnologias escolhidas | Foram selecionadas tecnologias que necessitam que o desenvolvedor se adapte | Atraso na entrega de Tasks, possível atraso do prazo e qualidade afetada | Média | Alta | Agrupar tasks por tecnologia/usuário | Nicolas Arthur |  
 
 ### 1.4 Tecnologia
 | ID | Descrição | Causa | Consequência/Impacto Esperado | Probabilidade | Prioridade |  Estratégia de Mitigação |  Responsável pelo Acompanhamento | 
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| RTE-1 | Falha de Integração | Obsolecência de tecnologias, funções deprecateds, sistemas sem conexão. | Atraso na entrega de Tasks, possível atraso do prazo e qualidade afetada | Baixa | Alta | Ter alternativas para serviços sem conexão | A definir. |  
+| RTE-1 | Falha de Integração | Obslecência de tecnologias, funções deprecateds, sistemas sem conexão. | Atraso na entrega de Tasks, possível atraso do prazo e qualidade afetada | Baixa | Alta | Ter alternativas para serviços sem conexão | Nicolas Arthur |  
 
 ### 1.5 Qualidade/Processo
 | ID | Descrição | Causa | Consequência/Impacto Esperado | Probabilidade | Prioridade |  Estratégia de Mitigação |  Responsável pelo Acompanhamento | 
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| RQP-1 | Alto indíce de bugs encontrados em fase de homologação | Testes mal-elaborados e fluxos sem testes | Qualidade do sistema | Alta | Alta | Manter a cobertura de testes acima de 80%, fazer relatórios de testes e priorizar bugs críticos | A definir. |  
+| RQP-1 | Alto indíce de bugs encontrados em fase de homologação | Testes mal-elaborados e fluxos sem testes | Qualidade do sistema | Alta | Alta | Manter a cobertura de testes acima de 80%, fazer relatórios de testes e priorizar bugs críticos | Nicolas Pitz |  
