@@ -50,9 +50,3 @@ Todo PR exige no mínimo 1 aprovação de um par antes de ser mergeado. O autor 
 ## Template de PR com checklist mínimo
 
 Todo PR aberto no repositório utiliza o template em [`.github/PULL_REQUEST_TEMPLATE.md`](../.github/PULL_REQUEST_TEMPLATE.md)
-
-## Referências
-
-- [git-flow.md](./git-flow.md) estratégia de branches e fluxo detalhado
-- [README.md](../README.md) governança e Definition of Done
-- [`.github/PULL_REQUEST_TEMPLATE.md`](../.github/PULL_REQUEST_TEMPLATE.md) template de pull request
