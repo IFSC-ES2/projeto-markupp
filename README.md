@@ -42,3 +42,7 @@ Excesso de informação descentralizada e dados desestruturados sem métodos de 
 ## DoD
 - Cobertura de testes unitários mínima de 80%
 - Feature revisada e aprovada por pares
+
+## Fluxo de trabalho
+
+O fluxo de trabalho do projeto está documentado em [fluxo de trabalho](docs/fluxo-de-trabalho.md)
