@@ -42,3 +42,6 @@ Excesso de informação descentralizada e dados desestruturados sem métodos de 
 ## DoD
 - Cobertura de testes unitários mínima de 80%
 - Feature revisada e aprovada por pares
+
+## Riscos
+- [Tabelas de Riscos](docs/riscos.md)
