@@ -1,7 +1,7 @@
 # Critérios de Qualidade do Projeto
 
 **Projeto:** Markupp
-**Versão:** 1.0
+**Versão:** 1.1
 **Data:** 16/04/2026
 **Equipe:** Renato Freitas (Arquiteto de Software), Nícolas Arthur (DevOps/Infra), Nicolas Pitz (Engenheiro de Qualidade), Gabriela Riedel (Scrum Master)
 
@@ -55,22 +55,26 @@ O MVP contempla processamento automático de documentos para busca semântica e 
 
 ### 2.1 Mapeamento de Riscos × Atributos de Qualidade
 
-| Risco Relevante | Probabilidade / Impacto | Atributo(s) Afetado(s) | Impacto Potencial na Qualidade | Ação de Mitigação | Como a Mitigação Protege o Atributo |
-|----------------|------------------------|----------------------|-------------------------------|-------------------|-------------------------------------|
-| Complexidade do processamento semântico sobrecarregar a API em tempo real | Média / Alto | Desempenho, Confiabilidade | Latência elevada nas operações de busca e edição, comprometendo a colaboração usuário-IA em tempo real | Processar indexação semântica de forma assíncrona, separando o fluxo crítico de edição do pipeline de busca | Garante que operações de escrita e leitura permaneçam responsivas mesmo durante reindexação de documentos |
-| Integração inconsistente entre clientes externos e a API REST | Alta / Médio | Compatibilidade, Confiabilidade | Falhas silenciosas na troca de documentos entre o Markupp e agentes de IA ou ferramentas terceiras | Definir e versionar contratos de API com especificação OpenAPI, implementar testes de integração automatizados | Assegura que mudanças na API não quebrem integrações existentes e que os formatos aceitos sejam validados de forma sistemática |
-| Equipe reduzida com acúmulo de funções | Média / Alto | Confiabilidade, Desempenho | Dívida técnica acumulada, cobertura de testes abaixo da meta de 80% definida no DoD, bugs em produção | Enforçar o DoD (cobertura ≥ 80%, aprovação por par via PR) e adotar conventional commits para rastreabilidade | Mantém o padrão de qualidade independentemente da pressão de prazo, garantindo que entregas com risco elevado não sejam mescladas sem revisão |
-| Perda ou corrompimento de versões de documentos | Baixa / Alto | Confiabilidade | Impossibilidade de recuperar histórico de documentos, violando a proposta central do produto como hub de conhecimento | Implementar testes automatizados de integridade do sistema de versionamento e política de backup dos dados | Garante que o controle de versões — funcionalidade core do Markupp — opere sem falhas de integridade |
-| Curva de aprendizado elevada para novos usuários na edição Markdown | Alta / Médio | Usabilidade | Baixa adoção do produto pelo público-alvo, especialmente usuários menos familiarizados com Markdown | Realizar ao menos uma rodada de testes com usuários antes da entrega do MVP e iterar sobre o fluxo de edição | Alinha a interface às expectativas reais dos usuários, reduzindo abandonos e aumentando a percepção de valor |
+A tabela abaixo referencia os riscos formalmente registrados no documento de gestão de riscos do projeto, relacionando cada um aos atributos de qualidade que podem ser afetados.
 
-> **Escala de referência:** Probabilidade — Baixa / Média / Alta. Impacto — Baixo / Médio / Alto.
+| ID | Risco | Prob. / Impacto | Prioridade | Atributo(s) Afetado(s) | Impacto Potencial na Qualidade | Ação de Mitigação | Como a Mitigação Protege o Atributo |
+|----|-------|----------------|------------|----------------------|-------------------------------|-------------------|-------------------------------------|
+| RQP-1 | Alto índice de bugs encontrados em fase de homologação | Alta / Alto | **Alta** | Confiabilidade, Desempenho | Fluxos críticos instáveis e cobertura insuficiente comprometem a integridade dos documentos e a performance do sistema em produção | Manter cobertura ≥ 80% (DoD), fazer relatórios de testes e priorizar bugs críticos; abrir sprint de estabilização se necessário | A cobertura garantida pelo DoD e a revisão obrigatória por par impedem que código de baixa qualidade chegue à main, preservando a estabilidade dos fluxos core |
+| RPR-1 | Backlog volumoso e poucas horas de trabalho semanais | Alta / Médio | **Alta** | Confiabilidade, Usabilidade | Pressão de prazo pode levar a testes negligenciados e funcionalidades de interface mal refinadas, degradando a experiência do usuário e a estabilidade do sistema | Sprints temáticas por categoria de entrega; repriorizar backlog no mínimo viável; renegociar escopo quando necessário | Sprints bem dimensionadas evitam que a pressão de tempo comprometa os atributos mais críticos do MVP, mantendo entregas focadas e testadas |
+| REQ-2 | Curva de aprendizado das tecnologias escolhidas | Média / Alto | **Alta** | Desempenho, Compatibilidade | Implementações subótimas de integração e do pipeline semântico podem gerar latência elevada na API e inconsistências na troca de documentos com clientes externos | Agrupar tasks por tecnologia e usuário; estudos dirigidos; pareamento entre membros mais e menos experientes | Reduz a probabilidade de decisões técnicas inadequadas que impactam diretamente o desempenho da API e a interoperabilidade com clientes |
+| RES-1 | Complexidade na criação/entrega da interface gráfica web | Média / Médio | **Média** | Usabilidade | Features mais complexas que o esperado podem resultar em fluxos de edição mal acabados, prejudicando a experiência central do produto | Validar mockups/protótipos antes da implementação; revisar requisitos ao fim de cada sprint; reduzir features secundárias se necessário | A validação antecipada de protótipos alinha a interface às expectativas dos usuários, evitando retrabalho e preservando a usabilidade nas entregas |
+| RTE-1 | Falha de integração (obsolescência, funções depreciadas, sistemas sem conexão) | Baixa / Alto | **Média** | Compatibilidade, Confiabilidade | Quebra de integrações com clientes e agentes de IA, falhas silenciosas na troca de documentos e possível perda de dados em operações em andamento | Mapear dependências externas; fixar versões estáveis; prever alternativas para serviços críticos; isolar módulo afetado em caso de falha | A adoção de versões fixas e alternativas mapeadas mantém o contrato de API estável e evita que falhas externas corrompam o fluxo de documentos |
+| REQ-1 | Membro da equipe ficar ausente (turnover) | Baixa / Alto | **Média** | Confiabilidade | Perda de conhecimento sobre partes críticas do sistema pode gerar inconsistências no versionamento e na lógica de negócio por redistribuição não planejada de tarefas | Cada membro documenta o andamento das suas tarefas; manter dois integrantes familiarizados com cada área; redistribuir e revisar prazos se necessário | A documentação contínua e o conhecimento compartilhado reduzem o impacto de ausências na estabilidade e integridade das funcionalidades core |
+
+> **Escala de referência:** Probabilidade — Baixa / Média / Alta. Impacto — Baixo / Médio / Alto. IDs conforme riscos.md do projeto.
 
 ---
 
 ### 2.2 Observações
 
-- Os riscos de integração com clientes externos e de corrompimento de versões afetam diretamente a Compatibilidade e a Confiabilidade simultaneamente, tornando esses dois atributos os de maior exposição no MVP.
-- O DoD já definido pela equipe (cobertura ≥ 80% e aprovação por par) atua como mecanismo de mitigação transversal, protegendo especialmente a Confiabilidade e o Desempenho ao impedir que código de baixa qualidade chegue à main.
+- **RQP-1** é o risco de maior exposição à qualidade do produto: combina alta probabilidade, alto impacto e afeta dois atributos prioritários simultaneamente (Confiabilidade e Desempenho). O DoD da equipe — cobertura ≥ 80% e aprovação por par — é a principal salvaguarda e deve ser tratado como inegociável.
+- **RPR-1** e **REQ-2** têm caráter estrutural: são condições permanentes do projeto (restrição de horas semanais e aprendizado de novas tecnologias) que pressionam os atributos de forma contínua, exigindo monitoramento ativo a cada sprint.
+- Os riscos **RTE-1** e **REQ-1**, embora de baixa probabilidade, têm impacto alto e afetam atributos centrais (Compatibilidade e Confiabilidade), justificando a manutenção das ações preventivas mesmo sem sinais imediatos de ocorrência.
 
 ---
 
@@ -112,7 +116,7 @@ A norma organiza a qualidade do produto em 8 características principais, das qu
 
 | Atributo | Característica ISO 25010 | O que será avaliado | Métrica / Evidência Preliminar | Meta Inicial |
 |----------|--------------------------|--------------------|---------------------------------|--------------|
-| Usabilidade | Usabilidade | Facilidade de uso dos fluxos de criação, edição e organização de documentos | Score no System Usability Scale (SUS) em sessões de teste com usuários; taxa de conclusão de tarefas sem auxílio | SUS ≥ 70; taxa de conclusão ≥ 80% |
-| Compatibilidade | Compatibilidade | Interoperabilidade da API REST com clientes externos e agentes de IA; suporte a encodings de texto | Resultados de testes de integração automatizados com diferentes clientes; validação de formatos (UTF-8, ASCII) | 100% dos contratos de API validados; zero falhas de encoding em testes de integração |
-| Confiabilidade | Confiabilidade | Integridade do versionamento de documentos; estabilidade dos fluxos críticos (CRUD) | Cobertura de testes unitários (meta do DoD); taxa de erro em fluxos críticos; testes de integridade do versionamento | Cobertura ≥ 80% (conforme DoD); taxa de erro < 1% nos fluxos de CRUD |
-| Desempenho | Eficiência de Desempenho | Tempo de resposta da API nas operações de leitura, escrita e busca semântica | Tempo de resposta medido via testes de carga (ex: k6); latência de operações de busca semântica | p95 < 2s para operações CRUD; p95 < 5s para buscas semânticas |
+| Usabilidade | Usabilidade | Facilidade de uso nos fluxos de criação, edição e organização de documentos; validação dos protótipos da interface (RES-1) | Score no System Usability Scale (SUS) em sessões de teste com usuários; taxa de conclusão de tarefas sem auxílio | SUS ≥ 70; taxa de conclusão ≥ 80% |
+| Compatibilidade | Compatibilidade | Interoperabilidade da API REST com clientes externos e agentes de IA; suporte a encodings; estabilidade frente a atualizações de dependências (RTE-1) | Resultados de testes de integração automatizados; validação de formatos (UTF-8, ASCII); build estável com versões fixadas | 100% dos contratos de API validados; zero falhas de encoding; zero quebras por dependência depreciada |
+| Confiabilidade | Confiabilidade | Integridade do versionamento de documentos; estabilidade dos fluxos CRUD; prevenção de regressões (RQP-1) | Cobertura de testes unitários (meta do DoD); taxa de erro em fluxos críticos; relatórios de bugs em homologação | Cobertura ≥ 80% (DoD); taxa de erro < 1% no CRUD; zero bugs críticos abertos ao fim de cada sprint |
+| Desempenho | Eficiência de Desempenho | Tempo de resposta da API nas operações de leitura, escrita e busca semântica; impacto de implementações da curva de aprendizado (REQ-2) | Tempo de resposta via testes de carga (ex: k6); latência das operações de busca semântica; revisão de código com foco em otimização nas PRs | p95 < 2s para operações CRUD; p95 < 5s para buscas semânticas |
