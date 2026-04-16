@@ -45,3 +45,6 @@ Excesso de informação descentralizada e dados desestruturados sem métodos de 
 
 ## Riscos
 - [Tabelas de Riscos](docs/riscos.md)
+
+## Fluxo de trabalho
+O fluxo de trabalho do projeto está documentado em [fluxo de trabalho](docs/fluxo-de-trabalho.md)
