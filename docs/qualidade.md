@@ -1,122 +1,94 @@
 # Critérios de Qualidade do Projeto
 
-**Projeto:** Markupp
-**Versão:** 1.1
-**Data:** 16/04/2026
-**Equipe:** Renato Freitas (Arquiteto de Software), Nícolas Arthur (DevOps/Infra), Nicolas Pitz (Engenheiro de Qualidade), Gabriela Riedel (Scrum Master)
+## Atributos Priorizados
 
----
+- Manutenibilidade
+- Compatibilidade
+- Confiabilidade 
+- Desempenho
 
-## 1. Definição Inicial de Critérios de Qualidade
+### Justificativa
 
-### 1.1 Atributos de Qualidade Prioritários
+**Manutenibilidade**
 
-Foram selecionados os quatro atributos de qualidade prioritários para este projeto, com base no contexto do MVP e nas necessidades dos stakeholders:
+O projeto tem um escopo que tende a crescer, aparecer novos requisitos e aumentar de escala. Evitar débitos técnicos em um projeto desse tipo é essencial.
 
-| # | Atributo | Categoria ISO/IEC 25010 |
-|---|----------|------------------------|
-| 1 | Usabilidade | Usabilidade |
-| 2 | Compatibilidade | Compatibilidade |
-| 3 | Confiabilidade | Confiabilidade |
-| 4 | Desempenho | Eficiência de Desempenho |
+**Compatibilidade**
 
-> **Referência:** Os atributos acima são definidos conforme a norma ISO/IEC 25010, que estrutura a qualidade de produto de software em 8 características: Adequação Funcional, Eficiência de Desempenho, Compatibilidade, Usabilidade, Confiabilidade, Segurança, Manutenibilidade e Portabilidade.
+O sistema tem a premissa de ser self host, isso faz ser importante alta compatibilidade entre diferentes ambiente com docker compose, além disso o editor de texto deve ser utilizável em diferentes ambientes
 
----
+**Confiabilidade**
 
-### 1.2 Justificativa da Relevância para o MVP
+Trabalhando com armazenamento é importante ter confiabilidade para não acontecer problemas sérios como perda ou corrupção de dados, modificações perdidas, retrabalhos para os usuários
 
-**Atributo 1 — Usabilidade**
-O Markupp tem como público-alvo usuários que já utilizam agentes de IA no dia a dia e times que precisam centralizar documentos. Para esse perfil, a interface de criação, edição e organização de documentos Markdown precisa ser intuitiva e eficiente, minimizando a curva de aprendizado. Uma experiência de uso fluida é condição direta para a adoção da plataforma e para que a colaboração entre usuário e IA ocorra sem fricção.
+**Desempenho**
 
-**Atributo 2 — Compatibilidade**
-O sistema expõe uma API REST e precisa integrar-se a múltiplos clientes, agentes de IA e ferramentas externas. A compatibilidade garante que o Markupp consiga receber e enviar documentos corretamente em diferentes formatos de texto (incluindo variações de codificação como UTF-8 e ASCII), além de interoperar com os agentes e clientes que consumirão a API no MVP.
+Para tornar a aplicação portável e usável em diferentes plataformas, tanto o servidor quanto a interface cliente devem ter bom desempenho evitando uso desnecessário de recursos
 
-**Atributo 3 — Confiabilidade**
-Como hub central de conhecimento, o Markupp precisa garantir que os documentos criados, editados e versionados sejam armazenados e recuperados com integridade. Falhas na confiabilidade — como perda de versões, corrompimento de dados ou indisponibilidade do serviço — comprometeriam diretamente a proposta de valor do produto, que é ser a fonte única e confiável de verdade para o conhecimento do usuário.
+## Orientação para as Próximas Etapas
 
-**Atributo 4 — Desempenho**
-O MVP contempla processamento automático de documentos para busca semântica e operações em tempo real entre usuário e IA. Tempos de resposta elevados degradariam a experiência colaborativa e a percepção de valor da plataforma, especialmente em operações de busca e edição simultânea.
+Cada atributo priorizado guia decisões nas sprints seguintes:
 
----
+- Manutenibilidade: exige cobertura mínima de testes no DoD, revisão de código em PR e aplicação de boas práticas de código limpo.
+- Compatibilidade: exige que a interface do cliente (editor de texto Markdown) funcione bem em diferentes ambientes e navegadores, e que o servidor self host rode sem problemas em diferentes sistemas operacionais.
+- Confiabilidade: exige testes junto com as features, tratamento de erros no CRUD, integridade dos documentos e correção de bugs críticos antes de novas entregas.
+- Desempenho: exige boas escolhas de recursos, atenção a memory leaks e cuidado para evitar más práticas que pesam sem necessidade no cliente e no servidor.
 
-### 1.3 Como os Atributos Orientarão Decisões nas Próximas Etapas
+## Relação entre Riscos e Qualidade
 
-| Atributo | Decisões que orientará |
-|----------|----------------------|
-| Usabilidade | Design da interface de edição Markdown, definição de critérios de aceite nas histórias de usuário relacionadas à navegação e organização hierárquica de documentos, planejamento de testes com usuários |
-| Compatibilidade | Definição dos formatos e encodings suportados pela API REST, estratégia de testes de integração com clientes e agentes de IA externos, especificação dos contratos de API |
-| Confiabilidade | Estratégia de controle de versões dos documentos, política de tratamento de erros e rollback, plano de testes de regressão e cobertura mínima de 80% definida no DoD |
-| Desempenho | Escolha de arquitetura para busca semântica, definição de SLAs da API, estratégia de indexação e otimização de queries |
+### Mapeamento de Riscos × Atributos de Qualidade
 
----
+Relação dos [riscos](docs/riscos.md) com os atributos afetados:
 
-## 2. Relação entre Riscos e Qualidade
+- RES-1 (complexidade da interface): afeta Manutenibilidade e Desempenho. Interface complexa gera código acoplado e componentes pesados.
+- RPR-1 (backlog volumoso com poucas horas semanais): afeta Manutenibilidade e Confiabilidade. Pressão por entrega estimula atalhos e redução de testes.
+- REQ-1 (turnover de membros): afeta Manutenibilidade e Confiabilidade. Saída de integrantes deixa áreas sem conhecimento documentado.
+- REQ-2 (curva de aprendizado): afeta Manutenibilidade e Desempenho. Falta de domínio gera código pouco padronizado e soluções ineficientes.
+- RTE-1 (falha de integração): afeta Compatibilidade e Confiabilidade. Dependências depreciadas quebram contratos da API e fluxos críticos.
+- RQP-1 (bugs em homologação): afeta Confiabilidade e Manutenibilidade. Bugs frequentes indicam baixa cobertura de testes e código difícil de evoluir.
 
-### 2.1 Mapeamento de Riscos × Atributos de Qualidade
+### Como as Mitigações Protegem os Atributos
 
-A tabela abaixo referencia os riscos formalmente registrados no documento de gestão de riscos do projeto, relacionando cada um aos atributos de qualidade que podem ser afetados.
+Ações concretas que a equipe adota para proteger cada atributo:
 
-| ID | Risco | Prob. / Impacto | Prioridade | Atributo(s) Afetado(s) | Impacto Potencial na Qualidade | Ação de Mitigação | Como a Mitigação Protege o Atributo |
-|----|-------|----------------|------------|----------------------|-------------------------------|-------------------|-------------------------------------|
-| RQP-1 | Alto índice de bugs encontrados em fase de homologação | Alta / Alto | **Alta** | Confiabilidade, Desempenho | Fluxos críticos instáveis e cobertura insuficiente comprometem a integridade dos documentos e a performance do sistema em produção | Manter cobertura ≥ 80% (DoD), fazer relatórios de testes e priorizar bugs críticos; abrir sprint de estabilização se necessário | A cobertura garantida pelo DoD e a revisão obrigatória por par impedem que código de baixa qualidade chegue à main, preservando a estabilidade dos fluxos core |
-| RPR-1 | Backlog volumoso e poucas horas de trabalho semanais | Alta / Médio | **Alta** | Confiabilidade, Usabilidade | Pressão de prazo pode levar a testes negligenciados e funcionalidades de interface mal refinadas, degradando a experiência do usuário e a estabilidade do sistema | Sprints temáticas por categoria de entrega; repriorizar backlog no mínimo viável; renegociar escopo quando necessário | Sprints bem dimensionadas evitam que a pressão de tempo comprometa os atributos mais críticos do MVP, mantendo entregas focadas e testadas |
-| REQ-2 | Curva de aprendizado das tecnologias escolhidas | Média / Alto | **Alta** | Desempenho, Compatibilidade | Implementações subótimas de integração e do pipeline semântico podem gerar latência elevada na API e inconsistências na troca de documentos com clientes externos | Agrupar tasks por tecnologia e usuário; estudos dirigidos; pareamento entre membros mais e menos experientes | Reduz a probabilidade de decisões técnicas inadequadas que impactam diretamente o desempenho da API e a interoperabilidade com clientes |
-| RES-1 | Complexidade na criação/entrega da interface gráfica web | Média / Médio | **Média** | Usabilidade | Features mais complexas que o esperado podem resultar em fluxos de edição mal acabados, prejudicando a experiência central do produto | Validar mockups/protótipos antes da implementação; revisar requisitos ao fim de cada sprint; reduzir features secundárias se necessário | A validação antecipada de protótipos alinha a interface às expectativas dos usuários, evitando retrabalho e preservando a usabilidade nas entregas |
-| RTE-1 | Falha de integração (obsolescência, funções depreciadas, sistemas sem conexão) | Baixa / Alto | **Média** | Compatibilidade, Confiabilidade | Quebra de integrações com clientes e agentes de IA, falhas silenciosas na troca de documentos e possível perda de dados em operações em andamento | Mapear dependências externas; fixar versões estáveis; prever alternativas para serviços críticos; isolar módulo afetado em caso de falha | A adoção de versões fixas e alternativas mapeadas mantém o contrato de API estável e evita que falhas externas corrompam o fluxo de documentos |
-| REQ-1 | Membro da equipe ficar ausente (turnover) | Baixa / Alto | **Média** | Confiabilidade | Perda de conhecimento sobre partes críticas do sistema pode gerar inconsistências no versionamento e na lógica de negócio por redistribuição não planejada de tarefas | Cada membro documenta o andamento das suas tarefas; manter dois integrantes familiarizados com cada área; redistribuir e revisar prazos se necessário | A documentação contínua e o conhecimento compartilhado reduzem o impacto de ausências na estabilidade e integridade das funcionalidades core |
+- **Manutenibilidade**: linter e formatter rodando em CI/pre-commit; PR template com checklist obrigatório de testes e boas práticas.
+- **Compatibilidade**: teste manual do editor em Chrome e Firefox antes de cada entrega.
+- **Confiabilidade**: validação de entrada; testes de integração obrigatórios para os fluxos CRUD; confirmação no frontend antes de ações destrutivas.
+- **Desempenho**: seguir boas práticas de código como evitar operações pesadas em eventos frequentes; evitar dependências pesadas sem necessidade; atenção a esses pontos durante o code review.
 
-> **Escala de referência:** Probabilidade — Baixa / Média / Alta. Impacto — Baixo / Médio / Alto. IDs conforme riscos.md do projeto.
+## Avaliação Preliminar da Qualidade
 
----
+### Escopo Inicial
 
-### 2.2 Observações
+- Verificar se os fluxos CRUD de documentos funcionam sem perda de dados.
+- Verificar se o editor de texto Markdown funciona bem em diferentes navegadores e sistemas operacionais.
+- Verificar se o servidor self host roda sem problemas em diferentes ambientes.
+- Observar se a aplicação se mantém leve no uso, sem consumo excessivo de memória ou CPU.
+- Acompanhar a facilidade de adicionar novos requisitos ao longo das sprints.
 
-- **RQP-1** é o risco de maior exposição à qualidade do produto: combina alta probabilidade, alto impacto e afeta dois atributos prioritários simultaneamente (Confiabilidade e Desempenho). O DoD da equipe — cobertura ≥ 80% e aprovação por par — é a principal salvaguarda e deve ser tratado como inegociável.
-- **RPR-1** e **REQ-2** têm caráter estrutural: são condições permanentes do projeto (restrição de horas semanais e aprendizado de novas tecnologias) que pressionam os atributos de forma contínua, exigindo monitoramento ativo a cada sprint.
-- Os riscos **RTE-1** e **REQ-1**, embora de baixa probabilidade, têm impacto alto e afetam atributos centrais (Compatibilidade e Confiabilidade), justificando a manutenção das ações preventivas mesmo sem sinais imediatos de ocorrência.
+### Métricas e Evidências Preliminares
 
----
+**Manutenibilidade**
 
-## 3. Definição Preliminar de Avaliação da Qualidade
+- Cobertura de testes unitários acima de 80%.
+- 100% das PRs revisadas por pelo menos 1 pessoa.
 
-### 3.1 Escopo Inicial da Avaliação
+**Compatibilidade**
 
-A avaliação de qualidade nesta fase inicial abrangerá:
+- Editor funcionando nos principais navegadores.
+- Servidor self host subindo em diferentes sistemas operacionais sem ajustes manuais.
+- Build estável com versões fixadas das dependências.
 
-- **Funcionalidades core do MVP:** criação, edição, organização hierárquica e versionamento de documentos Markdown; operações CRUD via API REST; busca semântica básica;
-- **Atributos selecionados:** avaliação focada nos 4 atributos definidos na Seção 1.1;
-- **Ambientes cobertos:** aplicação self-hosted em ambiente desktop, consumida via API REST por clientes e agentes de IA;
-- **O que está fora do escopo nesta fase:** avaliação de acessibilidade avançada, portabilidade para ambientes mobile, compatibilidade com navegadores legados.
+**Confiabilidade**
 
-A avaliação poderá ser expandida em versões posteriores ao MVP, incorporando características adicionais da ISO/IEC 25010, como Segurança e Manutenibilidade.
+- Cobertura de testes unitários acima de 80%.
+- Acompanhar erros nos fluxos de CRUD.
+- Zero bugs críticos abertos ao fim de cada sprint.
+- Relatórios de bugs encontrados em formato de issues no repositório.
 
----
+**Desempenho**
 
-### 3.2 Modelo de Qualidade Adotado: ISO/IEC 25010
-
-Este projeto adota a **ISO/IEC 25010** como modelo de referência para definição e avaliação da qualidade do produto de software.
-
-A norma organiza a qualidade do produto em 8 características principais, das quais este projeto prioriza as seguintes:
-
-| Característica ISO 25010 | Relevante para este projeto? | Atributo mapeado |
-|--------------------------|-----------------------------|--------------------|
-| Adequação Funcional | Não | — |
-| Eficiência de Desempenho | Sim | Desempenho |
-| Compatibilidade | Sim | Compatibilidade |
-| Usabilidade | Sim | Usabilidade |
-| Confiabilidade | Sim | Confiabilidade |
-| Segurança | Não | — |
-| Manutenibilidade | Não | — |
-| Portabilidade | Não | — |
-
----
-
-### 3.3 Métricas e Evidências Preliminares
-
-| Atributo | Característica ISO 25010 | O que será avaliado | Métrica / Evidência Preliminar | Meta Inicial |
-|----------|--------------------------|--------------------|---------------------------------|--------------|
-| Usabilidade | Usabilidade | Facilidade de uso nos fluxos de criação, edição e organização de documentos; validação dos protótipos da interface (RES-1) | Score no System Usability Scale (SUS) em sessões de teste com usuários; taxa de conclusão de tarefas sem auxílio | SUS ≥ 70; taxa de conclusão ≥ 80% |
-| Compatibilidade | Compatibilidade | Interoperabilidade da API REST com clientes externos e agentes de IA; suporte a encodings; estabilidade frente a atualizações de dependências (RTE-1) | Resultados de testes de integração automatizados; validação de formatos (UTF-8, ASCII); build estável com versões fixadas | 100% dos contratos de API validados; zero falhas de encoding; zero quebras por dependência depreciada |
-| Confiabilidade | Confiabilidade | Integridade do versionamento de documentos; estabilidade dos fluxos CRUD; prevenção de regressões (RQP-1) | Cobertura de testes unitários (meta do DoD); taxa de erro em fluxos críticos; relatórios de bugs em homologação | Cobertura ≥ 80% (DoD); taxa de erro < 1% no CRUD; zero bugs críticos abertos ao fim de cada sprint |
-| Desempenho | Eficiência de Desempenho | Tempo de resposta da API nas operações de leitura, escrita e busca semântica; impacto de implementações da curva de aprendizado (REQ-2) | Tempo de resposta via testes de carga (ex: k6); latência das operações de busca semântica; revisão de código com foco em otimização nas PRs | p95 < 2s para operações CRUD; p95 < 5s para buscas semânticas |
+- Ausência de memory leaks perceptíveis.
+- Uso de CPU e memória do servidor dentro de faixas razoáveis em operação normal.
+- Escolha consciente de bibliotecas e recursos, evitando dependências pesadas sem necessidade.
+- Interface respondendo rápido nas ações comuns do usuário.
