@@ -42,3 +42,7 @@ Excesso de informação descentralizada e dados desestruturados sem métodos de 
 ## DoD
 - Cobertura de testes unitários mínima de 80%
 - Feature revisada e aprovada por pares
+
+## Critérios de Qualidade
+
+- [Critérios de Qualidade](docs/qualidade.md)
