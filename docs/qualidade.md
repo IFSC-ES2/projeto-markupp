@@ -85,7 +85,7 @@ A tabela abaixo referencia os riscos formalmente registrados no documento de ges
 A avaliação de qualidade nesta fase inicial abrangerá:
 
 - **Funcionalidades core do MVP:** criação, edição, organização hierárquica e versionamento de documentos Markdown; operações CRUD via API REST; busca semântica básica;
-- **Atributos selecionados:** avaliação focada nos 4 atributos definidos na Seção 5;
+- **Atributos selecionados:** avaliação focada nos 4 atributos definidos na Seção 1.1;
 - **Ambientes cobertos:** aplicação self-hosted em ambiente desktop, consumida via API REST por clientes e agentes de IA;
 - **O que está fora do escopo nesta fase:** avaliação de acessibilidade avançada, portabilidade para ambientes mobile, compatibilidade com navegadores legados.
 
