@@ -3,9 +3,10 @@
 | entrega | commit  | data     | correção | nota | peso |
 | ------- | ------- | -------- | -------- | ---- | ---- |
 | 1       | 0d60ee0 | 16/03/26 | 20/03/26 | 9,5  | 2    |
-| 1       | 7242cb2 | 28/03/26 | 29/03/26 | 7,7  | 2    |
+| 2       | 7242cb2 | 28/03/26 | 29/03/26 | 7,7  | 2    |
+| 3       | 6e380d2 | 11/04/26 | 22/04/26 | 9,9  | 3    |
 
-**nota:** 8,6
+**nota parcial:** 9,1
 
 ## Comentários
 
@@ -33,3 +34,18 @@
 4. Definition of Done (DoD): atendido.
 5. ADRs iniciais: atendido.
 6. Atualização do README: atendido.
+
+- Não há regras de proteção da ramificação principal implementadas no GitHub.
+- A equipe apenas definiu algumas regras de proteção da ramificação principal que ainda não estão em vigor.
+
+### Entrega 3
+
+1. Planejamento inicial e baseline: atendido
+2. Registro da abordagem de estimativa: atendido
+3. Capacidade planejada da equipe: atendido
+4. Definição das métricas que serão acompanhadas: atendido
+5. Ficha de cada métrica: parcialmente atendido
+   - Separar as fichas de cada métrica em arquivos diferentes
+     - Em cada uma adicionar data do acompanhamento e valor coletado
+   - Numerar métricas para facilitar a referenciação
+
