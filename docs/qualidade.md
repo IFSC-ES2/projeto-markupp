@@ -15,7 +15,7 @@ O projeto tem um escopo que tende a crescer, aparecer novos requisitos e aumenta
 
 **Compatibilidade**
 
-O sistema tem a premissa de ser self host, isso faz ser importante alta compatibilidade entre diferentes ambiente com docker compose, além disso o editor de texto deve ser utilizável em diferentes ambientes
+O sistema tem a premissa de ser self host, isso faz ser importante alta compatibilidade entre diferentes ambiente com docker compose
 
 **Confiabilidade**
 
@@ -30,7 +30,7 @@ Para tornar a aplicação portável e usável em diferentes plataformas, tanto o
 Cada atributo priorizado guia decisões nas sprints seguintes:
 
 - Manutenibilidade: exige cobertura mínima de testes no DoD, revisão de código em PR e aplicação de boas práticas de código limpo.
-- Compatibilidade: exige que a interface do cliente (editor de texto Markdown) funcione bem em diferentes ambientes e navegadores, e que o servidor self host rode sem problemas em diferentes sistemas operacionais.
+- Compatibilidade: exige que o servidor self host rode sem problemas em diferentes sistemas operacionais.
 - Confiabilidade: exige testes junto com as features, tratamento de erros no CRUD, integridade dos documentos e correção de bugs críticos antes de novas entregas.
 - Desempenho: exige boas escolhas de recursos, atenção a memory leaks e cuidado para evitar más práticas que pesam sem necessidade no cliente e no servidor.
 
@@ -52,8 +52,7 @@ Relação dos [riscos](docs/riscos.md) com os atributos afetados:
 Ações concretas que a equipe adota para proteger cada atributo:
 
 - **Manutenibilidade**: linter e formatter rodando em CI/pre-commit; PR template com checklist obrigatório de testes e boas práticas.
-- **Compatibilidade**: teste manual do editor em Chrome e Firefox antes de cada entrega.
-- **Confiabilidade**: validação de entrada; testes de integração obrigatórios para os fluxos CRUD; confirmação no frontend antes de ações destrutivas.
+- **Confiabilidade**: validação de entrada; testes de integração obrigatórios para os fluxos CRUD; confirmação no plugin antes de ações destrutivas.
 - **Desempenho**: seguir boas práticas de código como evitar operações pesadas em eventos frequentes; evitar dependências pesadas sem necessidade; atenção a esses pontos durante o code review.
 
 ## Avaliação Preliminar da Qualidade
@@ -61,7 +60,6 @@ Ações concretas que a equipe adota para proteger cada atributo:
 ### Escopo Inicial
 
 - Verificar se os fluxos CRUD de documentos funcionam sem perda de dados.
-- Verificar se o editor de texto Markdown funciona bem em diferentes navegadores e sistemas operacionais.
 - Verificar se o servidor self host roda sem problemas em diferentes ambientes.
 - Observar se a aplicação se mantém leve no uso, sem consumo excessivo de memória ou CPU.
 - Acompanhar a facilidade de adicionar novos requisitos ao longo das sprints.
@@ -75,7 +73,6 @@ Ações concretas que a equipe adota para proteger cada atributo:
 
 **Compatibilidade**
 
-- Editor funcionando nos principais navegadores.
 - Servidor self host subindo em diferentes sistemas operacionais sem ajustes manuais.
 - Build estável com versões fixadas das dependências.
 

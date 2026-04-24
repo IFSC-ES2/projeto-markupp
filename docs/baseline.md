@@ -17,14 +17,14 @@ Lista completa de issues do repositório que servem de base para este planejamen
 | #14 | Configurar Provedor de Blob Storage (S3-compatible/Docker)         | Task    | RF1       |
 | #13 | Definir rotas da API do backend                                    | Feature | —         |
 | #11 | [INIT][3] Ferramentas Iniciais                                     | Feature | Init      |
-| #10 | [INIT][2] Arquitetura Frontend                                     | Feature | Init      |
+| #10 | [INIT][2] Arquitetura do Plugin Obsidian                           | Feature | Init      |
 | #9  | [INIT][1] Arquitetura Backend                                      | Feature | Init      |
 | #8  | [INIT] Versão inicial do projeto (Scaffolding)                     | Feature | Init      |
 | #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature | RF5       |
-| #6  | [RF4] Renomear Arquivos via Frontend                               | Feature | RF4       |
-| #5  | [RF3] Exclusão de Arquivos via Frontend                            | Feature | RF3       |
+| #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature | RF4       |
+| #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature | RF3       |
 | #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown          | Feature | RF1       |
-| #1  | [RF2] Criação de Arquivos via Frontend                             | Feature | RF2       |
+| #1  | [RF2] Criação de Arquivos via Plugin Obsidian                      | Feature | RF2       |
 
 ---
 
@@ -35,9 +35,9 @@ Priorizamos os Requisitos Funcionais (RF1 a RF5) como itens do MVP, por represen
 | Prioridade | ID  | Item                                                      | Justificativa                                          |
 |------------|-----|-----------------------------------------------------------|--------------------------------------------------------|
 | Alta       | #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown | Base para todas as demais funcionalidades do sistema   |
-| Alta       | #1  | [RF2] Criação de Arquivos via Frontend                    | Funcionalidade central da experiência do usuário       |
-| Alta       | #5  | [RF3] Exclusão de Arquivos via Frontend                   | Operação essencial para gerenciamento do ciclo de vida |
-| Média      | #6  | [RF4] Renomear Arquivos via Frontend                      | Melhora a usabilidade e organização dos arquivos       |
+| Alta       | #1  | [RF2] Criação de Arquivos via Plugin Obsidian             | Funcionalidade central da experiência do usuário       |
+| Alta       | #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian            | Operação essencial para gerenciamento do ciclo de vida |
+| Média      | #6  | [RF4] Renomear Arquivos via Plugin Obsidian               | Melhora a usabilidade e organização dos arquivos       |
 | Média      | #7  | [RF5] Edição de Conteúdo Markdown                         | Completa o fluxo CRUD e agrega valor direto ao usuário |
 
 > **Critérios de priorização:** valor de negócio, dependências técnicas entre RFs e viabilidade de entrega no horizonte atual do projeto.
@@ -51,9 +51,9 @@ Vamos definir as estimativas via T-Shirt Sizing em uma sessão de refinamento an
 | ID  | Item                                                      | Tamanho (T-Shirt) |
 |-----|-----------------------------------------------------------|-------------------|
 | #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown | XL       |
-| #1  | [RF2] Criação de Arquivos via Frontend                    | L        |
-| #5  | [RF3] Exclusão de Arquivos via Frontend                   | M        |
-| #6  | [RF4] Renomear Arquivos via Frontend                      | M        |
+| #1  | [RF2] Criação de Arquivos via Plugin Obsidian             | L        |
+| #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian            | M        |
+| #6  | [RF4] Renomear Arquivos via Plugin Obsidian               | M        |
 | #7  | [RF5] Edição de Conteúdo Markdown                         | XL       |
 
 ---
@@ -115,16 +115,16 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 |-----|--------------------------------------------------------------------|---------|------------------------------|
 | #8  | [INIT] Versão inicial do projeto (Scaffolding)                     | Feature |  Em andamento               |
 | #9  | [INIT][1] Arquitetura Backend                                      | Feature |  Em andamento               |
-| #10 | [INIT][2] Arquitetura Frontend                                     | Feature |  Em andamento               |
+| #10 | [INIT][2] Arquitetura do Plugin Obsidian                           | Feature |  Em andamento               |
 | #11 | [INIT][3] Ferramentas Iniciais                                     | Feature |  Em andamento               |
 | #13 | Definir rotas da API do backend                                    | Feature |  Em andamento               |
 | #14 | Configurar Provedor de Blob Storage (S3-compatible/Docker)         | Task    |  Não iniciado               |
 | #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown          | Feature |  Não iniciado               |
 | #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    |  Não iniciado               |
 | #16 | Implementar Endpoint GET /files/{id} para Recuperação de Conteúdo  | Task    |  Não iniciado               |
-| #1  | [RF2] Criação de Arquivos via Frontend                             | Feature |  Não iniciado               |
-| #5  | [RF3] Exclusão de Arquivos via Frontend                            | Feature |  Não iniciado               |
-| #6  | [RF4] Renomear Arquivos via Frontend                               | Feature |  Não iniciado               |
+| #1  | [RF2] Criação de Arquivos via Plugin Obsidian                      | Feature |  Não iniciado               |
+| #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature |  Não iniciado               |
+| #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature |  Não iniciado               |
 | #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature |  Não iniciado               |
 
 **Legenda:**
