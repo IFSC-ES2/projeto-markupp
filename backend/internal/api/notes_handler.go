@@ -71,11 +71,11 @@ func writeError(w http.ResponseWriter, code, message string, status int) {
 func writeDomainError(w http.ResponseWriter, err error) {
 	switch {
 	case errors.Is(err, notes.ErrInvalidPath):
-		writeError(w, "invalid_path", err.Error(), http.StatusBadRequest)
+		writeError(w, "invalid_path", notes.ErrInvalidPath.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrInvalidContent):
-		writeError(w, "invalid_content", err.Error(), http.StatusBadRequest)
+		writeError(w, "invalid_content", notes.ErrInvalidContent.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrDuplicatePath):
-		writeError(w, "duplicate_path", err.Error(), http.StatusConflict)
+		writeError(w, "duplicate_path", notes.ErrDuplicatePath.Error(), http.StatusConflict)
 	default:
 		writeError(w, "internal", "erro interno", http.StatusInternalServerError)
 	}
