@@ -3,6 +3,7 @@ module github.com/ifsc-ES2/projeto-markupp/backend
 go 1.26.1
 
 require (
+	github.com/go-chi/chi/v5 v5.2.5
 	github.com/google/uuid v1.6.0
 	github.com/pressly/goose/v3 v3.27.1
 	github.com/stretchr/testify v1.11.1
