@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -84,7 +85,8 @@ func TestPostNotes_ErrInvalidContent_Retorna400(t *testing.T) {
 }
 
 func TestPostNotes_ErrDuplicatePath_Retorna409(t *testing.T) {
-	svc := &fakeService{err: notes.ErrDuplicatePath}
+	wrapped := fmt.Errorf("salvar nota %q: %w", "id-interno-secreto", notes.ErrDuplicatePath)
+	svc := &fakeService{err: wrapped}
 	rec := doPost(t, svc, `{"path":"x.md","content":"y"}`)
 
 	assert.Equal(t, http.StatusConflict, rec.Code)
@@ -92,4 +94,6 @@ func TestPostNotes_ErrDuplicatePath_Retorna409(t *testing.T) {
 	var resp map[string]any
 	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
 	assert.Equal(t, "duplicate_path", resp["error"])
+	assert.Equal(t, notes.ErrDuplicatePath.Error(), resp["message"])
+	assert.NotContains(t, resp["message"], "id-interno-secreto")
 }
