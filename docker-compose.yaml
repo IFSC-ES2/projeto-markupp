@@ -1,0 +1,15 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/src
+      - markupp_data:/data
+      - go_mod_cache:/go/pkg/mod
+
+volumes:
+  markupp_data:
+  go_mod_cache:

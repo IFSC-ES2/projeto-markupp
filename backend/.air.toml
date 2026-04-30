@@ -1,0 +1,9 @@
+root = "/src"
+tmp_dir = "/tmp/air"
+
+[build]
+  cmd = "go build -C /src -o /tmp/air/markupp ./cmd/markupp"
+  entrypoint = ["/tmp/air/markupp"]
+  include_ext = ["go"]
+  exclude_dir = ["tmp", ".git"]
+  delay = 500
