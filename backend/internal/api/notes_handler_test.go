@@ -3,6 +3,7 @@ package api_test
 import (
 	"bytes"
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -22,6 +23,10 @@ type fakeService struct {
 }
 
 func (f *fakeService) Create(ctx context.Context, path, content string) (notes.Note, error) {
+	return f.note, f.err
+}
+
+func (f *fakeService) GetNoteById(ctx context.Context, id string) (notes.Note, error) {
 	return f.note, f.err
 }
 
@@ -96,4 +101,47 @@ func TestPostNotes_ErrDuplicatePath_Retorna409(t *testing.T) {
 	assert.Equal(t, "duplicate_path", resp["error"])
 	assert.Equal(t, notes.ErrDuplicatePath.Error(), resp["message"])
 	assert.NotContains(t, resp["message"], "id-interno-secreto")
+}
+
+func doGet(t *testing.T, svc api.NoteService, id string) *httptest.ResponseRecorder {
+	t.Helper()
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/files/%s", id), nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+	return rec
+}
+
+func TestGetFiles_IDValido_Retorna200(t *testing.T) {
+	svc := &fakeService{
+		note: notes.Note{ID: "id-x", Path: "x.md", Content: "y"},
+	}
+	rec := doGet(t, svc, "id-x")
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, "application/json", rec.Header().Get("Content-Type"))
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "id-x", resp["id"])
+	assert.Equal(t, "x.md", resp["path"])
+	assert.Equal(t, "y", resp["content"])
+}
+
+func TestGetFiles_IDVazio_Retorna404(t *testing.T) {
+	svc := &fakeService{}
+	rec := doGet(t, svc, "")
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+}
+
+func TestGetFiles_IDNaoEncontrado_Retorna404(t *testing.T) {
+	svc := &fakeService{err: sql.ErrNoRows}
+	rec := doGet(t, svc, "id-inexistente")
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "not_found", resp["error"])
 }

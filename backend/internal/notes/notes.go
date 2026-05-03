@@ -28,6 +28,8 @@ var (
 	ErrInvalidPath    = errors.New("path inválido")
 	ErrInvalidContent = errors.New("content inválido")
 	ErrDuplicatePath  = errors.New("path já existe")
+	ErrInvalidId      = errors.New("ID inválido")
+	ErrNotFoundId 		= errors.New("ID não encontrado")
 )
 
 type Service struct {
@@ -78,12 +80,12 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 
 func (s *Service) validateId(ctx context.Context, id string) error {
 	if id == "" {
-		return errors.New("id inválido")
+		return ErrInvalidId
 	}
 
 	_, err := s.repo.GetNoteByID(ctx, id)
 	if errors.Is(err, sql.ErrNoRows) {
-		return errors.New("id não encontrado")
+		return ErrNotFoundId
 	}
 	return err
 }

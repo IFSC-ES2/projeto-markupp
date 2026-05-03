@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -61,10 +62,6 @@ func (h *notesHandler) create(w http.ResponseWriter, r *http.Request) {
 
 func (h *notesHandler) get(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
-	if id == "" {
-		writeError(w, "invalid_request", "id inválido", http.StatusBadRequest)
-		return
-	}
 	note, err := h.svc.GetNoteById(r.Context(), id)
 	if err != nil {
 		writeDomainError(w, err)
@@ -85,6 +82,8 @@ func writeError(w http.ResponseWriter, code, message string, status int) {
 
 func writeDomainError(w http.ResponseWriter, err error) {
 	switch {
+	case errors.Is(err, sql.ErrNoRows):
+		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	case errors.Is(err, notes.ErrInvalidPath):
 		writeError(w, "invalid_path", notes.ErrInvalidPath.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrInvalidContent):

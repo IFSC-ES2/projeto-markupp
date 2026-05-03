@@ -19,12 +19,18 @@ type fakeRepo struct {
 	saved   notes.Note
 	saveErr error
 	called  bool
+	note    notes.Note
+	getErr  error
 }
 
 func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
 	f.called = true
 	f.saved = n
 	return f.saveErr
+}
+
+func (f *fakeRepo) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
+	return f.note, f.getErr
 }
 
 func newServiceForTest(repo notes.Repository) *notes.Service {
