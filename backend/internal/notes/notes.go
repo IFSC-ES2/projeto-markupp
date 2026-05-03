@@ -2,6 +2,7 @@ package notes
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
@@ -20,6 +21,7 @@ type Note struct {
 
 type Repository interface {
 	Save(ctx context.Context, note Note) error
+	GetNoteByID(ctx context.Context, id string) (Note, error)
 }
 
 var (
@@ -44,6 +46,15 @@ func NewService(repo Repository, maxContentSize int64) *Service {
 	}
 }
 
+func (s *Service) GetNoteById(ctx context.Context, id string) (Note, error) {
+	if err := s.validateId(ctx, id); err != nil {
+		return Note{}, err
+	}
+
+	note, err := s.repo.GetNoteByID(ctx, id)
+	return note, err
+}
+
 func (s *Service) Create(ctx context.Context, path, content string) (Note, error) {
 	if err := validatePath(path); err != nil {
 		return Note{}, err
@@ -63,6 +74,18 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 		return Note{}, fmt.Errorf("salvar nota %q: %w", note.ID, err)
 	}
 	return note, nil
+}
+
+func (s *Service) validateId(ctx context.Context, id string) error {
+	if id == "" {
+		return errors.New("id inválido")
+	}
+
+	_, err := s.repo.GetNoteByID(ctx, id)
+	if errors.Is(err, sql.ErrNoRows) {
+		return errors.New("id não encontrado")
+	}
+	return err
 }
 
 func validatePath(path string) error {

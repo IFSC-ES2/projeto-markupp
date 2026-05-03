@@ -12,6 +12,7 @@ import (
 
 type NoteService interface {
 	Create(ctx context.Context, path, content string) (notes.Note, error)
+	GetNoteById(ctx context.Context, id string) (notes.Note, error)
 }
 
 type notesHandler struct {
@@ -56,6 +57,20 @@ func (h *notesHandler) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusCreated, toResponse(note))
+}
+
+func (h *notesHandler) get(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	if id == "" {
+		writeError(w, "invalid_request", "id inválido", http.StatusBadRequest)
+		return
+	}
+	note, err := h.svc.GetNoteById(r.Context(), id)
+	if err != nil {
+		writeDomainError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, toResponse(note))
 }
 
 func writeJSON(w http.ResponseWriter, status int, body any) {
