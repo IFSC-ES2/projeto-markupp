@@ -122,8 +122,6 @@ func TestCreate_RepoRetornaErrDuplicatePath_PropagadoAoCaller(t *testing.T) {
 	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
 }
 
-// Problema 4: Testes para Service.GetNoteById()
-
 func TestGetNoteById_IDVazio_RetornaErrInvalidId(t *testing.T) {
 	repo := &fakeRepo{}
 	svc := newServiceForTest(repo)
@@ -132,7 +130,6 @@ func TestGetNoteById_IDVazio_RetornaErrInvalidId(t *testing.T) {
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrInvalidId))
-	// Valida que o repo NÃO foi chamado (validação local é suficiente)
 }
 
 func TestGetNoteById_IDNaoEncontrado_RetornaErrNotFoundId(t *testing.T) {

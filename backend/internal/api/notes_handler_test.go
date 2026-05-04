@@ -158,9 +158,6 @@ func TestGetFiles_IDNaoEncontrado_Retorna404(t *testing.T) {
 	assert.Equal(t, "not_found", resp["error"])
 }
 
-// Problema 3: Testes com Service REAL + Repo Stub
-// Isso valida que o handler trata corretamente os erros do Service
-
 type stubRepository struct {
 	noteToReturn notes.Note
 	getError     error
@@ -175,7 +172,6 @@ func (s *stubRepository) GetNoteByID(ctx context.Context, id string) (notes.Note
 }
 
 func TestGetFiles_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
-	// Problema 3: Usa Service real + repo stub, não fakeService
 	repo := &stubRepository{getError: sql.ErrNoRows}
 	svc := notes.NewService(repo, 1000)
 
@@ -192,7 +188,6 @@ func TestGetFiles_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
 }
 
 func TestGetFiles_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
-	// Service valida ID vazio antes de chamar o repo
 	repo := &stubRepository{}
 	svc := notes.NewService(repo, 1000)
 
@@ -205,7 +200,6 @@ func TestGetFiles_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
 }
 
 func TestGetFiles_IDValido_ComServiceReal_Retorna200(t *testing.T) {
-	// Caminho feliz com Service real
 	notaEsperada := notes.Note{
 		ID:      "id-123",
 		Path:    "file.md",
