@@ -22,12 +22,24 @@ type fakeService struct {
 	err  error
 }
 
+type fakeRepo struct {
+	getErr error
+}
+
 func (f *fakeService) Create(ctx context.Context, path, content string) (notes.Note, error) {
 	return f.note, f.err
 }
 
 func (f *fakeService) GetNoteById(ctx context.Context, id string) (notes.Note, error) {
 	return f.note, f.err
+}
+
+func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
+	return nil
+}
+
+func (f *fakeRepo) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
+	return notes.Note{}, f.getErr // Retorna o erro que você quer testar
 }
 
 func doPost(t *testing.T, svc api.NoteService, body string) *httptest.ResponseRecorder {
@@ -144,4 +156,74 @@ func TestGetFiles_IDNaoEncontrado_Retorna404(t *testing.T) {
 	var resp map[string]any
 	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
 	assert.Equal(t, "not_found", resp["error"])
+}
+
+// Problema 3: Testes com Service REAL + Repo Stub
+// Isso valida que o handler trata corretamente os erros do Service
+
+type stubRepository struct {
+	noteToReturn notes.Note
+	getError     error
+}
+
+func (s *stubRepository) Save(ctx context.Context, n notes.Note) error {
+	return nil
+}
+
+func (s *stubRepository) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
+	return s.noteToReturn, s.getError
+}
+
+func TestGetFiles_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
+	// Problema 3: Usa Service real + repo stub, não fakeService
+	repo := &stubRepository{getError: sql.ErrNoRows}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/files/id-inexistente", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "not_found", resp["error"])
+}
+
+func TestGetFiles_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
+	// Service valida ID vazio antes de chamar o repo
+	repo := &stubRepository{}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/files/", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+}
+
+func TestGetFiles_IDValido_ComServiceReal_Retorna200(t *testing.T) {
+	// Caminho feliz com Service real
+	notaEsperada := notes.Note{
+		ID:      "id-123",
+		Path:    "file.md",
+		Content: "conteudo",
+	}
+	repo := &stubRepository{noteToReturn: notaEsperada}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/files/id-123", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "id-123", resp["id"])
+	assert.Equal(t, "file.md", resp["path"])
+	assert.Equal(t, "conteudo", resp["content"])
 }
