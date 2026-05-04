@@ -12,6 +12,8 @@ func NewRouter(svc NoteService) chi.Router {
 
 	h := &notesHandler{svc: svc}
 	r.Post("/notes", h.create)
+	r.Put("/notes/{id}", h.update)
+	r.Delete("/notes/{id}", h.delete)
 
 	return r
 }

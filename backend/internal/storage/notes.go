@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"time"
 
 	sqlite "modernc.org/sqlite"
 
@@ -36,6 +37,42 @@ func (r *SqliteNotesRepository) Save(ctx context.Context, note notes.Note) error
 		return notes.ErrDuplicatePath
 	}
 	return err
+}
+
+func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content string, updatedAt time.Time) (notes.Note, error) {
+	row, err := r.q.UpdateNote(ctx, gen.UpdateNoteParams{
+		ID:        id,
+		Path:      path,
+		Content:   content,
+		UpdatedAt: updatedAt,
+	})
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return notes.Note{}, notes.ErrNotFound
+		}
+		if isUniqueConstraintViolation(err) {
+			return notes.Note{}, notes.ErrDuplicatePath
+		}
+		return notes.Note{}, err
+	}
+	return notes.Note{
+		ID:        row.ID,
+		Path:      row.Path,
+		Content:   row.Content,
+		CreatedAt: row.CreatedAt,
+		UpdatedAt: row.UpdatedAt,
+	}, nil
+}
+
+func (r *SqliteNotesRepository) Delete(ctx context.Context, id string) error {
+	rows, err := r.q.DeleteNote(ctx, id)
+	if err != nil {
+		return err
+	}
+	if rows == 0 {
+		return notes.ErrNotFound
+	}
+	return nil
 }
 
 func isUniqueConstraintViolation(err error) bool {
