@@ -90,6 +90,10 @@ func writeDomainError(w http.ResponseWriter, err error) {
 		writeError(w, "invalid_content", notes.ErrInvalidContent.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrDuplicatePath):
 		writeError(w, "duplicate_path", notes.ErrDuplicatePath.Error(), http.StatusConflict)
+	case errors.Is(err, notes.ErrInvalidId):
+		writeError(w, "invalid_id", notes.ErrInvalidId.Error(), http.StatusBadRequest)
+	case errors.Is(err, notes.ErrNotFoundId):
+		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	default:
 		writeError(w, "internal", "erro interno", http.StatusInternalServerError)
 	}
