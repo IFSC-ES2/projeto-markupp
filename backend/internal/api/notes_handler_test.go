@@ -3,6 +3,7 @@ package api_test
 import (
 	"bytes"
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -21,8 +22,24 @@ type fakeService struct {
 	err  error
 }
 
+type fakeRepo struct {
+	getErr error
+}
+
 func (f *fakeService) Create(ctx context.Context, path, content string) (notes.Note, error) {
 	return f.note, f.err
+}
+
+func (f *fakeService) GetNoteById(ctx context.Context, id string) (notes.Note, error) {
+	return f.note, f.err
+}
+
+func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
+	return nil
+}
+
+func (f *fakeRepo) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
+	return notes.Note{}, f.getErr // Retorna o erro que você quer testar
 }
 
 func doPost(t *testing.T, svc api.NoteService, body string) *httptest.ResponseRecorder {
@@ -96,4 +113,111 @@ func TestPostNotes_ErrDuplicatePath_Retorna409(t *testing.T) {
 	assert.Equal(t, "duplicate_path", resp["error"])
 	assert.Equal(t, notes.ErrDuplicatePath.Error(), resp["message"])
 	assert.NotContains(t, resp["message"], "id-interno-secreto")
+}
+
+func doGet(t *testing.T, svc api.NoteService, id string) *httptest.ResponseRecorder {
+	t.Helper()
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/files/%s", id), nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+	return rec
+}
+
+func TestGetFiles_IDValido_Retorna200(t *testing.T) {
+	svc := &fakeService{
+		note: notes.Note{ID: "id-x", Path: "x.md", Content: "y"},
+	}
+	rec := doGet(t, svc, "id-x")
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, "application/json", rec.Header().Get("Content-Type"))
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "id-x", resp["id"])
+	assert.Equal(t, "x.md", resp["path"])
+	assert.Equal(t, "y", resp["content"])
+}
+
+func TestGetFiles_IDVazio_Retorna404(t *testing.T) {
+	svc := &fakeService{}
+	rec := doGet(t, svc, "")
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+}
+
+func TestGetFiles_IDNaoEncontrado_Retorna404(t *testing.T) {
+	svc := &fakeService{err: sql.ErrNoRows}
+	rec := doGet(t, svc, "id-inexistente")
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "not_found", resp["error"])
+}
+
+type stubRepository struct {
+	noteToReturn notes.Note
+	getError     error
+}
+
+func (s *stubRepository) Save(ctx context.Context, n notes.Note) error {
+	return nil
+}
+
+func (s *stubRepository) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
+	return s.noteToReturn, s.getError
+}
+
+func TestGetFiles_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
+	repo := &stubRepository{getError: sql.ErrNoRows}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/files/id-inexistente", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "not_found", resp["error"])
+}
+
+func TestGetFiles_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
+	repo := &stubRepository{}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/files/", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+}
+
+func TestGetFiles_IDValido_ComServiceReal_Retorna200(t *testing.T) {
+	notaEsperada := notes.Note{
+		ID:      "id-123",
+		Path:    "file.md",
+		Content: "conteudo",
+	}
+	repo := &stubRepository{noteToReturn: notaEsperada}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/files/id-123", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "id-123", resp["id"])
+	assert.Equal(t, "file.md", resp["path"])
+	assert.Equal(t, "conteudo", resp["content"])
 }

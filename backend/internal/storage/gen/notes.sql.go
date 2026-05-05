@@ -33,3 +33,22 @@ func (q *Queries) CreateNote(ctx context.Context, arg CreateNoteParams) error {
 	)
 	return err
 }
+
+const getNoteByID = `-- name: GetNoteByID :one
+SELECT id, path, content, created_at, updated_at FROM notes WHERE id = ?
+`
+
+type GetNoteByIDRow struct {
+	ID        string
+	Path      string
+	Content   string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
+
+func (q *Queries) GetNoteByID(ctx context.Context, id string) (GetNoteByIDRow, error) {
+	row := q.db.QueryRowContext(ctx, getNoteByID, id)
+	var i GetNoteByIDRow
+	err := row.Scan(&i.ID, &i.Path, &i.Content, &i.CreatedAt, &i.UpdatedAt)
+	return i, err
+}

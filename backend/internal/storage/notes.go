@@ -38,6 +38,20 @@ func (r *SqliteNotesRepository) Save(ctx context.Context, note notes.Note) error
 	return err
 }
 
+func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
+	row, err := r.q.GetNoteByID(ctx, id)
+	if err != nil {
+		return notes.Note{}, err
+	}
+	return notes.Note{
+		ID:        row.ID,
+		Path:      row.Path,
+		Content:   row.Content,
+		CreatedAt: row.CreatedAt,
+		UpdatedAt: row.UpdatedAt,
+	}, nil
+}
+
 func isUniqueConstraintViolation(err error) bool {
 	var sqliteErr *sqlite.Error
 	if !errors.As(err, &sqliteErr) {

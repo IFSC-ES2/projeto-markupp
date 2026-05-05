@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 
 type NoteService interface {
 	Create(ctx context.Context, path, content string) (notes.Note, error)
+	GetNoteById(ctx context.Context, id string) (notes.Note, error)
 }
 
 type notesHandler struct {
@@ -58,6 +60,16 @@ func (h *notesHandler) create(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusCreated, toResponse(note))
 }
 
+func (h *notesHandler) get(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	note, err := h.svc.GetNoteById(r.Context(), id)
+	if err != nil {
+		writeDomainError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, toResponse(note))
+}
+
 func writeJSON(w http.ResponseWriter, status int, body any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
@@ -70,12 +82,18 @@ func writeError(w http.ResponseWriter, code, message string, status int) {
 
 func writeDomainError(w http.ResponseWriter, err error) {
 	switch {
+	case errors.Is(err, sql.ErrNoRows):
+		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	case errors.Is(err, notes.ErrInvalidPath):
 		writeError(w, "invalid_path", notes.ErrInvalidPath.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrInvalidContent):
 		writeError(w, "invalid_content", notes.ErrInvalidContent.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrDuplicatePath):
 		writeError(w, "duplicate_path", notes.ErrDuplicatePath.Error(), http.StatusConflict)
+	case errors.Is(err, notes.ErrInvalidId):
+		writeError(w, "invalid_id", notes.ErrInvalidId.Error(), http.StatusBadRequest)
+	case errors.Is(err, notes.ErrNotFoundId):
+		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	default:
 		writeError(w, "internal", "erro interno", http.StatusInternalServerError)
 	}
