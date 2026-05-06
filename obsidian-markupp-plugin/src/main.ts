@@ -19,6 +19,7 @@ export default class MarkuppPlugin extends Plugin {
 		});
 
 		this.addSettingTab(new MarkuppSettingTab(this.app, this));
+
 	}
 
 	onunload() {}
