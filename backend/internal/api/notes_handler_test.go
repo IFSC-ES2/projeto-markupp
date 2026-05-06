@@ -118,13 +118,13 @@ func TestPostNotes_ErrDuplicatePath_Retorna409(t *testing.T) {
 func doGet(t *testing.T, svc api.NoteService, id string) *httptest.ResponseRecorder {
 	t.Helper()
 	router := api.NewRouter(svc)
-	req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/files/%s", id), nil)
+	req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/notes/%s", id), nil)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)
 	return rec
 }
 
-func TestGetFiles_IDValido_Retorna200(t *testing.T) {
+func TestGetNotes_IDValido_Retorna200(t *testing.T) {
 	svc := &fakeService{
 		note: notes.Note{ID: "id-x", Path: "x.md", Content: "y"},
 	}
@@ -140,14 +140,14 @@ func TestGetFiles_IDValido_Retorna200(t *testing.T) {
 	assert.Equal(t, "y", resp["content"])
 }
 
-func TestGetFiles_IDVazio_Retorna404(t *testing.T) {
+func TestGetNotes_IDVazio_Retorna404(t *testing.T) {
 	svc := &fakeService{}
 	rec := doGet(t, svc, "")
 
 	assert.Equal(t, http.StatusNotFound, rec.Code)
 }
 
-func TestGetFiles_IDNaoEncontrado_Retorna404(t *testing.T) {
+func TestGetNotes_IDNaoEncontrado_Retorna404(t *testing.T) {
 	svc := &fakeService{err: sql.ErrNoRows}
 	rec := doGet(t, svc, "id-inexistente")
 
@@ -171,12 +171,12 @@ func (s *stubRepository) GetNoteByID(ctx context.Context, id string) (notes.Note
 	return s.noteToReturn, s.getError
 }
 
-func TestGetFiles_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
+func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
 	repo := &stubRepository{getError: sql.ErrNoRows}
 	svc := notes.NewService(repo, 1000)
 
 	router := api.NewRouter(svc)
-	req := httptest.NewRequest(http.MethodGet, "/files/id-inexistente", nil)
+	req := httptest.NewRequest(http.MethodGet, "/notes/id-inexistente", nil)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)
 
@@ -187,19 +187,19 @@ func TestGetFiles_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
 	assert.Equal(t, "not_found", resp["error"])
 }
 
-func TestGetFiles_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
+func TestGetNotes_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
 	repo := &stubRepository{}
 	svc := notes.NewService(repo, 1000)
 
 	router := api.NewRouter(svc)
-	req := httptest.NewRequest(http.MethodGet, "/files/", nil)
+	req := httptest.NewRequest(http.MethodGet, "/notes/", nil)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)
 
 	assert.Equal(t, http.StatusNotFound, rec.Code)
 }
 
-func TestGetFiles_IDValido_ComServiceReal_Retorna200(t *testing.T) {
+func TestGetNotes_IDValido_ComServiceReal_Retorna200(t *testing.T) {
 	notaEsperada := notes.Note{
 		ID:      "id-123",
 		Path:    "file.md",
@@ -209,7 +209,7 @@ func TestGetFiles_IDValido_ComServiceReal_Retorna200(t *testing.T) {
 	svc := notes.NewService(repo, 1000)
 
 	router := api.NewRouter(svc)
-	req := httptest.NewRequest(http.MethodGet, "/files/id-123", nil)
+	req := httptest.NewRequest(http.MethodGet, "/notes/id-123", nil)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)
 
