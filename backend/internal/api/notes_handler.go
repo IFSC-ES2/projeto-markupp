@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -16,6 +17,7 @@ type NoteService interface {
 	Create(ctx context.Context, path, content string) (notes.Note, error)
 	Update(ctx context.Context, id, path, content string) (notes.Note, error)
 	Delete(ctx context.Context, id string) error
+	GetNoteById(ctx context.Context, id string) (notes.Note, error)
 }
 
 type notesHandler struct {
@@ -80,6 +82,16 @@ func (h *notesHandler) update(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, toResponse(note))
 }
 
+func (h *notesHandler) get(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	note, err := h.svc.GetNoteById(r.Context(), id)
+	if err != nil {
+		writeDomainError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, toResponse(note))
+}
+
 func (h *notesHandler) delete(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if err := h.svc.Delete(r.Context(), id); err != nil {
@@ -101,6 +113,8 @@ func writeError(w http.ResponseWriter, code, message string, status int) {
 
 func writeDomainError(w http.ResponseWriter, err error) {
 	switch {
+	case errors.Is(err, sql.ErrNoRows):
+		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	case errors.Is(err, notes.ErrInvalidPath):
 		writeError(w, "invalid_path", notes.ErrInvalidPath.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrInvalidContent):
@@ -109,6 +123,10 @@ func writeDomainError(w http.ResponseWriter, err error) {
 		writeError(w, "duplicate_path", notes.ErrDuplicatePath.Error(), http.StatusConflict)
 	case errors.Is(err, notes.ErrNotFound):
 		writeError(w, "not_found", notes.ErrNotFound.Error(), http.StatusNotFound)
+	case errors.Is(err, notes.ErrInvalidId):
+		writeError(w, "invalid_id", notes.ErrInvalidId.Error(), http.StatusBadRequest)
+	case errors.Is(err, notes.ErrNotFoundId):
+		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	default:
 		writeError(w, "internal", "erro interno", http.StatusInternalServerError)
 	}

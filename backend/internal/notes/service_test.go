@@ -2,6 +2,7 @@ package notes_test
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"strings"
 	"testing"
@@ -33,6 +34,9 @@ type fakeRepo struct {
 	deleteErr    error
 	deleteCalled bool
 	deletedID    string
+
+	note   notes.Note
+	getErr error
 }
 
 func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
@@ -54,6 +58,10 @@ func (f *fakeRepo) Delete(ctx context.Context, id string) error {
 	f.deleteCalled = true
 	f.deletedID = id
 	return f.deleteErr
+}
+
+func (f *fakeRepo) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
+	return f.note, f.getErr
 }
 
 func newServiceForTest(repo notes.Repository) *notes.Service {
@@ -250,4 +258,41 @@ func TestDelete_CaminhoFeliz_DelegaParaRepo(t *testing.T) {
 	require.NoError(t, err)
 	assert.True(t, repo.deleteCalled)
 	assert.Equal(t, "id-1", repo.deletedID)
+}
+
+func TestGetNoteById_IDVazio_RetornaErrInvalidId(t *testing.T) {
+	repo := &fakeRepo{}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.GetNoteById(context.Background(), "")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrInvalidId))
+}
+
+func TestGetNoteById_IDNaoEncontrado_RetornaErrNotFoundId(t *testing.T) {
+	repo := &fakeRepo{getErr: sql.ErrNoRows}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.GetNoteById(context.Background(), "id-inexistente")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrNotFoundId))
+}
+
+func TestGetNoteById_CaminhoFeliz_RetornaNotaCorreta(t *testing.T) {
+	notaEsperada := notes.Note{
+		ID:        "id-123",
+		Path:      "arquivo.md",
+		Content:   "conteudo",
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	repo := &fakeRepo{note: notaEsperada}
+	svc := newServiceForTest(repo)
+
+	nota, err := svc.GetNoteById(context.Background(), "id-123")
+
+	require.NoError(t, err)
+	assert.Equal(t, notaEsperada, nota)
 }

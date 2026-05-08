@@ -2,6 +2,7 @@ package notes
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
@@ -22,6 +23,7 @@ type Repository interface {
 	Save(ctx context.Context, note Note) error
 	Update(ctx context.Context, id, path, content string, updatedAt time.Time) (Note, error)
 	Delete(ctx context.Context, id string) error
+	GetNoteByID(ctx context.Context, id string) (Note, error)
 }
 
 var (
@@ -29,6 +31,8 @@ var (
 	ErrInvalidContent = errors.New("content inválido")
 	ErrDuplicatePath  = errors.New("path já existe")
 	ErrNotFound       = errors.New("nota não encontrada")
+	ErrInvalidId      = errors.New("ID inválido")
+	ErrNotFoundId     = errors.New("ID não encontrado")
 )
 
 type Service struct {
@@ -45,6 +49,18 @@ func NewService(repo Repository, maxContentSize int64) *Service {
 		newID:          func() string { return uuid.NewString() },
 		maxContentSize: maxContentSize,
 	}
+}
+
+func (s *Service) GetNoteById(ctx context.Context, id string) (Note, error) {
+	if err := s.validateId(ctx, id); err != nil {
+		return Note{}, err
+	}
+
+	note, err := s.repo.GetNoteByID(ctx, id)
+	if errors.Is(err, sql.ErrNoRows) {
+		return Note{}, ErrNotFoundId
+	}
+	return note, err
 }
 
 func (s *Service) Create(ctx context.Context, path, content string) (Note, error) {
@@ -97,6 +113,13 @@ func (s *Service) Delete(ctx context.Context, id string) error {
 			return err
 		}
 		return fmt.Errorf("excluir nota %q: %w", id, err)
+	}
+	return nil
+}
+
+func (s *Service) validateId(ctx context.Context, id string) error {
+	if id == "" {
+		return ErrInvalidId
 	}
 	return nil
 }

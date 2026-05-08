@@ -3,11 +3,13 @@ package api_test
 import (
 	"bytes"
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -52,6 +54,10 @@ func (f *fakeService) Delete(ctx context.Context, id string) error {
 	return f.deleteErr
 }
 
+func (f *fakeService) GetNoteById(ctx context.Context, id string) (notes.Note, error) {
+	return f.note, f.err
+}
+
 func doPost(t *testing.T, svc api.NoteService, body string) *httptest.ResponseRecorder {
 	t.Helper()
 	router := api.NewRouter(svc)
@@ -76,6 +82,15 @@ func doDelete(t *testing.T, svc api.NoteService, id string) *httptest.ResponseRe
 	t.Helper()
 	router := api.NewRouter(svc)
 	req := httptest.NewRequest(http.MethodDelete, "/notes/"+id, nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+	return rec
+}
+
+func doGet(t *testing.T, svc api.NoteService, id string) *httptest.ResponseRecorder {
+	t.Helper()
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/notes/%s", id), nil)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)
 	return rec
@@ -221,4 +236,110 @@ func TestDeleteNotes_ErrNotFound_Retorna404(t *testing.T) {
 	var resp map[string]any
 	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
 	assert.Equal(t, "not_found", resp["error"])
+}
+
+func TestGetNotes_IDValido_Retorna200(t *testing.T) {
+	svc := &fakeService{
+		note: notes.Note{ID: "id-x", Path: "x.md", Content: "y"},
+	}
+	rec := doGet(t, svc, "id-x")
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, "application/json", rec.Header().Get("Content-Type"))
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "id-x", resp["id"])
+	assert.Equal(t, "x.md", resp["path"])
+	assert.Equal(t, "y", resp["content"])
+}
+
+func TestGetNotes_IDVazio_Retorna404(t *testing.T) {
+	svc := &fakeService{}
+	rec := doGet(t, svc, "")
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+}
+
+func TestGetNotes_IDNaoEncontrado_Retorna404(t *testing.T) {
+	svc := &fakeService{err: sql.ErrNoRows}
+	rec := doGet(t, svc, "id-inexistente")
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "not_found", resp["error"])
+}
+
+type stubRepository struct {
+	noteToReturn notes.Note
+	getError     error
+}
+
+func (s *stubRepository) Save(ctx context.Context, n notes.Note) error {
+	return nil
+}
+
+func (s *stubRepository) Update(ctx context.Context, id, path, content string, updatedAt time.Time) (notes.Note, error) {
+	return notes.Note{}, nil
+}
+
+func (s *stubRepository) Delete(ctx context.Context, id string) error {
+	return nil
+}
+
+func (s *stubRepository) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
+	return s.noteToReturn, s.getError
+}
+
+func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
+	repo := &stubRepository{getError: sql.ErrNoRows}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/notes/id-inexistente", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "not_found", resp["error"])
+}
+
+func TestGetNotes_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
+	repo := &stubRepository{}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/notes/", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusNotFound, rec.Code)
+}
+
+func TestGetNotes_IDValido_ComServiceReal_Retorna200(t *testing.T) {
+	notaEsperada := notes.Note{
+		ID:      "id-123",
+		Path:    "file.md",
+		Content: "conteudo",
+	}
+	repo := &stubRepository{noteToReturn: notaEsperada}
+	svc := notes.NewService(repo, 1000)
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/notes/id-123", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "id-123", resp["id"])
+	assert.Equal(t, "file.md", resp["path"])
+	assert.Equal(t, "conteudo", resp["content"])
 }

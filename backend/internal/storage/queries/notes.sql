@@ -2,6 +2,9 @@
 INSERT INTO notes (id, path, content, created_at, updated_at)
 VALUES (?, ?, ?, ?, ?);
 
+-- name: GetNoteByID :one
+SELECT id, path, content, created_at, updated_at FROM notes WHERE id = ?;
+
 -- name: UpdateNote :one
 UPDATE notes
 SET path = ?, content = ?, updated_at = ?
