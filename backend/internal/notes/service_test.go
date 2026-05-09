@@ -20,14 +20,44 @@ type fakeRepo struct {
 	saved   notes.Note
 	saveErr error
 	called  bool
-	note    notes.Note
-	getErr  error
+
+	updateNote notes.Note
+	updateErr  error
+	updateArgs struct {
+		id        string
+		path      string
+		content   string
+		updatedAt time.Time
+		called    bool
+	}
+
+	deleteErr    error
+	deleteCalled bool
+	deletedID    string
+
+	note   notes.Note
+	getErr error
 }
 
 func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
 	f.called = true
 	f.saved = n
 	return f.saveErr
+}
+
+func (f *fakeRepo) Update(ctx context.Context, id, path, content string, updatedAt time.Time) (notes.Note, error) {
+	f.updateArgs.called = true
+	f.updateArgs.id = id
+	f.updateArgs.path = path
+	f.updateArgs.content = content
+	f.updateArgs.updatedAt = updatedAt
+	return f.updateNote, f.updateErr
+}
+
+func (f *fakeRepo) Delete(ctx context.Context, id string) error {
+	f.deleteCalled = true
+	f.deletedID = id
+	return f.deleteErr
 }
 
 func (f *fakeRepo) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
@@ -120,6 +150,114 @@ func TestCreate_RepoRetornaErrDuplicatePath_PropagadoAoCaller(t *testing.T) {
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
+}
+
+func TestUpdate_IDVazio_RetornaErrNotFound(t *testing.T) {
+	repo := &fakeRepo{}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.Update(context.Background(), "", "ok.md", "x")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
+	assert.False(t, repo.updateArgs.called)
+}
+
+func TestUpdate_PathInvalido_RetornaErrInvalidPath(t *testing.T) {
+	repo := &fakeRepo{}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.Update(context.Background(), "id-1", "", "x")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrInvalidPath))
+	assert.False(t, repo.updateArgs.called)
+}
+
+func TestUpdate_ContentMuitoGrande_RetornaErrInvalidContent(t *testing.T) {
+	repo := &fakeRepo{}
+	svc := newServiceForTest(repo)
+	bigContent := strings.Repeat("x", testMaxContentSize+1)
+
+	_, err := svc.Update(context.Background(), "id-1", "ok.md", bigContent)
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrInvalidContent))
+	assert.False(t, repo.updateArgs.called)
+}
+
+func TestUpdate_RepoRetornaErrNotFound_Propagado(t *testing.T) {
+	repo := &fakeRepo{updateErr: notes.ErrNotFound}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.Update(context.Background(), "id-x", "ok.md", "x")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
+}
+
+func TestUpdate_RepoRetornaErrDuplicatePath_Propagado(t *testing.T) {
+	repo := &fakeRepo{updateErr: notes.ErrDuplicatePath}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.Update(context.Background(), "id-x", "ok.md", "x")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
+}
+
+func TestUpdate_CaminhoFeliz_RetornaNotaAtualizada(t *testing.T) {
+	updated := notes.Note{
+		ID:        "id-1",
+		Path:      "novo.md",
+		Content:   "novo",
+		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: time.Date(2026, 5, 4, 0, 0, 0, 0, time.UTC),
+	}
+	repo := &fakeRepo{updateNote: updated}
+	svc := newServiceForTest(repo)
+
+	got, err := svc.Update(context.Background(), "id-1", "novo.md", "novo")
+
+	require.NoError(t, err)
+	assert.Equal(t, updated, got)
+	assert.True(t, repo.updateArgs.called)
+	assert.Equal(t, "id-1", repo.updateArgs.id)
+	assert.Equal(t, "novo.md", repo.updateArgs.path)
+	assert.Equal(t, "novo", repo.updateArgs.content)
+	assert.False(t, repo.updateArgs.updatedAt.IsZero())
+}
+
+func TestDelete_IDVazio_RetornaErrNotFoundSemChamarRepo(t *testing.T) {
+	repo := &fakeRepo{}
+	svc := newServiceForTest(repo)
+
+	err := svc.Delete(context.Background(), "")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
+	assert.False(t, repo.deleteCalled)
+}
+
+func TestDelete_RepoRetornaErrNotFound_Propagado(t *testing.T) {
+	repo := &fakeRepo{deleteErr: notes.ErrNotFound}
+	svc := newServiceForTest(repo)
+
+	err := svc.Delete(context.Background(), "id-x")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
+}
+
+func TestDelete_CaminhoFeliz_DelegaParaRepo(t *testing.T) {
+	repo := &fakeRepo{}
+	svc := newServiceForTest(repo)
+
+	err := svc.Delete(context.Background(), "id-1")
+
+	require.NoError(t, err)
+	assert.True(t, repo.deleteCalled)
+	assert.Equal(t, "id-1", repo.deletedID)
 }
 
 func TestGetNoteById_IDVazio_RetornaErrInvalidId(t *testing.T) {

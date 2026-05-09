@@ -21,6 +21,8 @@ type Note struct {
 
 type Repository interface {
 	Save(ctx context.Context, note Note) error
+	Update(ctx context.Context, id, path, content string, updatedAt time.Time) (Note, error)
+	Delete(ctx context.Context, id string) error
 	GetNoteByID(ctx context.Context, id string) (Note, error)
 }
 
@@ -28,6 +30,7 @@ var (
 	ErrInvalidPath    = errors.New("path inválido")
 	ErrInvalidContent = errors.New("content inválido")
 	ErrDuplicatePath  = errors.New("path já existe")
+	ErrNotFound       = errors.New("nota não encontrada")
 	ErrInvalidId      = errors.New("ID inválido")
 	ErrNotFoundId     = errors.New("ID não encontrado")
 )
@@ -79,6 +82,39 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 		return Note{}, fmt.Errorf("salvar nota %q: %w", note.ID, err)
 	}
 	return note, nil
+}
+
+func (s *Service) Update(ctx context.Context, id, path, content string) (Note, error) {
+	if strings.TrimSpace(id) == "" {
+		return Note{}, ErrNotFound
+	}
+	if err := validatePath(path); err != nil {
+		return Note{}, err
+	}
+	if err := s.validateContent(content); err != nil {
+		return Note{}, err
+	}
+	updated, err := s.repo.Update(ctx, id, path, content, s.clock())
+	if err != nil {
+		if errors.Is(err, ErrNotFound) || errors.Is(err, ErrDuplicatePath) {
+			return Note{}, err
+		}
+		return Note{}, fmt.Errorf("atualizar nota %q: %w", id, err)
+	}
+	return updated, nil
+}
+
+func (s *Service) Delete(ctx context.Context, id string) error {
+	if strings.TrimSpace(id) == "" {
+		return ErrNotFound
+	}
+	if err := s.repo.Delete(ctx, id); err != nil {
+		if errors.Is(err, ErrNotFound) {
+			return err
+		}
+		return fmt.Errorf("excluir nota %q: %w", id, err)
+	}
+	return nil
 }
 
 func (s *Service) validateId(ctx context.Context, id string) error {

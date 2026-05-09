@@ -34,21 +34,63 @@ func (q *Queries) CreateNote(ctx context.Context, arg CreateNoteParams) error {
 	return err
 }
 
+const deleteNote = `-- name: DeleteNote :execrows
+DELETE FROM notes WHERE id = ?
+`
+
+func (q *Queries) DeleteNote(ctx context.Context, id string) (int64, error) {
+	result, err := q.db.ExecContext(ctx, deleteNote, id)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
+}
+
 const getNoteByID = `-- name: GetNoteByID :one
 SELECT id, path, content, created_at, updated_at FROM notes WHERE id = ?
 `
 
-type GetNoteByIDRow struct {
-	ID        string
-	Path      string
-	Content   string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+func (q *Queries) GetNoteByID(ctx context.Context, id string) (Note, error) {
+	row := q.db.QueryRowContext(ctx, getNoteByID, id)
+	var i Note
+	err := row.Scan(
+		&i.ID,
+		&i.Path,
+		&i.Content,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
 }
 
-func (q *Queries) GetNoteByID(ctx context.Context, id string) (GetNoteByIDRow, error) {
-	row := q.db.QueryRowContext(ctx, getNoteByID, id)
-	var i GetNoteByIDRow
-	err := row.Scan(&i.ID, &i.Path, &i.Content, &i.CreatedAt, &i.UpdatedAt)
+const updateNote = `-- name: UpdateNote :one
+UPDATE notes
+SET path = ?, content = ?, updated_at = ?
+WHERE id = ?
+RETURNING id, path, content, created_at, updated_at
+`
+
+type UpdateNoteParams struct {
+	Path      string
+	Content   string
+	UpdatedAt time.Time
+	ID        string
+}
+
+func (q *Queries) UpdateNote(ctx context.Context, arg UpdateNoteParams) (Note, error) {
+	row := q.db.QueryRowContext(ctx, updateNote,
+		arg.Path,
+		arg.Content,
+		arg.UpdatedAt,
+		arg.ID,
+	)
+	var i Note
+	err := row.Scan(
+		&i.ID,
+		&i.Path,
+		&i.Content,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
 	return i, err
 }

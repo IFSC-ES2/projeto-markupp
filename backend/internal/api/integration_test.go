@@ -46,6 +46,25 @@ func postNotes(t *testing.T, baseURL, body string) *http.Response {
 	return resp
 }
 
+func putNote(t *testing.T, baseURL, id, body string) *http.Response {
+	t.Helper()
+	req, err := http.NewRequest(http.MethodPut, baseURL+"/notes/"+id, strings.NewReader(body))
+	require.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	require.NoError(t, err)
+	return resp
+}
+
+func deleteNote(t *testing.T, baseURL, id string) *http.Response {
+	t.Helper()
+	req, err := http.NewRequest(http.MethodDelete, baseURL+"/notes/"+id, nil)
+	require.NoError(t, err)
+	resp, err := http.DefaultClient.Do(req)
+	require.NoError(t, err)
+	return resp
+}
+
 func decodeJSON(t *testing.T, body io.Reader) map[string]any {
 	t.Helper()
 	var result map[string]any
@@ -72,6 +91,92 @@ func TestIntegration_CriarNota_FluxoCompleto(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, "integracao.md", dbPath)
 	assert.Equal(t, "# teste", dbContent)
+}
+
+func TestIntegration_AtualizarNota_FluxoCompleto(t *testing.T) {
+	server, db := setupIntegrationServer(t)
+
+	created := postNotes(t, server.URL, `{"path":"orig.md","content":"v1"}`)
+	require.Equal(t, http.StatusCreated, created.StatusCode)
+	createdBody := decodeJSON(t, created.Body)
+	_ = created.Body.Close()
+	id, _ := createdBody["id"].(string)
+	require.NotEmpty(t, id)
+
+	updated := putNote(t, server.URL, id, `{"path":"renomeada.md","content":"v2"}`)
+	defer func() { _ = updated.Body.Close() }()
+	require.Equal(t, http.StatusOK, updated.StatusCode)
+
+	body := decodeJSON(t, updated.Body)
+	assert.Equal(t, id, body["id"])
+	assert.Equal(t, "renomeada.md", body["path"])
+	assert.Equal(t, "v2", body["content"])
+
+	var dbPath, dbContent string
+	require.NoError(t, db.QueryRow("SELECT path, content FROM notes WHERE id = ?", id).Scan(&dbPath, &dbContent))
+	assert.Equal(t, "renomeada.md", dbPath)
+	assert.Equal(t, "v2", dbContent)
+}
+
+func TestIntegration_AtualizarNotaInexistente_Retorna404(t *testing.T) {
+	server, _ := setupIntegrationServer(t)
+
+	resp := putNote(t, server.URL, "fantasma", `{"path":"x.md","content":"y"}`)
+	defer func() { _ = resp.Body.Close() }()
+
+	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	body := decodeJSON(t, resp.Body)
+	assert.Equal(t, "not_found", body["error"])
+}
+
+func TestIntegration_AtualizarParaPathDuplicado_Retorna409(t *testing.T) {
+	server, _ := setupIntegrationServer(t)
+
+	r1 := postNotes(t, server.URL, `{"path":"a.md","content":"1"}`)
+	require.Equal(t, http.StatusCreated, r1.StatusCode)
+	_ = r1.Body.Close()
+
+	r2 := postNotes(t, server.URL, `{"path":"b.md","content":"2"}`)
+	require.Equal(t, http.StatusCreated, r2.StatusCode)
+	bBody := decodeJSON(t, r2.Body)
+	_ = r2.Body.Close()
+	idB, _ := bBody["id"].(string)
+
+	conflict := putNote(t, server.URL, idB, `{"path":"a.md","content":"x"}`)
+	defer func() { _ = conflict.Body.Close() }()
+	require.Equal(t, http.StatusConflict, conflict.StatusCode)
+	body := decodeJSON(t, conflict.Body)
+	assert.Equal(t, "duplicate_path", body["error"])
+}
+
+func TestIntegration_DeletarNota_FluxoCompleto(t *testing.T) {
+	server, db := setupIntegrationServer(t)
+
+	created := postNotes(t, server.URL, `{"path":"a-deletar.md","content":"x"}`)
+	require.Equal(t, http.StatusCreated, created.StatusCode)
+	cBody := decodeJSON(t, created.Body)
+	_ = created.Body.Close()
+	id, _ := cBody["id"].(string)
+
+	resp := deleteNote(t, server.URL, id)
+	defer func() { _ = resp.Body.Close() }()
+
+	require.Equal(t, http.StatusNoContent, resp.StatusCode)
+
+	var count int
+	require.NoError(t, db.QueryRow("SELECT COUNT(*) FROM notes WHERE id = ?", id).Scan(&count))
+	assert.Equal(t, 0, count)
+}
+
+func TestIntegration_DeletarNotaInexistente_Retorna404(t *testing.T) {
+	server, _ := setupIntegrationServer(t)
+
+	resp := deleteNote(t, server.URL, "fantasma")
+	defer func() { _ = resp.Body.Close() }()
+
+	require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	body := decodeJSON(t, resp.Body)
+	assert.Equal(t, "not_found", body["error"])
 }
 
 func TestIntegration_CriarNotaDuplicada_RetornaMensagemLimpa(t *testing.T) {
