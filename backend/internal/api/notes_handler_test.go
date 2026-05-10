@@ -5,6 +5,7 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -34,6 +35,10 @@ type fakeService struct {
 	deleteErr    error
 	deleteCalled bool
 	deletedID    string
+
+	listResult []notes.Note
+	listErr    error
+	listCalled bool
 }
 
 func (f *fakeService) Create(ctx context.Context, path, content string) (notes.Note, error) {
@@ -56,6 +61,11 @@ func (f *fakeService) Delete(ctx context.Context, id string) error {
 
 func (f *fakeService) GetNoteById(ctx context.Context, id string) (notes.Note, error) {
 	return f.note, f.err
+}
+
+func (f *fakeService) ListNotes(ctx context.Context) ([]notes.Note, error) {
+	f.listCalled = true
+	return f.listResult, f.listErr
 }
 
 func doPost(t *testing.T, svc api.NoteService, body string) *httptest.ResponseRecorder {
@@ -91,6 +101,15 @@ func doGet(t *testing.T, svc api.NoteService, id string) *httptest.ResponseRecor
 	t.Helper()
 	router := api.NewRouter(svc)
 	req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/notes/%s", id), nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+	return rec
+}
+
+func doListNotes(t *testing.T, svc api.NoteService) *httptest.ResponseRecorder {
+	t.Helper()
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/notes", nil)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)
 	return rec
@@ -275,6 +294,9 @@ func TestGetNotes_IDNaoEncontrado_Retorna404(t *testing.T) {
 type stubRepository struct {
 	noteToReturn notes.Note
 	getError     error
+
+	listResult []notes.Note
+	listErr    error
 }
 
 func (s *stubRepository) Save(ctx context.Context, n notes.Note) error {
@@ -291,6 +313,10 @@ func (s *stubRepository) Delete(ctx context.Context, id string) error {
 
 func (s *stubRepository) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
 	return s.noteToReturn, s.getError
+}
+
+func (s *stubRepository) ListNotes(ctx context.Context) ([]notes.Note, error) {
+	return s.listResult, s.listErr
 }
 
 func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
@@ -342,4 +368,45 @@ func TestGetNotes_IDValido_ComServiceReal_Retorna200(t *testing.T) {
 	assert.Equal(t, "id-123", resp["id"])
 	assert.Equal(t, "file.md", resp["path"])
 	assert.Equal(t, "conteudo", resp["content"])
+}
+
+func TestListNotes_DBVazio_Retorna200ComArrayVazio(t *testing.T) {
+	svc := &fakeService{listResult: []notes.Note{}}
+	rec := doListNotes(t, svc)
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, "application/json", rec.Header().Get("Content-Type"))
+
+	var resp []map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Empty(t, resp)
+	assert.True(t, svc.listCalled)
+}
+
+func TestListNotes_ComNotas_RetornaArrayCompleto(t *testing.T) {
+	svc := &fakeService{listResult: []notes.Note{
+		{ID: "id-1", Path: "a.md", Content: "aaa"},
+		{ID: "id-2", Path: "b.md", Content: "bbb"},
+	}}
+	rec := doListNotes(t, svc)
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+
+	var resp []map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	require.Len(t, resp, 2)
+	assert.Equal(t, "id-1", resp[0]["id"])
+	assert.Equal(t, "a.md", resp[0]["path"])
+	assert.Equal(t, "aaa", resp[0]["content"])
+	assert.Equal(t, "id-2", resp[1]["id"])
+}
+
+func TestListNotes_ServiceRetornaErro_Retorna500(t *testing.T) {
+	svc := &fakeService{listErr: errors.New("erro inesperado")}
+	rec := doListNotes(t, svc)
+
+	assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "internal", resp["error"])
 }

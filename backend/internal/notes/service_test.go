@@ -37,6 +37,10 @@ type fakeRepo struct {
 
 	note   notes.Note
 	getErr error
+
+	listResult []notes.Note
+	listErr    error
+	listCalled bool
 }
 
 func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
@@ -62,6 +66,11 @@ func (f *fakeRepo) Delete(ctx context.Context, id string) error {
 
 func (f *fakeRepo) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
 	return f.note, f.getErr
+}
+
+func (f *fakeRepo) ListNotes(ctx context.Context) ([]notes.Note, error) {
+	f.listCalled = true
+	return f.listResult, f.listErr
 }
 
 func newServiceForTest(repo notes.Repository) *notes.Service {
@@ -295,4 +304,38 @@ func TestGetNoteById_CaminhoFeliz_RetornaNotaCorreta(t *testing.T) {
 
 	require.NoError(t, err)
 	assert.Equal(t, notaEsperada, nota)
+}
+
+func TestListNotes_DelegaParaRepo_RetornaLista(t *testing.T) {
+	esperadas := []notes.Note{
+		{ID: "id-1", Path: "a.md", Content: "1"},
+		{ID: "id-2", Path: "b.md", Content: "2"},
+	}
+	repo := &fakeRepo{listResult: esperadas}
+	svc := newServiceForTest(repo)
+
+	got, err := svc.ListNotes(context.Background())
+
+	require.NoError(t, err)
+	assert.True(t, repo.listCalled)
+	assert.Equal(t, esperadas, got)
+}
+
+func TestListNotes_RepoRetornaErro_Propagado(t *testing.T) {
+	repo := &fakeRepo{listErr: errors.New("falha no repo")}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.ListNotes(context.Background())
+
+	require.Error(t, err)
+}
+
+func TestListNotes_DBVazio_RetornaSliceVazio(t *testing.T) {
+	repo := &fakeRepo{listResult: []notes.Note{}}
+	svc := newServiceForTest(repo)
+
+	got, err := svc.ListNotes(context.Background())
+
+	require.NoError(t, err)
+	assert.Empty(t, got)
 }

@@ -198,3 +198,49 @@ func TestIntegration_CriarNotaDuplicada_RetornaMensagemLimpa(t *testing.T) {
 	msg, _ := errBody["message"].(string)
 	assert.NotContains(t, msg, "salvar nota")
 }
+
+func TestIntegration_ListNotes_DBVazio_RetornaArrayVazio(t *testing.T) {
+	server, _ := setupIntegrationServer(t)
+
+	resp, err := http.Get(server.URL + "/notes")
+	require.NoError(t, err)
+	defer func() { _ = resp.Body.Close() }()
+
+	require.Equal(t, http.StatusOK, resp.StatusCode)
+
+	var arr []map[string]any
+	require.NoError(t, json.NewDecoder(resp.Body).Decode(&arr))
+	assert.Empty(t, arr)
+}
+
+func TestIntegration_ListNotes_RetornaArrayOrdenadoPorPath(t *testing.T) {
+	server, _ := setupIntegrationServer(t)
+
+	r1 := postNotes(t, server.URL, `{"path":"zebra.md","content":"z"}`)
+	require.Equal(t, http.StatusCreated, r1.StatusCode)
+	_ = r1.Body.Close()
+
+	r2 := postNotes(t, server.URL, `{"path":"alfa.md","content":"a"}`)
+	require.Equal(t, http.StatusCreated, r2.StatusCode)
+	_ = r2.Body.Close()
+
+	r3 := postNotes(t, server.URL, `{"path":"meio.md","content":"m"}`)
+	require.Equal(t, http.StatusCreated, r3.StatusCode)
+	_ = r3.Body.Close()
+
+	resp, err := http.Get(server.URL + "/notes")
+	require.NoError(t, err)
+	defer func() { _ = resp.Body.Close() }()
+
+	require.Equal(t, http.StatusOK, resp.StatusCode)
+
+	var arr []map[string]any
+	require.NoError(t, json.NewDecoder(resp.Body).Decode(&arr))
+	require.Len(t, arr, 3)
+	assert.Equal(t, "alfa.md", arr[0]["path"])
+	assert.Equal(t, "meio.md", arr[1]["path"])
+	assert.Equal(t, "zebra.md", arr[2]["path"])
+	assert.Equal(t, "a", arr[0]["content"])
+	assert.Equal(t, "m", arr[1]["content"])
+	assert.Equal(t, "z", arr[2]["content"])
+}

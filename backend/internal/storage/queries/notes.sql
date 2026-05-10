@@ -5,6 +5,10 @@ VALUES (?, ?, ?, ?, ?);
 -- name: GetNoteByID :one
 SELECT id, path, content, created_at, updated_at FROM notes WHERE id = ?;
 
+-- name: ListNotes :many
+SELECT id, path, content, created_at, updated_at FROM notes
+ORDER BY path;
+
 -- name: UpdateNote :one
 UPDATE notes
 SET path = ?, content = ?, updated_at = ?

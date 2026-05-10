@@ -24,6 +24,7 @@ type Repository interface {
 	Update(ctx context.Context, id, path, content string, updatedAt time.Time) (Note, error)
 	Delete(ctx context.Context, id string) error
 	GetNoteByID(ctx context.Context, id string) (Note, error)
+	ListNotes(ctx context.Context) ([]Note, error)
 }
 
 var (
@@ -61,6 +62,10 @@ func (s *Service) GetNoteById(ctx context.Context, id string) (Note, error) {
 		return Note{}, ErrNotFoundId
 	}
 	return note, err
+}
+
+func (s *Service) ListNotes(ctx context.Context) ([]Note, error) {
+	return s.repo.ListNotes(ctx)
 }
 
 func (s *Service) Create(ctx context.Context, path, content string) (Note, error) {
