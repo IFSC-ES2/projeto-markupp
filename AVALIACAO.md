@@ -5,8 +5,9 @@
 | 1       | 0d60ee0 | 16/03/26 | 20/03/26 | 9,5  | 2    |
 | 2       | 7242cb2 | 28/03/26 | 29/03/26 | 7,7  | 2    |
 | 3       | 6e380d2 | 11/04/26 | 22/04/26 | 9,9  | 3    |
+| 4       | 76b5943 | 18/04/26 | 09/05/26 | 9,9  | 3    |
 
-**nota parcial:** 9,1
+**nota parcial:** 9,4
 
 ## Comentários
 
@@ -48,4 +49,18 @@
    - Separar as fichas de cada métrica em arquivos diferentes
      - Em cada uma adicionar data do acompanhamento e valor coletado
    - Numerar métricas para facilitar a referenciação
+
+### Entrega 4
+
+1. Registro inicial de riscos do projeto: parcial
+   - A identificação dos risco separada por siglas é difícil de acompanhar; mudem para uma numeração sequencial;
+   - A tabela horizontal dificulta a visualização;
+2. Análise e priorização dos riscos: atendido
+3. Plano de resposta aos riscos: atendido
+4. Consolidação do fluxo de trabalho no repositório: atendido
+5. Definição inicial de critérios de qualidade do projeto: atendido
+6. Relação entre riscos e qualidade: atendido
+7. Definição preliminar de avaliação da qualidade: atendido
+8. Atualização da documentação do projeto: atendido
+
 
