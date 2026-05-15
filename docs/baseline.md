@@ -133,6 +133,7 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 **Legenda:**
 -  **Em andamento** — iniciado no período, conclusão prevista para a Sprint 1
 -  **Não iniciado** — fora do escopo deste período, previsto para sprints futuras
+-  **Feito** — Item finalizado para o MVP
 
 > **Observação:** revisaremos este baseline ao final da Sprint 2.
 
