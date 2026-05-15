@@ -16,7 +16,7 @@ func TestDefault_RetornaValoresPadrao(t *testing.T) {
 
 	assert.Equal(t, 8080, cfg.Port)
 	assert.Equal(t, "./markupp.db", cfg.DBPath)
-	assert.Equal(t, 50*1024*1024, cfg.MaxNoteSize)
+	assert.Equal(t, int64(50*1024*1024), cfg.MaxNoteSize)
 }
 
 func TestLoad_SemEnvVarSemArquivo_RetornaDefaults(t *testing.T) {
@@ -51,7 +51,7 @@ func TestLoad_FallbackConfigJsonNoCwd_QuandoEnvVarVazia(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, 9090, cfg.Port)
 	assert.Equal(t, "/data/markupp.db", cfg.DBPath)
-	assert.Equal(t, 1024, cfg.MaxNoteSize)
+	assert.Equal(t, int64(1024), cfg.MaxNoteSize)
 }
 
 func TestLoad_ArquivoCompleto_LeTodosOsCampos(t *testing.T) {
@@ -65,7 +65,7 @@ func TestLoad_ArquivoCompleto_LeTodosOsCampos(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, 9090, cfg.Port)
 	assert.Equal(t, "/data/markupp.db", cfg.DBPath)
-	assert.Equal(t, 1024, cfg.MaxNoteSize)
+	assert.Equal(t, int64(1024), cfg.MaxNoteSize)
 }
 
 func TestLoad_ArquivoParcial_PreservaDefaultsDasChavesAusentes(t *testing.T) {
@@ -79,7 +79,7 @@ func TestLoad_ArquivoParcial_PreservaDefaultsDasChavesAusentes(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, 9090, cfg.Port)
 	assert.Equal(t, "./markupp.db", cfg.DBPath)
-	assert.Equal(t, 50*1024*1024, cfg.MaxNoteSize)
+	assert.Equal(t, int64(50*1024*1024), cfg.MaxNoteSize)
 }
 
 func TestLoad_JsonInvalido_RetornaErro(t *testing.T) {

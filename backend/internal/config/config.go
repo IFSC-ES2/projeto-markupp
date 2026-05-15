@@ -15,7 +15,7 @@ const (
 type Config struct {
 	Port        int    `json:"port"`
 	DBPath      string `json:"db_path"`
-	MaxNoteSize int    `json:"max_note_size"`
+	MaxNoteSize int64  `json:"max_note_size"`
 }
 
 func Default() Config {
