@@ -228,14 +228,14 @@ func TestUpdate_CaminhoFeliz_RetornaNotaAtualizada(t *testing.T) {
 	assert.False(t, repo.updateArgs.updatedAt.IsZero())
 }
 
-func TestDelete_IDVazio_RetornaErrNotFoundSemChamarRepo(t *testing.T) {
+func TestDelete_IDVazio_RetornaErrInvalidIdSemChamarRepo(t *testing.T) {
 	repo := &fakeRepo{}
 	svc := newServiceForTest(repo)
 
 	err := svc.Delete(context.Background(), "")
 
 	require.Error(t, err)
-	assert.True(t, errors.Is(err, notes.ErrNotFound))
+	assert.True(t, errors.Is(err, notes.ErrInvalidId))
 	assert.False(t, repo.deleteCalled)
 }
 

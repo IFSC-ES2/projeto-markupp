@@ -105,8 +105,8 @@ func (s *Service) Update(ctx context.Context, id, path, content string) (Note, e
 }
 
 func (s *Service) Delete(ctx context.Context, id string) error {
-	if strings.TrimSpace(id) == "" {
-		return ErrNotFound
+	if err := s.validateId(ctx, id); err != nil {
+		return err
 	}
 	if err := s.repo.Delete(ctx, id); err != nil {
 		if errors.Is(err, ErrNotFound) {
@@ -118,7 +118,7 @@ func (s *Service) Delete(ctx context.Context, id string) error {
 }
 
 func (s *Service) validateId(ctx context.Context, id string) error {
-	if id == "" {
+	if strings.TrimSpace(id) == "" {
 		return ErrInvalidId
 	}
 	return nil
