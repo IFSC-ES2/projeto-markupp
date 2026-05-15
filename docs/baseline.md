@@ -113,25 +113,28 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 
 | ID  | Item                                                               | Tipo    | Previsão para o Período      |
 |-----|--------------------------------------------------------------------|---------|------------------------------|
-| #8  | [INIT] Versão inicial do projeto (Scaffolding)                     | Feature |  Em andamento               |
-| #9  | [INIT][1] Arquitetura Backend                                      | Feature |  Em andamento               |
-| #10 | [INIT][2] Arquitetura do Plugin Obsidian                           | Feature |  Em andamento               |
-| #11 | [INIT][3] Ferramentas Iniciais                                     | Feature |  Em andamento               |
-| #13 | Definir rotas da API do backend                                    | Feature |  Em andamento               |
-| #14 | Configurar Provedor de Blob Storage (S3-compatible/Docker)         | Task    |  Não iniciado               |
-| #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown          | Feature |  Não iniciado               |
-| #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    |  Não iniciado               |
-| #16 | Implementar Endpoint GET /files/{id} para Recuperação de Conteúdo  | Task    |  Não iniciado               |
-| #1  | [RF2] Criação de Arquivos via Plugin Obsidian                      | Feature |  Não iniciado               |
+| #8  | [INIT] Versão inicial do projeto (Scaffolding)                     | Feature |  Feito                      |
+| #9  | [INIT][1] Arquitetura Backend                                      | Feature |  Feito                      |
+| #10 | [INIT][2] Arquitetura do Plugin Obsidian                           | Feature |  Feito                      |
+| #11 | [INIT][3] Ferramentas Iniciais                                     | Feature |  Feito                      |
+| #13 | Definir rotas da API do backend                                    | Feature |  Feito                      |
+~~| #14 | Configurar Provedor de Blob Storage (S3-compatible/Docker)         | Task    |  Não iniciado               |~~
+| #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown          | Feature |  Feito                      |
+| #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    |  Feito                      |
+| #16 | Implementar Endpoint GET /files/{id} para Recuperação de Conteúdo  | Task    |  Feito                      |
+| #1  | [RF2] Criação de Arquivos via Plugin Obsidian                      | Feature |  Feito                      |
 | #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature |  Não iniciado               |
 | #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature |  Não iniciado               |
-| #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature |  Não iniciado               |
+| #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature |  Feito                      |
+| #20 | Frontend: UI de Exclusão e Sincronização de Estado                 | Feature |  Em andamento (Sprint 2)     | 
+| #48 | Documentação das rotas já existentes                               | Feature |  Em andamento (Sprint 2)     | 
+| #44 | Configuração do servidor via arquivo JSON                          | Feature |  Em andamento (Sprint 2)     | 
 
 **Legenda:**
 -  **Em andamento** — iniciado no período, conclusão prevista para a Sprint 1
 -  **Não iniciado** — fora do escopo deste período, previsto para sprints futuras
 
-> **Observação:** revisaremos este baseline ao final da Sprint 1, quando as estimativas da seção (c) estiverem definidas e o progresso real puder ser comparado com esta previsão inicial.
+> **Observação:** revisaremos este baseline ao final da Sprint 2.
 
 ---
 
