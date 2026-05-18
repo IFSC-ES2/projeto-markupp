@@ -123,8 +123,8 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 | #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    |  Feito                      |
 | #16 | Implementar Endpoint GET /files/{id} para Recuperação de Conteúdo  | Task    |  Feito                      |
 | #1  | [RF2] Criação de Arquivos via Plugin Obsidian                      | Feature |  Feito                      |
-| #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature |  Não iniciado               |
-| #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature |  Não iniciado               |
+| #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature |  Não iniciado (Sprint 3)    |
+| #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature |  Não iniciado (Sprint 3)    |
 | #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature |  Feito                      |
 | #20 | Frontend: UI de Exclusão e Sincronização de Estado                 | Feature |  Em andamento (Sprint 2)     | 
 | #48 | Documentação das rotas já existentes                               | Feature |  Em andamento (Sprint 2)     | 
