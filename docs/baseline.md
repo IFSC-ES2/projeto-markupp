@@ -126,9 +126,12 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 | #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature |  Não iniciado (Sprint 3)    |
 | #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature |  Não iniciado (Sprint 3)    |
 | #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature |  Feito                      |
-| #20 | Frontend: UI de Exclusão e Sincronização de Estado                 | Feature |  Em andamento (Sprint 2)     | 
-| #48 | Documentação das rotas já existentes                               | Feature |  Em andamento (Sprint 2)     | 
-| #44 | Configuração do servidor via arquivo JSON                          | Feature |  Em andamento (Sprint 2)     | 
+| #20 | Frontend: UI de Exclusão e Sincronização de Estado                 | Feature |  Em andamento (Sprint 2)    | 
+| #48 | Documentação das rotas já existentes                               | Feature |  Em andamento (Sprint 2)    | 
+| #44 | Configuração do servidor via arquivo JSON                          | Feature |  Em andamento (Sprint 2)    |
+| #68 | Trazer notas do servidor para o vault do Obsidian                  | Feature |  Não iniciado (Sprint 3)    |
+| #67 | Listar notas via GET /notes no backend                             | Feature |  Não iniciado (Sprint 3)    |
+| #66 | Adicionar lint e format checks ao CI                               | Feature |  Não iniciado (Sprint 3)    |
 
 **Legenda:**
 -  **Em andamento** — iniciado no período, conclusão prevista para a Sprint 1
