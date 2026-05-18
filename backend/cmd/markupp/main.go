@@ -4,22 +4,24 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/ifsc-ES2/projeto-markupp/backend/internal/api"
+	"github.com/ifsc-ES2/projeto-markupp/backend/internal/config"
 	"github.com/ifsc-ES2/projeto-markupp/backend/internal/notes"
 	"github.com/ifsc-ES2/projeto-markupp/backend/internal/storage"
-)
-
-const (
-	serverPort  = "8080"
-	dbPath      = "./markupp.db"
-	maxNoteSize = 50 * 1024 * 1024
 )
 
 func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
-	db, err := storage.OpenDB(dbPath)
+	cfg, err := config.Load()
+	if err != nil {
+		logger.Error("carregar config", "err", err)
+		os.Exit(1)
+	}
+
+	db, err := storage.OpenDB(cfg.DBPath)
 	if err != nil {
 		logger.Error("abrir db", "err", err)
 		os.Exit(1)
@@ -32,10 +34,10 @@ func main() {
 	}
 
 	repo := storage.NewSqliteNotesRepository(db)
-	svc := notes.NewService(repo, maxNoteSize)
+	svc := notes.NewService(repo, cfg.MaxNoteSize)
 	router := api.NewRouter(svc)
 
-	addr := ":" + serverPort
+	addr := ":" + strconv.Itoa(cfg.Port)
 	logger.Info("servidor subindo", "addr", addr)
 	if err := http.ListenAndServe(addr, router); err != nil {
 		logger.Error("servidor", "err", err)
