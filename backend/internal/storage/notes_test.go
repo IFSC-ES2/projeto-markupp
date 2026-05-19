@@ -147,3 +147,37 @@ func TestSqliteRepo_Delete_IDInexistente_RetornaErrNotFound(t *testing.T) {
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrNotFound))
 }
+
+func TestSqliteRepo_ListNotes_DBVazio_RetornaSliceVazio(t *testing.T) {
+	db := setupTestDB(t)
+	repo := storage.NewSqliteNotesRepository(db)
+
+	got, err := repo.ListNotes(context.Background())
+
+	require.NoError(t, err)
+	assert.Empty(t, got)
+}
+
+func TestSqliteRepo_ListNotes_RetornaTodasNotasOrdenadasPorPath(t *testing.T) {
+	db := setupTestDB(t)
+	repo := storage.NewSqliteNotesRepository(db)
+	now := time.Date(2026, 4, 27, 10, 0, 0, 0, time.UTC)
+
+	notas := []notes.Note{
+		{ID: "id-c", Path: "c.md", Content: "ccc", CreatedAt: now, UpdatedAt: now},
+		{ID: "id-a", Path: "a.md", Content: "aaa", CreatedAt: now, UpdatedAt: now},
+		{ID: "id-b", Path: "b.md", Content: "bbb", CreatedAt: now, UpdatedAt: now},
+	}
+	for _, n := range notas {
+		require.NoError(t, repo.Save(context.Background(), n))
+	}
+
+	got, err := repo.ListNotes(context.Background())
+
+	require.NoError(t, err)
+	require.Len(t, got, 3)
+	assert.Equal(t, "a.md", got[0].Path)
+	assert.Equal(t, "b.md", got[1].Path)
+	assert.Equal(t, "c.md", got[2].Path)
+	assert.Equal(t, "aaa", got[0].Content)
+}
