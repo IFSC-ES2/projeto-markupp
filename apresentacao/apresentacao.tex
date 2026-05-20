@@ -1,0 +1,333 @@
+
+%-------------------------------------------------%
+% Pitch Markupp
+%-------------------------------------------------%
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[english,brazil]{babel}
+\usepackage[style=abnt,noslsn,justify]{biblatex}
+\renewcommand*{\bibfont}{\small}
+\usepackage{csquotes}
+\addbibresource{referencias_trabalho.bib}
+
+\usepackage{tikz}
+\usepackage{pifont}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric, shapes.symbols, decorations.pathmorphing}
+
+\definecolor[named]{novaCor}{HTML}{303A52}
+\definecolor{azul-seg}{RGB}{27, 85, 142}
+\definecolor{verde-ok}{RGB}{34, 139, 87}
+\definecolor{vermelho-x}{RGB}{180, 60, 60}
+\definecolor{cinza-fundo}{RGB}{240, 240, 245}
+
+\usetheme[
+    foreground=azul-seg,
+]{ifsclean}
+
+% Comando para uma "tagline" em destaque no topo do slide
+\newcommand{\tagline}[1]{%
+    \begin{center}
+        \colorbox{azul-seg!10}{%
+            \begin{minipage}{0.95\linewidth}\centering
+                \vspace{0.2em}
+                {\bfseries\color{azul-seg} #1}
+                \vspace{0.2em}
+            \end{minipage}%
+        }
+    \end{center}
+    \vspace{0.3em}
+}
+
+% -------------------------------------------------%
+\title{Markupp}
+\subtitle{Um hub para suas anotações e seus agentes de IA,\\com o dado sempre no seu servidor}
+\author{
+  Renato Freitas \and Nícolas Arthur \and Nicolas Pitz \and Gabriela Riedel
+}
+\institute{Instituto Federal de Santa Catarina}
+\date{Maio de 2026}
+
+% -------------------------------------------------%
+\begin{document}
+
+\begin{frame}[plain, noframenumbering]
+    \maketitle
+\end{frame}
+
+\begin{frame}[plain, noframenumbering]{Licenciamento}
+    \licenciamentoLivre
+\end{frame}
+
+\begin{frame}[plain, noframenumbering]{Sumário}
+    \tableofcontents
+\end{frame}
+
+% -------------------------------------------------%
+\section{Introdução}
+% -------------------------------------------------%
+
+\begin{frame}{O que é o Markupp?}
+    \tagline{Um lugar único para suas anotações e para seus agentes de IA, instalado no seu próprio servidor.}
+
+    \begin{columns}[T]
+        \begin{column}{0.58\textwidth}
+            \begin{itemize}\small
+                \item \textbf{Servidor próprio}: você instala no seu computador ou na sua nuvem. Sem mensalidade, sem dependência de terceiros.
+                \item \textbf{Formato aberto (Markdown)}: arquivos de texto simples, que você pode ler em qualquer editor.
+                \item \textbf{Interface universal (API)}: o mesmo conjunto de notas é acessado pelo \textbf{usuário} e por \textbf{qualquer agente de IA}.
+                \item \textbf{Open-source}: código aberto e auditável, sem ficar refém de uma empresa.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.40\textwidth}
+            \centering
+            \begin{tikzpicture}[scale=0.80, every node/.style={transform shape},
+                node distance=0.5cm and 0.3cm,
+                box/.style={draw=azul-seg, thick, rounded corners, minimum width=1.8cm, minimum height=0.6cm, align=center, font=\scriptsize},
+                hub/.style={draw=azul-seg, very thick, fill=azul-seg!15, rounded corners, minimum width=2.2cm, minimum height=0.9cm, align=center, font=\small\bfseries},
+                arrow/.style={-Stealth, thick, azul-seg}
+            ]
+                \node[hub] (hub) {Markupp\\\scriptsize (seu servidor)};
+                \node[box, above=of hub] (user) {Você};
+                \node[box, below left=of hub] (obs) {Obsidian};
+                \node[box, below right=of hub] (ai) {Agente IA};
+                \draw[arrow, <->] (user) -- (hub);
+                \draw[arrow, <->] (obs) -- (hub);
+                \draw[arrow, <->] (ai) -- (hub);
+            \end{tikzpicture}
+
+            \vspace{0.3em}
+            \tiny\itshape Uma base, vários clientes.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Tamanho de mercado}
+% -------------------------------------------------%
+
+\begin{frame}{Um mercado em forte expansão}
+    \tagline{O Markupp cruza dois mercados que somam US\$ 24 bi em 2026 e crescem mais de 20\% ao ano.}
+
+    \begin{columns}[T]
+        \begin{column}{0.50\textwidth}
+            \begin{itemize}\footnotesize
+                \item \textbf{Apps de anotações}: US\$ 13{,}3 bi em 2026 \cite{tbrc_notetaking}.
+                \item \textbf{Agentes de IA}: US\$ 10{,}9 bi, \textasciitilde 46\% a.a. \cite{grandview_aiagents}.
+                \item Gartner: \textbf{40\%} dos apps empresariais terão agentes de IA até o fim de 2026 \cite{gartner_aiagents}.
+            \end{itemize}
+
+            \vspace{0.3em}
+            \textbf{Por que open-source agora?}
+            \begin{itemize}\footnotesize
+                \item LGPD/GDPR pressionam empresas a controlar seus dados \cite{dreamhost_selfhosted}.
+                \item Docker tornou instalar servidores próprios trivial.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \centering\textbf{Anotações + agentes de IA (US\$ bi)}\\[0.3em]
+            \begin{tikzpicture}[scale=0.85]
+                \draw[->, thick] (0,0) -- (5.6,0) node[right, font=\tiny] {ano};
+                \draw[->, thick] (0,0) -- (0,3.0) node[above, font=\tiny] {US\$ bi};
+                \draw[azul-seg, very thick] (0.3,0.5) -- (1.6,1.0) -- (2.7,1.5) -- (3.8,2.1) -- (4.9,2.6);
+                \foreach \x/\y/\v in {0.3/0.5/19, 1.6/1.0/24, 2.7/1.5/30, 3.8/2.1/38, 4.9/2.6/48} {
+                    \fill[azul-seg] (\x,\y) circle (1.5pt);
+                    \node[font=\scriptsize, azul-seg, above=1pt] at (\x,\y) {\v};
+                }
+                \foreach \x/\ano in {0.3/25, 1.6/26, 2.7/27, 3.8/28, 4.9/29} {
+                    \node[font=\scriptsize, anchor=north] at (\x,0) {\ano};
+                }
+            \end{tikzpicture}
+
+            \vspace{0.3em}
+            \footnotesize\itshape Por sermos open-source: medimos \textbf{potencial de adoção}, não receita.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Problema}
+% -------------------------------------------------%
+
+\begin{frame}{O problema: conhecimento fragmentado}
+    \tagline{Suas anotações estão espalhadas em várias ferramentas; nenhuma delas conversa com seu agente de IA.}
+
+    \begin{columns}[T]
+        \begin{column}{0.50\textwidth}
+            \textbf{Cenário típico}
+            \begin{itemize}\footnotesize
+                \item Você anota uma ideia no \textbf{Notion}, faz \emph{brainstorm} no \textbf{ChatGPT} e cola um link no \textbf{Slack}.
+                \item No dia seguinte, nem você nem a IA conseguem reunir tudo.
+                \item SaaS retêm dados na nuvem; ferramentas locais (Obsidian) protegem privacidade, mas \textbf{não expõem interface} para outros programas.
+            \end{itemize}
+
+            \vspace{0.3em}
+            \footnotesize\emph{Resultado}: retrabalho, perda de contexto e zero simbiose com a IA.
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \centering
+            \begin{tikzpicture}[scale=0.78, every node/.style={transform shape},
+                tool/.style={draw=vermelho-x!70, thick, rounded corners, fill=vermelho-x!5,
+                             minimum width=1.3cm, minimum height=0.55cm, align=center, font=\tiny},
+                user/.style={draw=azul-seg, very thick, circle, fill=azul-seg!15,
+                             minimum size=1.0cm, align=center, font=\scriptsize\bfseries},
+                wave/.style={->, decorate, decoration={snake, amplitude=0.5mm, segment length=2mm,
+                             post length=1.0mm}, vermelho-x!80, thick}
+            ]
+                \node[user] (u) at (0,0) {Você};
+                \node[tool] (n)  at (-2.6, 1.3) {Notion};
+                \node[tool] (gpt) at (-1.3, 1.8) {ChatGPT};
+                \node[tool] (sl)  at ( 0.2, 2.0) {Slack};
+                \node[tool] (gd)  at ( 1.7, 1.8) {GDocs};
+                \node[tool] (ap)  at ( 2.8, 1.3) {Apple\\Notes};
+                \node[tool] (em)  at ( 2.8,-1.1) {e-mail};
+                \node[tool] (ob)  at ( 1.3,-1.9) {Obsidian};
+                \node[tool] (ag)  at (-1.3,-1.9) {Agente?};
+                \node[tool] (dr)  at (-2.8,-1.1) {Drive};
+                \foreach \t in {n,gpt,sl,gd,ap,em,ob,ag,dr}
+                    \draw[wave] (u) -- (\t);
+                \node[font=\tiny\itshape, vermelho-x] at (0,-2.6) {silos isolados, sem visão unificada};
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Solução}
+% -------------------------------------------------%
+
+\begin{frame}{A solução: Markupp}
+    \tagline{Um servidor open-source que centraliza seus arquivos em Markdown e os expõe por uma interface aberta.}
+
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \textbf{Em uma frase:} um back-end único guarda suas notas; vários clientes conversam com ele pela mesma interface aberta.
+            \begin{itemize}\small
+                \item \textbf{Criar, ler, editar e excluir} notas pelo plugin do Obsidian.
+                \item \textbf{Interface aberta (REST)}: qualquer agente de IA lê e escreve nas mesmas notas.
+                \item \textbf{No seu servidor}, sem nuvem terceirizada. Código auditável.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \textbf{Já validado no MVP}
+            \begin{itemize}\footnotesize
+                \item[\textcolor{verde-ok}{\ding{51}}] Back-end (Go) com armazenamento
+                \item[\textcolor{verde-ok}{\ding{51}}] Criar, ler, editar e excluir notas
+                \item[\textcolor{verde-ok}{\ding{51}}] Plugin Obsidian: criação
+                \item[\textcolor{verde-ok}{\ding{51}}] Testes + integração contínua
+                \item[$\circ$] Plugin: edição/exclusão/rename (em curso)
+            \end{itemize}
+
+            \vspace{0.3em}
+            \footnotesize \emph{Stack:} Go, PostgreSQL, Docker, TypeScript.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Concorrência}
+% -------------------------------------------------%
+
+\begin{frame}{Como nos posicionamos}
+    \tagline{Cada concorrente cobre parte do problema. O Markupp é o único que combina os 4 atributos.}
+
+    \scriptsize
+    \begin{center}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \textbf{Solução} & \textbf{No seu servidor} & \textbf{Hub central + API} & \textbf{Markdown} & \textbf{Pensado p/ IA} \\
+        \hline
+        Notion       & \textcolor{vermelho-x}{\ding{55}} (SaaS) & \textcolor{verde-ok}{\ding{51}} (proprietária) & \textcolor{vermelho-x}{\ding{55}} & \textcolor{vermelho-x}{\ding{55}} \\
+        \hline
+        Obsidian     & \textcolor{verde-ok}{\ding{51}} (local) & \textcolor{vermelho-x}{\ding{55}} & \textcolor{verde-ok}{\ding{51}} & \textcolor{vermelho-x}{\ding{55}} \\
+        \hline
+        Logseq       & \textcolor{verde-ok}{\ding{51}} (local) & \textcolor{vermelho-x}{\ding{55}} & \textcolor{verde-ok}{\ding{51}} & \textcolor{vermelho-x}{\ding{55}} \\
+        \hline
+        AnyType      & \textcolor{verde-ok}{\ding{51}} & \textcolor{vermelho-x}{\ding{55}} (formato próprio) & \textcolor{vermelho-x}{\ding{55}} & \textcolor{vermelho-x}{\ding{55}} \\
+        \hline
+        \textbf{Markupp} & \textcolor{verde-ok}{\ding{51}} & \textcolor{verde-ok}{\ding{51}} (REST aberta) & \textcolor{verde-ok}{\ding{51}} & \textcolor{verde-ok}{\ding{51}} \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    \vspace{0.4em}
+    \normalsize
+    \begin{itemize}\footnotesize
+        \item \textbf{Notion}: centraliza, mas é SaaS fechado; seu dado fica na nuvem deles.
+        \item \textbf{Obsidian/Logseq}: controle local, mas não compartilham a base com agentes.
+        \item \textbf{Markupp}: hub central + controle do dado + abertura para a IA.
+    \end{itemize}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Time}
+% -------------------------------------------------%
+
+\begin{frame}{Time}
+    \tagline{Quatro desenvolvedores, cada um responsável por um papel de processo.}
+
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}\small
+                \item \textbf{Renato Freitas}\\Desenvolvedor + \emph{Arquiteto de Software}: desenho da API e do back-end em Go.
+                \vspace{0.3em}
+                \item \textbf{Nícolas Arthur}\\Desenvolvedor + \emph{DevOps / Infra}: contêineres, integração contínua e infraestrutura self-hosted.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}\small
+                \item \textbf{Nicolas Pitz}\\Desenvolvedor + \emph{Qualidade}: testes ($\geq 80\%$ de cobertura) e \emph{code review}.
+                \vspace{0.3em}
+                \item \textbf{Gabriela Riedel}\\Desenvolvedora + \emph{Scrum Master}: planejamento, métricas e cadência das sprints.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.6em}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Próximos passos}
+% -------------------------------------------------%
+
+\begin{frame}{Próximos passos}
+    \tagline{Um \emph{roadmap} em três horizontes: terminar o MVP, refinar o produto, virar plataforma de IA.}
+
+    \begin{columns}[T]
+        \begin{column}{0.32\textwidth}
+            \textbf{Curto prazo}\\\footnotesize \emph{fechar o MVP}
+            \begin{itemize}\footnotesize
+                \item Plugin Obsidian completo: edição, exclusão e renomear.
+                \item Manter cobertura $\geq 80\%$.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \textbf{Médio prazo}\\\footnotesize \emph{refinar o produto}
+            \begin{itemize}\footnotesize
+                \item Pastas e organização hierárquica.
+                \item Busca por título e conteúdo.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \textbf{Longo prazo}\\\footnotesize \emph{diferencial competitivo}
+            \begin{itemize}\footnotesize
+                \item Busca semântica (vetorial).
+                \item Conexão com agentes via MCP (protocolo padrão para IA).
+                \item Comunidade de contribuidores.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.8em}
+    \begin{center}
+        \large\bfseries\color{azul-seg}
+        Um segundo cérebro aberto, soberano e pronto para a era dos agentes.
+    \end{center}
+\end{frame}
+
+% -------------------------------------------------%
+\begin{frame}[allowframebreaks, noframenumbering]{Referências}
+    \nocite{*}
+    \printbibliography
+\end{frame}
+
+\end{document}

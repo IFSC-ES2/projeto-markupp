@@ -10,3 +10,19 @@
 # Sistema
 .DS_Store
 .env
+
+# LaTeX (apresentação)
+apresentacao/*.aux
+apresentacao/*.bbl
+apresentacao/*.bcf
+apresentacao/*.blg
+apresentacao/*.fdb_latexmk
+apresentacao/*.fls
+apresentacao/*.log
+apresentacao/*.nav
+apresentacao/*.out
+apresentacao/*.run.xml
+apresentacao/*.snm
+apresentacao/*.synctex.gz
+apresentacao/*.toc
+apresentacao/*.vrb
