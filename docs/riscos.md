@@ -10,7 +10,7 @@ Vamos separar os tópicos em:
 ### 1.1 Escopo
 | ID | Descrição | Causa | Consequência/Impacto Esperado | Probabilidade | Impacto | Prioridade |  Estratégia de Mitigação |  Responsável pelo Acompanhamento |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| RES-1 | Complexidade na criação/entrega da interface gráfica web | Features mais profundas e complexas do que o esperado. | Grande volume de Tasks e possível atraso do prazo | Média | Médio | Média | Otimizar requisitos e criar mockup/protótipo para validação da interface gráfica. | Nicolas Pitz |
+| RES-1 | Complexidade na criação/entrega da interface via plugin do Obsidian | Features mais profundas e complexas do que o esperado. | Grande volume de Tasks e possível atraso do prazo | Média | Médio | Média | Otimizar requisitos e criar mockup/protótipo para validação da interface gráfica. | Nicolas Pitz |
 
 ### 1.2 Prazo
 | ID | Descrição | Causa | Consequência/Impacto Esperado | Probabilidade | Impacto | Prioridade |  Estratégia de Mitigação |  Responsável pelo Acompanhamento |

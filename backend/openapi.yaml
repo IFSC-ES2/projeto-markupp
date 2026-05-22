@@ -1,0 +1,210 @@
+openapi: 3.0.3
+info:
+  title: Markupp Backend API
+  description: API REST para gerenciamento de notas do projeto Markupp.
+  version: 0.1.0
+servers:
+  - url: http://localhost:8080
+    description: Servidor local padrão
+paths:
+  /notes:
+    post:
+      summary: Cria uma nova nota
+      description: Cria uma nota com caminho e conteúdo fornecidos.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteRequest'
+      responses:
+        '201':
+          description: Nota criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          description: Requisição inválida ou dados de nota inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Caminho de nota duplicado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /notes/{id}:
+    get:
+      summary: Recupera uma nota por ID
+      description: Retorna a nota correspondente ao identificador fornecido.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identificador único da nota
+      responses:
+        '200':
+          description: Nota encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          description: ID inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Nota não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Atualiza uma nota existente
+      description: Atualiza o caminho e conteúdo de uma nota existente.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identificador único da nota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteRequest'
+      responses:
+        '200':
+          description: Nota atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteResponse'
+        '400':
+          description: Requisição inválida ou dados de nota inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Nota não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Caminho de nota duplicado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Exclui uma nota
+      description: Remove a nota identificada pelo ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identificador único da nota
+      responses:
+        '204':
+          description: Nota excluída com sucesso
+        '400':
+          description: ID inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Nota não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    NoteRequest:
+      type: object
+      required:
+        - path
+        - content
+      properties:
+        path:
+          type: string
+          description: Caminho/identificador do arquivo de nota
+          example: "notas/meeting.md"
+        content:
+          type: string
+          description: Conteúdo da nota
+          example: "# Reunião\n- Tarefa 1\n- Tarefa 2"
+    NoteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único da nota
+          example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        path:
+          type: string
+          description: Caminho/identificador do arquivo de nota
+          example: "notas/meeting.md"
+        content:
+          type: string
+          description: Conteúdo da nota
+          example: "# Reunião\n- Tarefa 1\n- Tarefa 2"
+        created_at:
+          type: string
+          format: date-time
+          description: Data de criação da nota
+          example: "2026-05-14T12:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: Data da última atualização da nota
+          example: "2026-05-14T12:00:00Z"
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Código de erro
+          example: "invalid_request"
+        message:
+          type: string
+          description: Mensagem de erro legível
+          example: "JSON inválido"

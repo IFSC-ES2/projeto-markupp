@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Validar a base da solução: um hub centralizado onde o usuário consegue criar, ler, editar e excluir anotações em markdown via navegador 
+Validar a base da solução: um hub centralizado onde o usuário consegue criar, ler, editar e excluir anotações em markdown via plugin do Obsidian
 
 ## Funcionalidades essenciais
 
@@ -11,7 +11,7 @@ Validar a base da solução: um hub centralizado onde o usuário consegue criar,
 - Editar arquivos markdown
 - Excluir arquivos markdown
 - Renomear arquivos markdown
-- Interface web para interação com os documentos
+- Plugin do Obsidian para interação com os documentos
 - API REST para operações sobre os documentos
 - Armazenamento centralizado dos arquivos
 
@@ -25,7 +25,7 @@ Validar a base da solução: um hub centralizado onde o usuário consegue criar,
 
 ## Por que esse recorte é viável
 
-- O CRUD com interface web é um escopo contido que 4 pessoas conseguem entregar no semestre
+- O CRUD via plugin do Obsidian é um escopo contido que 4 pessoas conseguem entregar no semestre
 - Não depende de integrações complexas (IA, embeddings, banco vetorial)
 
 ## Critérios de decisão

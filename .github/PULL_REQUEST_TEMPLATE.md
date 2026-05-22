@@ -9,5 +9,3 @@
 - [ ] PR pequeno e focado
 - [ ] Casos limite considerados (ex.: vazio, 0, erro)
 - [ ] Evidência de teste (manual ou automatizado)
-## Comentários técnicos (mínimo 3)
-Use rótulos: [Risco], [Manutenção], [Teste]

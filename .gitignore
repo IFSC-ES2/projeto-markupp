@@ -1,0 +1,12 @@
+# Configuração pessoal do Obsidian (vault de testes)
+.obsidian/
+*.code-workspace
+
+# Editores
+.vscode/
+.idea/
+*.iml
+
+# Sistema
+.DS_Store
+.env
