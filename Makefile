@@ -17,6 +17,9 @@ compose-config:
 
 # Configura variáveis de ambiente no ambiente do Compose
 compose-env:
+    @if [ ! -f .env ]; then \
+      printf 'BACKEND_PORT=8080\nDATA_VOLUME=markupp_data\nGO_MOD_CACHE=go_mod_cache\n' > .env; \
+    fi
 	@echo "Criando arquivo .env com valores padrão..."
 	@printf 'BACKEND_PORT=8080\nDATA_VOLUME=markupp_data\nGO_MOD_CACHE=go_mod_cache\n' > .env
 	@echo ".env criado/atualizado com sucesso."
