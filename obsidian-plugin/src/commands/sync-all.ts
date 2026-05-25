@@ -22,9 +22,9 @@ export async function syncAllNotes(
 
 	let serverNotes: NoteResponse[];
 	try {
-		serverNotes = await listNotes(settings.backendUrl);
+		serverNotes = await listNotes(settings.serverUrl);
 	} catch (err) {
-		new Notice(connectionErrorMessage(err, settings.backendUrl));
+		new Notice(connectionErrorMessage(err, settings.serverUrl));
 		return;
 	}
 
@@ -77,9 +77,9 @@ export async function syncAllNotes(
 	new Notice(msg);
 }
 
-function connectionErrorMessage(err: unknown, backendUrl: string): string {
+function connectionErrorMessage(err: unknown, serverUrl: string): string {
 	if (err instanceof MarkuppApiError) {
 		return `Erro do servidor (${err.status}): ${err.message}`;
 	}
-	return `Não foi possível conectar a ${backendUrl}. Verifique se o backend está rodando.`;
+	return `Não foi possível conectar a ${serverUrl}. Verifique se o servidor está rodando.`;
 }

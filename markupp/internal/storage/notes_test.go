@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/notes"
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/storage"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/notes"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/storage"
 )
 
 func setupTestDB(t *testing.T) *sql.DB {

@@ -28,7 +28,7 @@ export async function syncOneFile(
 ): Promise<SyncResult> {
 	const path = file.path;
 	const serverNote =
-		options.serverNote ?? (await getNote(settings.backendUrl, meta.id));
+		options.serverNote ?? (await getNote(settings.serverUrl, meta.id));
 
 	const serverChanged = serverNote.updated_at !== meta.serverUpdatedAt;
 	const localChanged = file.stat.mtime !== meta.localMtimeAtSync;
@@ -50,7 +50,7 @@ export async function syncOneFile(
 
 	if (!serverChanged && localChanged) {
 		const content = await plugin.app.vault.read(file);
-		const note = await updateNote(settings.backendUrl, meta.id, path, content);
+		const note = await updateNote(settings.serverUrl, meta.id, path, content);
 		setNoteMeta(settings, path, {
 			id: note.id,
 			serverUpdatedAt: note.updated_at,
@@ -92,7 +92,7 @@ export async function syncActiveNote(
 			removeNoteMeta(settings, path);
 			await plugin.saveData(settings);
 		}
-		new Notice(buildErrorMessage(err, settings.backendUrl));
+		new Notice(buildErrorMessage(err, settings.serverUrl));
 	}
 }
 
@@ -109,7 +109,7 @@ function messageFor(result: SyncResult, path: string): string {
 	}
 }
 
-function buildErrorMessage(err: unknown, backendUrl: string): string {
+function buildErrorMessage(err: unknown, serverUrl: string): string {
 	if (err instanceof MarkuppApiError) {
 		switch (err.code) {
 			case "not_found":
@@ -124,5 +124,5 @@ function buildErrorMessage(err: unknown, backendUrl: string): string {
 				return `Erro do servidor (${err.status}): ${err.message}`;
 		}
 	}
-	return `Não foi possível conectar a ${backendUrl}. Verifique se o backend está rodando.`;
+	return `Não foi possível conectar a ${serverUrl}. Verifique se o servidor está rodando.`;
 }

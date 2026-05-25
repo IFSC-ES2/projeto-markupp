@@ -9,9 +9,9 @@ export async function importFromServer(
 ): Promise<void> {
 	let serverNotes;
 	try {
-		serverNotes = await listNotes(settings.backendUrl);
+		serverNotes = await listNotes(settings.serverUrl);
 	} catch (err) {
-		new Notice(buildErrorMessage(err, settings.backendUrl));
+		new Notice(buildErrorMessage(err, settings.serverUrl));
 		return;
 	}
 
@@ -57,9 +57,9 @@ export async function importFromServer(
 	new Notice(msg);
 }
 
-function buildErrorMessage(err: unknown, backendUrl: string): string {
+function buildErrorMessage(err: unknown, serverUrl: string): string {
 	if (err instanceof MarkuppApiError) {
 		return `Erro do servidor (${err.status}): ${err.message}`;
 	}
-	return `Não foi possível conectar a ${backendUrl}. Verifique se o backend está rodando.`;
+	return `Não foi possível conectar a ${serverUrl}. Verifique se o servidor está rodando.`;
 }
