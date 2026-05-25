@@ -18,7 +18,7 @@ type Note struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
- 
+
 type SearchResult struct {
 	ID        string    `json:"id"`
 	Path      string    `json:"path"`
