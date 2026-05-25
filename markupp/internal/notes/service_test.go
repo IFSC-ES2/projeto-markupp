@@ -452,7 +452,8 @@ func TestSearch_AdicionaWildcardsNaQuery(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
-	svc.Search(context.Background(), "test", 0, 10)
+	_, err := svc.Search(context.Background(), "test", 0, 10)
+	require.NoError(t, err)
 
 	assert.Equal(t, "%test%", repo.searchArgs.query)
 }
@@ -461,7 +462,8 @@ func TestSearch_QueryVazioComWildcards(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
-	svc.Search(context.Background(), "", 0, 10)
+	_, err := svc.Search(context.Background(), "", 0, 10)
+	require.NoError(t, err)
 
 	assert.Equal(t, "%%", repo.searchArgs.query)
 }
