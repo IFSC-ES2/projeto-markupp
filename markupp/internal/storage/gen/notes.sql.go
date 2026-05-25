@@ -74,7 +74,7 @@ func (q *Queries) ListNotes(ctx context.Context) ([]Note, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []Note{}
+	var items []Note
 	for rows.Next() {
 		var i Note
 		if err := rows.Scan(
@@ -84,6 +84,48 @@ func (q *Queries) ListNotes(ctx context.Context) ([]Note, error) {
 			&i.CreatedAt,
 			&i.UpdatedAt,
 		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const searchNotes = `-- name: SearchNotes :many
+SELECT id, path, updated_at FROM notes
+WHERE content GLOB ?
+ORDER BY updated_at DESC
+LIMIT ? OFFSET ?
+`
+
+type SearchNotesParams struct {
+	Content string
+	Limit   int64
+	Offset  int64
+}
+
+type SearchNotesRow struct {
+	ID        string
+	Path      string
+	UpdatedAt time.Time
+}
+
+func (q *Queries) SearchNotes(ctx context.Context, arg SearchNotesParams) ([]SearchNotesRow, error) {
+	rows, err := q.db.QueryContext(ctx, searchNotes, arg.Content, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SearchNotesRow
+	for rows.Next() {
+		var i SearchNotesRow
+		if err := rows.Scan(&i.ID, &i.Path, &i.UpdatedAt); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

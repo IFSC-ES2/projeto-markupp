@@ -17,3 +17,9 @@ RETURNING id, path, content, created_at, updated_at;
 
 -- name: DeleteNote :execrows
 DELETE FROM notes WHERE id = ?;
+
+-- name: SearchNotes :many
+SELECT id, path, updated_at FROM notes
+WHERE content GLOB ?
+ORDER BY updated_at DESC
+LIMIT ? OFFSET ?;

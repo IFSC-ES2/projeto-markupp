@@ -18,6 +18,12 @@ type Note struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+ 
+type SearchResult struct {
+	ID        string    `json:"id"`
+	Path      string    `json:"path"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
 
 type Repository interface {
 	Save(ctx context.Context, note Note) error
@@ -25,6 +31,7 @@ type Repository interface {
 	Delete(ctx context.Context, id string) error
 	GetNoteByID(ctx context.Context, id string) (Note, error)
 	ListNotes(ctx context.Context) ([]Note, error)
+	SearchNotes(ctx context.Context, query string, offset, limit int32) ([]SearchResult, error)
 }
 
 var (
@@ -148,4 +155,24 @@ func (s *Service) validateContent(content string) error {
 		return ErrInvalidContent
 	}
 	return nil
+}
+
+func (s *Service) Search(ctx context.Context, query string, offset, limit int) ([]SearchResult, error) {
+	if offset < 0 {
+		offset = 0
+	}
+	if limit <= 0 {
+		limit = 10
+	}
+
+	searchQuery := "%" + query + "%"
+	results, err := s.repo.SearchNotes(ctx, searchQuery, int32(offset), int32(limit))
+	if err != nil {
+		return nil, fmt.Errorf("buscar notas: %w", err)
+	}
+	return results, nil
+}
+
+func (s *Service) SearchNotes(ctx context.Context, query string, offset, limit int) ([]SearchResult, error) {
+	return s.Search(ctx, query, offset, limit)
 }
