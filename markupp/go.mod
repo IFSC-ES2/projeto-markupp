@@ -1,4 +1,4 @@
-module github.com/ifsc-ES2/projeto-markupp/backend
+module github.com/ifsc-ES2/projeto-markupp/markupp
 
 go 1.26.1
 

@@ -8,8 +8,8 @@ import (
 
 	sqlite "modernc.org/sqlite"
 
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/notes"
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/storage/gen"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/notes"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/storage/gen"
 )
 
 const sqliteUniqueConstraintCode = 2067

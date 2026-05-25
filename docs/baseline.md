@@ -15,10 +15,10 @@ Lista completa de issues do repositório que servem de base para este planejamen
 | #16 | Implementar Endpoint GET /files/{id} para Recuperação de Conteúdo | Task    | RF1       |
 | #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    | RF1       |
 | #14 | Configurar Provedor de Blob Storage (S3-compatible/Docker)         | Task    | RF1       |
-| #13 | Definir rotas da API do backend                                    | Feature | —         |
+| #13 | Definir rotas da API do servidor                                   | Feature | —         |
 | #11 | [INIT][3] Ferramentas Iniciais                                     | Feature | Init      |
 | #10 | [INIT][2] Arquitetura do Plugin Obsidian                           | Feature | Init      |
-| #9  | [INIT][1] Arquitetura Backend                                      | Feature | Init      |
+| #9  | [INIT][1] Arquitetura do servidor                                  | Feature | Init      |
 | #8  | [INIT] Versão inicial do projeto (Scaffolding)                     | Feature | Init      |
 | #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature | RF5       |
 | #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature | RF4       |
@@ -114,10 +114,10 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 | ID  | Item                                                               | Tipo    | Previsão para o Período      |
 |-----|--------------------------------------------------------------------|---------|------------------------------|
 | #8  | [INIT] Versão inicial do projeto (Scaffolding)                     | Feature |  Em andamento               |
-| #9  | [INIT][1] Arquitetura Backend                                      | Feature |  Em andamento               |
+| #9  | [INIT][1] Arquitetura do servidor                                  | Feature |  Em andamento               |
 | #10 | [INIT][2] Arquitetura do Plugin Obsidian                           | Feature |  Em andamento               |
 | #11 | [INIT][3] Ferramentas Iniciais                                     | Feature |  Em andamento               |
-| #13 | Definir rotas da API do backend                                    | Feature |  Em andamento               |
+| #13 | Definir rotas da API do servidor                                   | Feature |  Em andamento               |
 | #14 | Configurar Provedor de Blob Storage (S3-compatible/Docker)         | Task    |  Não iniciado               |
 | #2  | [RF1] Implementação de Armazenamento de Arquivos Markdown          | Feature |  Não iniciado               |
 | #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    |  Não iniciado               |

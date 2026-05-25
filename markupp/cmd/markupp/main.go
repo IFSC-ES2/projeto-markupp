@@ -6,10 +6,10 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/api"
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/config"
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/notes"
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/storage"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/api"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/config"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/notes"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/storage"
 )
 
 func main() {

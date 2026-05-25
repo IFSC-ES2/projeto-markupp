@@ -14,8 +14,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/api"
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/notes"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/api"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/notes"
 )
 
 type fakeService struct {

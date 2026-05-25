@@ -6,7 +6,7 @@ O usuário precisa de uma interface para interagir com seus documentos
 
 ## Decisão
 
-Plugin do Obsidian escrito em TypeScript. O Obsidian hospeda a interface e consome a API REST do backend
+Plugin do Obsidian escrito em TypeScript. O Obsidian hospeda a interface e consome a API REST do servidor
 
 ## Alternativas consideradas
 

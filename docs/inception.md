@@ -19,7 +19,7 @@ Anotações pessoais e conteúdos gerados por agentes de IA ficam espalhados em 
 ## Objetivos do semestre
 
 - Entregar o MVP funcional: CRUD completo de arquivos markdown via plugin do Obsidian
-- Estabelecer a arquitetura base (backend, plugin do Obsidian, armazenamento)
+- Estabelecer a arquitetura base (servidor, plugin do Obsidian, armazenamento)
 
 ## Premissas, restrições e limitações
 

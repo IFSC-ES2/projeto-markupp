@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/notes"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/notes"
 )
 
 type NoteService interface {

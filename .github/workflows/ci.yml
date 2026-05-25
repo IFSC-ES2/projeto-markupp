@@ -6,20 +6,20 @@ on:
   pull_request:
 
 jobs:
-  backend-tests:
-    name: Backend (Go) tests
+  server-tests:
+    name: Servidor (Go) tests
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: markupp
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: backend/go.mod
-          cache-dependency-path: backend/go.sum
+          go-version-file: markupp/go.mod
+          cache-dependency-path: markupp/go.sum
 
       - name: Download modules
         run: go mod download

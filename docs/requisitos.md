@@ -14,6 +14,6 @@
 - Criar taxonomias personalizadas
 - Classificar arquivos com taxonomias
 - O sistema deve ser acessível pelo Obsidian
-- O backend deve expor uma API REST
+- O servidor deve expor uma API REST
 - O sistema deve ser self-hosted
 - Os documentos devem ser armazenados de forma centralizada
