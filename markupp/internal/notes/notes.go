@@ -89,7 +89,7 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 	return note, nil
 }
 
-func (s *Service) Update(ctx context.Context, id, path, content string) (Note, error) {
+func (s *Service) Update(ctx context.Context, id, path, content string, syncFlag bool, clientFileTimeAt time.Time) (Note, error) {
 	if strings.TrimSpace(id) == "" {
 		return Note{}, ErrNotFound
 	}
@@ -99,7 +99,16 @@ func (s *Service) Update(ctx context.Context, id, path, content string) (Note, e
 	if err := s.validateContent(content); err != nil {
 		return Note{}, err
 	}
-	updated, err := s.repo.Update(ctx, id, path, content, s.clock())
+
+	backNote, err := s.repo.GetNoteByID(ctx, id)
+	if backNote.UpdatedAt.After(clientFileTimeAt) && syncFlag {
+		updated, err := s.repo.Update(ctx, id, path, content, s.clock())
+	} else if backNote.UpdatedAt.After(clientFileTimeAt) && !syncFlag {
+		return Note{}, errors.New("nota foi atualizada por outro cliente, habilite a flag de sincronização para atualizar")
+	} else {
+		updated, err := s.repo.Update(ctx, id, path, content, s.clock())
+	}
+
 	if err != nil {
 		if errors.Is(err, ErrNotFound) || errors.Is(err, ErrDuplicatePath) {
 			return Note{}, err
