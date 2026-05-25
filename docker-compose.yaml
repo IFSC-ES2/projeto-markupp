@@ -4,11 +4,11 @@ services:
       context: ./markupp
       dockerfile: Dockerfile.dev
     ports:
-      - "8080:8080"
+      - "${MARKUPP_PORT:-8080}:8080"
     volumes:
       - ./markupp:/src
-      - markupp_data:/data
-      - go_mod_cache:/go/pkg/mod
+      - ${DATA_VOLUME:-markupp_data}:/data
+      - ${GO_MOD_CACHE:-go_mod_cache}:/go/pkg/mod
 
 volumes:
   markupp_data:

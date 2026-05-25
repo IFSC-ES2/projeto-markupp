@@ -18,6 +18,7 @@ type NoteService interface {
 	Update(ctx context.Context, id, path, content string) (notes.Note, error)
 	Delete(ctx context.Context, id string) error
 	GetNoteById(ctx context.Context, id string) (notes.Note, error)
+	ListNotes(ctx context.Context) ([]notes.Note, error)
 }
 
 type notesHandler struct {
@@ -90,6 +91,19 @@ func (h *notesHandler) get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, toResponse(note))
+}
+
+func (h *notesHandler) list(w http.ResponseWriter, r *http.Request) {
+	list, err := h.svc.ListNotes(r.Context())
+	if err != nil {
+		writeDomainError(w, err)
+		return
+	}
+	out := make([]noteResponse, 0, len(list))
+	for _, n := range list {
+		out = append(out, toResponse(n))
+	}
+	writeJSON(w, http.StatusOK, out)
 }
 
 func (h *notesHandler) delete(w http.ResponseWriter, r *http.Request) {

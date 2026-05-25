@@ -89,6 +89,24 @@ func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (not
 	}, nil
 }
 
+func (r *SqliteNotesRepository) ListNotes(ctx context.Context) ([]notes.Note, error) {
+	rows, err := r.q.ListNotes(ctx)
+	if err != nil {
+		return nil, err
+	}
+	out := make([]notes.Note, 0, len(rows))
+	for _, row := range rows {
+		out = append(out, notes.Note{
+			ID:        row.ID,
+			Path:      row.Path,
+			Content:   row.Content,
+			CreatedAt: row.CreatedAt,
+			UpdatedAt: row.UpdatedAt,
+		})
+	}
+	return out, nil
+}
+
 func isUniqueConstraintViolation(err error) bool {
 	var sqliteErr *sqlite.Error
 	if !errors.As(err, &sqliteErr) {

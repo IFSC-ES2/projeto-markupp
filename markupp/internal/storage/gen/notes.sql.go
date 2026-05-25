@@ -63,6 +63,40 @@ func (q *Queries) GetNoteByID(ctx context.Context, id string) (Note, error) {
 	return i, err
 }
 
+const listNotes = `-- name: ListNotes :many
+SELECT id, path, content, created_at, updated_at FROM notes
+ORDER BY path
+`
+
+func (q *Queries) ListNotes(ctx context.Context) ([]Note, error) {
+	rows, err := q.db.QueryContext(ctx, listNotes)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []Note{}
+	for rows.Next() {
+		var i Note
+		if err := rows.Scan(
+			&i.ID,
+			&i.Path,
+			&i.Content,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const updateNote = `-- name: UpdateNote :one
 UPDATE notes
 SET path = ?, content = ?, updated_at = ?
