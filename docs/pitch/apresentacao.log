@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.4.27)  27 MAY 2026 11:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.4.27)  27 MAY 2026 12:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1812,42 +1812,42 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
 
 ]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 8.0pt on input line 233.
+(Font)              scaled to size 8.0pt on input line 232.
 LaTeX Font Info:    Trying to load font information for T1+aess on input line 2
-33.
+32.
  (/usr/share/texmf-dist/tex/latex/ae/t1aess.fd
 File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 233
+LaTeX Font Info:    Trying to load font information for U+msa on input line 232
 .
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 233
+LaTeX Font Info:    Trying to load font information for U+msb on input line 232
 .
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <8> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 233.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 232.
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <6> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 233.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 232.
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <5> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 233.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 232.
 LaTeX Font Info:    Trying to load font information for TS1+opensans-TLF on inp
-ut line 233.
+ut line 232.
 
 (/usr/share/texmf-dist/tex/latex/opensans/TS1opensans-TLF.fd
 File: TS1opensans-TLF.fd 2019/06/24 Font definitions for TS1/opensans-TLF.
 )
 LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 233.
+(Font)              scaled to size 8.0pt on input line 232.
 LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 6.0pt on input line 233.
+(Font)              scaled to size 6.0pt on input line 232.
 LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 5.0pt on input line 233.
+(Font)              scaled to size 5.0pt on input line 232.
  [21
 
  </usr/share/texmf-dist/tex/latex/beamer/beamericonarticle.pdf>]
@@ -1884,7 +1884,7 @@ share/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Italic.pfb></usr/share/
 texmf-dist/fonts/type1/ascender/opensans/OpenSans-Regular.pfb></usr/share/texmf
 -dist/fonts/type1/public/ccicons/ccicons.pfb></usr/share/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmss8.pfb>
-Output written on apresentacao.pdf (21 pages, 97600 bytes).
+Output written on apresentacao.pdf (21 pages, 97440 bytes).
 PDF statistics:
  233 PDF objects out of 1000 (max. 8388607)
  189 compressed objects within 2 object streams
