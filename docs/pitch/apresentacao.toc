@@ -1,0 +1,17 @@
+\babel@toc {brazil}{}\relax 
+\beamer@sectionintoc {1}{Introdução}{3}{0}{1}
+\beamer@sectionintoc {2}{Tamanho do mercado}{5}{0}{2}
+\beamer@sectionintoc {3}{Problema}{7}{0}{3}
+\beamer@sectionintoc {4}{Solução}{9}{0}{4}
+\beamer@sectionintoc {5}{Alternativas no ecossistema}{13}{0}{5}
+\beamer@sectionintoc {6}{Time}{15}{0}{6}
+\beamer@sectionintoc {7}{Feedback}{17}{0}{7}
+\beamer@sectionintoc {8}{Próximos passos}{19}{0}{8}
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 

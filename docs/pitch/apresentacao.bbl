@@ -1,0 +1,182 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{mcp}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f431db65cea024a5f19eab835afefee2}{%
+           family={{Anthropic}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{f431db65cea024a5f19eab835afefee2}
+      \strng{fullhash}{f431db65cea024a5f19eab835afefee2}
+      \strng{fullhashraw}{f431db65cea024a5f19eab835afefee2}
+      \strng{bibnamehash}{f431db65cea024a5f19eab835afefee2}
+      \strng{authorbibnamehash}{f431db65cea024a5f19eab835afefee2}
+      \strng{authornamehash}{f431db65cea024a5f19eab835afefee2}
+      \strng{authorfullhash}{f431db65cea024a5f19eab835afefee2}
+      \strng{authorfullhashraw}{f431db65cea024a5f19eab835afefee2}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Model Context Protocol: Specification and Documentation}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://modelcontextprotocol.io/
+      \endverb
+      \verb{url}
+      \verb https://modelcontextprotocol.io/
+      \endverb
+    \endentry
+    \entry{forte2022}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b3c526cf723be2d928fbbcc639f45d74}{%
+           family={Forte},
+           familyi={F\bibinitperiod},
+           given={Tiago},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Atria Books}%
+      }
+      \strng{namehash}{b3c526cf723be2d928fbbcc639f45d74}
+      \strng{fullhash}{b3c526cf723be2d928fbbcc639f45d74}
+      \strng{fullhashraw}{b3c526cf723be2d928fbbcc639f45d74}
+      \strng{bibnamehash}{b3c526cf723be2d928fbbcc639f45d74}
+      \strng{authorbibnamehash}{b3c526cf723be2d928fbbcc639f45d74}
+      \strng{authornamehash}{b3c526cf723be2d928fbbcc639f45d74}
+      \strng{authorfullhash}{b3c526cf723be2d928fbbcc639f45d74}
+      \strng{authorfullhashraw}{b3c526cf723be2d928fbbcc639f45d74}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Building a Second Brain: A Proven Method to Organize Your Digital Life and Unlock Your Creative Potential}
+      \field{year}{2022}
+    \endentry
+    \entry{commonmark}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5bf0b7d925a470916ef716a541a4d42b}{%
+           family={MacFarlane},
+           familyi={M\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5bf0b7d925a470916ef716a541a4d42b}
+      \strng{fullhash}{5bf0b7d925a470916ef716a541a4d42b}
+      \strng{fullhashraw}{5bf0b7d925a470916ef716a541a4d42b}
+      \strng{bibnamehash}{5bf0b7d925a470916ef716a541a4d42b}
+      \strng{authorbibnamehash}{5bf0b7d925a470916ef716a541a4d42b}
+      \strng{authornamehash}{5bf0b7d925a470916ef716a541a4d42b}
+      \strng{authorfullhash}{5bf0b7d925a470916ef716a541a4d42b}
+      \strng{authorfullhashraw}{5bf0b7d925a470916ef716a541a4d42b}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{CommonMark Spec, Version 0.31.2}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://spec.commonmark.org/0.31.2/
+      \endverb
+      \verb{url}
+      \verb https://spec.commonmark.org/0.31.2/
+      \endverb
+    \endentry
+    \entry{obsidiancult}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d5e6a16557c388af14e416b9543594b4}{%
+           family={Newman},
+           familyi={N\bibinitperiod},
+           given={Jared},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d5e6a16557c388af14e416b9543594b4}
+      \strng{fullhash}{d5e6a16557c388af14e416b9543594b4}
+      \strng{fullhashraw}{d5e6a16557c388af14e416b9543594b4}
+      \strng{bibnamehash}{d5e6a16557c388af14e416b9543594b4}
+      \strng{authorbibnamehash}{d5e6a16557c388af14e416b9543594b4}
+      \strng{authornamehash}{d5e6a16557c388af14e416b9543594b4}
+      \strng{authorfullhash}{d5e6a16557c388af14e416b9543594b4}
+      \strng{authorfullhashraw}{d5e6a16557c388af14e416b9543594b4}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Fast Company}
+      \field{note}{Acesso em: maio 2026}
+      \field{title}{The cult of Obsidian: Why people are obsessed with the note-taking app}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.fastcompany.com/90960653/why-people-are-obsessed-with-obsidian-the-indie-darling-of-notetaking-apps
+      \endverb
+      \verb{url}
+      \verb https://www.fastcompany.com/90960653/why-people-are-obsessed-with-obsidian-the-indie-darling-of-notetaking-apps
+      \endverb
+    \endentry
+    \entry{notion100m}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=ef8378229fb951d37d477f8ff3de55bb}{%
+           family={{Notion Labs}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{ef8378229fb951d37d477f8ff3de55bb}
+      \strng{fullhash}{ef8378229fb951d37d477f8ff3de55bb}
+      \strng{fullhashraw}{ef8378229fb951d37d477f8ff3de55bb}
+      \strng{bibnamehash}{ef8378229fb951d37d477f8ff3de55bb}
+      \strng{authorbibnamehash}{ef8378229fb951d37d477f8ff3de55bb}
+      \strng{authornamehash}{ef8378229fb951d37d477f8ff3de55bb}
+      \strng{authorfullhash}{ef8378229fb951d37d477f8ff3de55bb}
+      \strng{authorfullhashraw}{ef8378229fb951d37d477f8ff3de55bb}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Acesso em: maio 2026}
+      \field{title}{100 million of you}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.notion.com/blog/100-million-of-you
+      \endverb
+      \verb{url}
+      \verb https://www.notion.com/blog/100-million-of-you
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

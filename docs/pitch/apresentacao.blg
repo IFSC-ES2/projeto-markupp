@@ -1,0 +1,15 @@
+[0] Config.pm:328> INFO - This is Biber 2.21
+[0] Config.pm:331> INFO - Logfile is 'apresentacao.blg'
+[44] biber:342> INFO - === Wed May 27, 2026, 11:29:18
+[53] Biber.pm:421> INFO - Reading 'apresentacao.bcf'
+[93] Biber.pm:1002> INFO - Found 5 citekeys in bib section 0
+[102] Biber.pm:4487> INFO - Processing section 0
+[107] Biber.pm:4678> INFO - Looking for bibtex file 'referencias_trabalho.bib' for section 0
+[108] bibtex.pm:1713> INFO - LaTeX decoding ...
+[113] bibtex.pm:1519> INFO - Found BibTeX data source 'referencias_trabalho.bib'
+[143] UCollate.pm:68> INFO - Overriding locale 'pt-BR' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[143] UCollate.pm:68> INFO - Overriding locale 'pt-BR' defaults 'variable = shifted' with 'variable = non-ignorable'
+[143] Biber.pm:4307> INFO - Sorting list 'nty/global//global/global/global' of type 'entry' with template 'nty' and locale 'pt-BR'
+[143] Biber.pm:4313> INFO - No sort tailoring available for locale 'pt-BR'
+[148] bbl.pm:676> INFO - Writing 'apresentacao.bbl' with encoding 'UTF-8'
+[149] bbl.pm:779> INFO - Output to apresentacao.bbl
