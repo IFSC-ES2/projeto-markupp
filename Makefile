@@ -7,6 +7,8 @@ DOCKER_COMPOSE=docker compose
 
 all: compose-env compose-config docker-up docker-test docker-down
 
+test: docker-test
+
 # Testa o módulo de banco de dados do servidor dentro de um contêiner Docker
 test-db-config:
 	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) run --rm markupp sh -c "cd $(MARKUPP_WORKDIR) && go test $(DB_CONFIG_PKG)"
@@ -17,11 +19,9 @@ compose-config:
 
 # Configura variáveis de ambiente no ambiente do Compose
 compose-env:
-    @if [ ! -f .env ]; then \
-      printf 'MARKUPP_PORT=8080\nDATA_VOLUME=markupp_data\nGO_MOD_CACHE=go_mod_cache\n' > .env; \
-    fi
-	@echo "Criando arquivo .env com valores padrão..."
-	@printf 'MARKUPP_PORT=8080\nDATA_VOLUME=markupp_data\nGO_MOD_CACHE=go_mod_cache\n' > .env
+	@if [ ! -f .env ]; then \
+		printf 'MARKUPP_PORT=8080\nDATA_VOLUME=markupp_data\nGO_MOD_CACHE=go_mod_cache\n' > .env; \
+	fi
 	@echo ".env criado/atualizado com sucesso."
 
 # Sobe o container Docker do servidor em modo destacado

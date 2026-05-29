@@ -41,6 +41,15 @@ type fakeRepo struct {
 	listResult []notes.Note
 	listErr    error
 	listCalled bool
+
+	searchResult []notes.SearchResult
+	searchErr    error
+	searchArgs   struct {
+		query  string
+		offset int32
+		limit  int32
+		called bool
+	}
 }
 
 func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
@@ -71,6 +80,14 @@ func (f *fakeRepo) GetNoteByID(ctx context.Context, id string) (notes.Note, erro
 func (f *fakeRepo) ListNotes(ctx context.Context) ([]notes.Note, error) {
 	f.listCalled = true
 	return f.listResult, f.listErr
+}
+
+func (f *fakeRepo) SearchNotes(ctx context.Context, query string, offset, limit int32) ([]notes.SearchResult, error) {
+	f.searchArgs.called = true
+	f.searchArgs.query = query
+	f.searchArgs.offset = offset
+	f.searchArgs.limit = limit
+	return f.searchResult, f.searchErr
 }
 
 func newServiceForTest(repo notes.Repository) *notes.Service {
@@ -338,4 +355,115 @@ func TestListNotes_DBVazio_RetornaSliceVazio(t *testing.T) {
 
 	require.NoError(t, err)
 	assert.Empty(t, got)
+}
+
+func TestSearch_RepoRetornaErro_Propagado(t *testing.T) {
+	repo := &fakeRepo{searchErr: errors.New("erro ao buscar")}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.SearchNotes(context.Background(), "golang", 0, 10)
+
+	require.Error(t, err)
+	assert.True(t, repo.searchArgs.called)
+}
+
+func TestSearch_SemResultados_RetornaSliceVazio(t *testing.T) {
+	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
+	svc := newServiceForTest(repo)
+
+	results, err := svc.SearchNotes(context.Background(), "golang", 0, 10)
+
+	require.NoError(t, err)
+	assert.Empty(t, results)
+}
+
+func TestSearch_ComResultados_RetornaSomenteIdPathUpdatedAt(t *testing.T) {
+	now := time.Date(2026, 5, 25, 10, 0, 0, 0, time.UTC)
+	repo := &fakeRepo{searchResult: []notes.SearchResult{
+		{ID: "id-1", Path: "golang.md", UpdatedAt: now},
+		{ID: "id-2", Path: "tips.md", UpdatedAt: now},
+	}}
+	svc := newServiceForTest(repo)
+
+	results, err := svc.SearchNotes(context.Background(), "golang", 0, 10)
+
+	require.NoError(t, err)
+	require.Len(t, results, 2)
+	assert.Equal(t, "id-1", results[0].ID)
+	assert.Equal(t, "golang.md", results[0].Path)
+	assert.Equal(t, now, results[0].UpdatedAt)
+	assert.Equal(t, "id-2", results[1].ID)
+	assert.Equal(t, "tips.md", results[1].Path)
+	assert.Equal(t, now, results[1].UpdatedAt)
+}
+
+func TestSearch_PaginacaoComOffset_PassaParametrosCorretosAoRepo(t *testing.T) {
+	now := time.Now()
+	repo := &fakeRepo{searchResult: []notes.SearchResult{
+		{ID: "id-2", Path: "b.md", UpdatedAt: now},
+		{ID: "id-3", Path: "c.md", UpdatedAt: now},
+	}}
+	svc := newServiceForTest(repo)
+
+	results, err := svc.SearchNotes(context.Background(), "golang", 1, 2)
+
+	require.NoError(t, err)
+	require.Len(t, results, 2)
+	assert.Equal(t, "id-2", results[0].ID)
+	assert.Equal(t, "id-3", results[1].ID)
+	// Valida que os parâmetros foram passados corretamente (com wildcards)
+	assert.True(t, repo.searchArgs.called)
+	assert.Equal(t, "%golang%", repo.searchArgs.query)
+	assert.Equal(t, int32(1), repo.searchArgs.offset)
+	assert.Equal(t, int32(2), repo.searchArgs.limit)
+}
+
+func TestSearch_LimitZero_UsaPadraoDeZ(t *testing.T) {
+	repo := &fakeRepo{searchResult: make([]notes.SearchResult, 10)}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.SearchNotes(context.Background(), "golang", 0, 0)
+
+	require.NoError(t, err)
+	assert.Equal(t, int32(10), repo.searchArgs.limit)
+}
+
+func TestSearch_LimitNegativo_UsaPadraoDeZ(t *testing.T) {
+	repo := &fakeRepo{searchResult: make([]notes.SearchResult, 10)}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.SearchNotes(context.Background(), "golang", 0, -5)
+
+	require.NoError(t, err)
+	assert.Equal(t, int32(10), repo.searchArgs.limit)
+}
+
+func TestSearch_OffsetNegativo_UsaZero(t *testing.T) {
+	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.SearchNotes(context.Background(), "golang", -10, 5)
+
+	require.NoError(t, err)
+	assert.Equal(t, int32(0), repo.searchArgs.offset)
+}
+
+func TestSearch_AdicionaWildcardsNaQuery(t *testing.T) {
+	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.SearchNotes(context.Background(), "test", 0, 10)
+	require.NoError(t, err)
+
+	assert.Equal(t, "%test%", repo.searchArgs.query)
+}
+
+func TestSearch_QueryVazioComWildcards(t *testing.T) {
+	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.SearchNotes(context.Background(), "", 0, 10)
+	require.NoError(t, err)
+
+	assert.Equal(t, "%%", repo.searchArgs.query)
 }

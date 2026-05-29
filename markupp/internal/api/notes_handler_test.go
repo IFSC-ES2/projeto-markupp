@@ -39,6 +39,15 @@ type fakeService struct {
 	listResult []notes.Note
 	listErr    error
 	listCalled bool
+
+	searchResult []notes.SearchResult
+	searchErr    error
+	searchArgs   struct {
+		query  string
+		offset int
+		limit  int
+		called bool
+	}
 }
 
 func (f *fakeService) Create(ctx context.Context, path, content string) (notes.Note, error) {
@@ -66,6 +75,14 @@ func (f *fakeService) GetNoteById(ctx context.Context, id string) (notes.Note, e
 func (f *fakeService) ListNotes(ctx context.Context) ([]notes.Note, error) {
 	f.listCalled = true
 	return f.listResult, f.listErr
+}
+
+func (f *fakeService) SearchNotes(ctx context.Context, query string, offset, limit int) ([]notes.SearchResult, error) {
+	f.searchArgs.called = true
+	f.searchArgs.query = query
+	f.searchArgs.offset = offset
+	f.searchArgs.limit = limit
+	return f.searchResult, f.searchErr
 }
 
 func doPost(t *testing.T, svc api.NoteService, body string) *httptest.ResponseRecorder {
@@ -319,6 +336,10 @@ func (s *stubRepository) ListNotes(ctx context.Context) ([]notes.Note, error) {
 	return s.listResult, s.listErr
 }
 
+func (s *stubRepository) SearchNotes(ctx context.Context, query string, offset, limit int32) ([]notes.SearchResult, error) {
+	return nil, nil
+}
+
 func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
 	repo := &stubRepository{getError: sql.ErrNoRows}
 	svc := notes.NewService(repo, 1000)
@@ -409,4 +430,57 @@ func TestListNotes_ServiceRetornaErro_Retorna500(t *testing.T) {
 	var resp map[string]any
 	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
 	assert.Equal(t, "internal", resp["error"])
+}
+
+func TestSearchNotes_QueryValido_Retorna200(t *testing.T) {
+	now := time.Now()
+	svc := &fakeService{searchResult: []notes.SearchResult{
+		{ID: "id-1", Path: "a.md", UpdatedAt: now},
+		{ID: "id-2", Path: "b.md", UpdatedAt: now},
+	}}
+
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/notes/search?query=go&offset=1&limit=2", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusOK, rec.Code)
+
+	var resp []map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Len(t, resp, 2)
+	assert.Equal(t, "id-1", resp[0]["id"])
+	assert.Equal(t, "a.md", resp[0]["path"])
+	assert.Equal(t, "id-2", resp[1]["id"])
+	assert.Equal(t, "b.md", resp[1]["path"])
+	assert.True(t, svc.searchArgs.called)
+	assert.Equal(t, "go", svc.searchArgs.query)
+	assert.Equal(t, 1, svc.searchArgs.offset)
+	assert.Equal(t, 2, svc.searchArgs.limit)
+}
+
+func TestSearchNotes_QueryObrigatoria_Retorna400(t *testing.T) {
+	svc := &fakeService{}
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/notes/search", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "invalid_request", resp["error"])
+}
+
+func TestSearchNotes_OffsetInvalido_Retorna400(t *testing.T) {
+	svc := &fakeService{}
+	router := api.NewRouter(svc)
+	req := httptest.NewRequest(http.MethodGet, "/notes/search?query=go&offset=abc", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "invalid_request", resp["error"])
 }

@@ -89,6 +89,26 @@ func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (not
 	}, nil
 }
 
+func (r *SqliteNotesRepository) SearchNotes(ctx context.Context, query string, offset, limit int32) ([]notes.SearchResult, error) {
+	rows, err := r.q.SearchNotes(ctx, gen.SearchNotesParams{
+		Content: query,
+		Limit:   int64(limit),
+		Offset:  int64(offset),
+	})
+	if err != nil {
+		return nil, err
+	}
+	out := make([]notes.SearchResult, 0, len(rows))
+	for _, row := range rows {
+		out = append(out, notes.SearchResult{
+			ID:        row.ID,
+			Path:      row.Path,
+			UpdatedAt: row.UpdatedAt,
+		})
+	}
+	return out, nil
+}
+
 func (r *SqliteNotesRepository) ListNotes(ctx context.Context) ([]notes.Note, error) {
 	rows, err := r.q.ListNotes(ctx)
 	if err != nil {
