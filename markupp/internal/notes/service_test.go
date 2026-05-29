@@ -361,7 +361,7 @@ func TestSearch_RepoRetornaErro_Propagado(t *testing.T) {
 	repo := &fakeRepo{searchErr: errors.New("erro ao buscar")}
 	svc := newServiceForTest(repo)
 
-	_, err := svc.Search(context.Background(), "golang", 0, 10)
+	_, err := svc.SearchNotes(context.Background(), "golang", 0, 10)
 
 	require.Error(t, err)
 	assert.True(t, repo.searchArgs.called)
@@ -371,7 +371,7 @@ func TestSearch_SemResultados_RetornaSliceVazio(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
-	results, err := svc.Search(context.Background(), "golang", 0, 10)
+	results, err := svc.SearchNotes(context.Background(), "golang", 0, 10)
 
 	require.NoError(t, err)
 	assert.Empty(t, results)
@@ -385,7 +385,7 @@ func TestSearch_ComResultados_RetornaSomenteIdPathUpdatedAt(t *testing.T) {
 	}}
 	svc := newServiceForTest(repo)
 
-	results, err := svc.Search(context.Background(), "golang", 0, 10)
+	results, err := svc.SearchNotes(context.Background(), "golang", 0, 10)
 
 	require.NoError(t, err)
 	require.Len(t, results, 2)
@@ -405,7 +405,7 @@ func TestSearch_PaginacaoComOffset_PassaParametrosCorretosAoRepo(t *testing.T) {
 	}}
 	svc := newServiceForTest(repo)
 
-	results, err := svc.Search(context.Background(), "golang", 1, 2)
+	results, err := svc.SearchNotes(context.Background(), "golang", 1, 2)
 
 	require.NoError(t, err)
 	require.Len(t, results, 2)
@@ -422,7 +422,7 @@ func TestSearch_LimitZero_UsaPadraoDeZ(t *testing.T) {
 	repo := &fakeRepo{searchResult: make([]notes.SearchResult, 10)}
 	svc := newServiceForTest(repo)
 
-	_, err := svc.Search(context.Background(), "golang", 0, 0)
+	_, err := svc.SearchNotes(context.Background(), "golang", 0, 0)
 
 	require.NoError(t, err)
 	assert.Equal(t, int32(10), repo.searchArgs.limit)
@@ -432,7 +432,7 @@ func TestSearch_LimitNegativo_UsaPadraoDeZ(t *testing.T) {
 	repo := &fakeRepo{searchResult: make([]notes.SearchResult, 10)}
 	svc := newServiceForTest(repo)
 
-	_, err := svc.Search(context.Background(), "golang", 0, -5)
+	_, err := svc.SearchNotes(context.Background(), "golang", 0, -5)
 
 	require.NoError(t, err)
 	assert.Equal(t, int32(10), repo.searchArgs.limit)
@@ -442,7 +442,7 @@ func TestSearch_OffsetNegativo_UsaZero(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
-	_, err := svc.Search(context.Background(), "golang", -10, 5)
+	_, err := svc.SearchNotes(context.Background(), "golang", -10, 5)
 
 	require.NoError(t, err)
 	assert.Equal(t, int32(0), repo.searchArgs.offset)
@@ -452,7 +452,7 @@ func TestSearch_AdicionaWildcardsNaQuery(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
-	_, err := svc.Search(context.Background(), "test", 0, 10)
+	_, err := svc.SearchNotes(context.Background(), "test", 0, 10)
 	require.NoError(t, err)
 
 	assert.Equal(t, "%test%", repo.searchArgs.query)
@@ -462,7 +462,7 @@ func TestSearch_QueryVazioComWildcards(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
-	_, err := svc.Search(context.Background(), "", 0, 10)
+	_, err := svc.SearchNotes(context.Background(), "", 0, 10)
 	require.NoError(t, err)
 
 	assert.Equal(t, "%%", repo.searchArgs.query)

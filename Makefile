@@ -22,8 +22,6 @@ compose-env:
 	@if [ ! -f .env ]; then \
 		printf 'MARKUPP_PORT=8080\nDATA_VOLUME=markupp_data\nGO_MOD_CACHE=go_mod_cache\n' > .env; \
 	fi
-	@echo "Criando arquivo .env com valores padrão..."
-	@printf 'MARKUPP_PORT=8080\nDATA_VOLUME=markupp_data\nGO_MOD_CACHE=go_mod_cache\n' > .env
 	@echo ".env criado/atualizado com sucesso."
 
 # Sobe o container Docker do servidor em modo destacado

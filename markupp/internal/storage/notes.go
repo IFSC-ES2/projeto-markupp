@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"strings"
 	"time"
 
 	sqlite "modernc.org/sqlite"
@@ -91,8 +90,6 @@ func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (not
 }
 
 func (r *SqliteNotesRepository) SearchNotes(ctx context.Context, query string, offset, limit int32) ([]notes.SearchResult, error) {
-	query = strings.ReplaceAll(query, "%", "*")
-	query = strings.ReplaceAll(query, "_", "?")
 	rows, err := r.q.SearchNotes(ctx, gen.SearchNotesParams{
 		Content: query,
 		Limit:   int64(limit),

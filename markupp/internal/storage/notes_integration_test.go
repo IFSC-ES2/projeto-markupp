@@ -119,7 +119,7 @@ func TestSearchNotes_NaoEncontra_RetornaVazio(t *testing.T) {
 	assert.Empty(t, results)
 }
 
-func TestSearchNotes_LikeEhCaseSensitive(t *testing.T) {
+func TestSearchNotes_LikeEhCaseInsensitive(t *testing.T) {
 	db := setupIntegrationTestDB(t)
 	defer db.Close()
 	repo := storage.NewSqliteNotesRepository(db)
@@ -135,12 +135,11 @@ func TestSearchNotes_LikeEhCaseSensitive(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	// Buscar por "golang" (minúscula)
+	// Buscar por "golang" (minúscula) - LIKE é case-insensitive
 	results, err := repo.SearchNotes(ctx, "%golang%", 0, 10)
 
 	require.NoError(t, err)
-	require.Len(t, results, 1)
-	assert.Equal(t, "2", results[0].ID)
+	require.Len(t, results, 2)
 }
 
 func setupIntegrationTestDB(t *testing.T) *sql.DB {

@@ -74,7 +74,7 @@ func (q *Queries) ListNotes(ctx context.Context) ([]Note, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Note
+	items := []Note{}
 	for rows.Next() {
 		var i Note
 		if err := rows.Scan(
@@ -99,7 +99,7 @@ func (q *Queries) ListNotes(ctx context.Context) ([]Note, error) {
 
 const searchNotes = `-- name: SearchNotes :many
 SELECT id, path, updated_at FROM notes
-WHERE content GLOB ?
+WHERE content LIKE ?
 ORDER BY updated_at DESC
 LIMIT ? OFFSET ?
 `

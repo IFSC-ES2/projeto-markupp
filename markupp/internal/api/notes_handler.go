@@ -40,6 +40,12 @@ type errorResponse struct {
 	Message string `json:"message"`
 }
 
+const (
+	maxOffset = 10_000
+	maxLimit  = 100
+	minLimit  = 1
+)
+
 func toResponse(n notes.Note) noteResponse {
 	return noteResponse{
 		ID:        n.ID,
@@ -127,6 +133,9 @@ func (h *notesHandler) search(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	offset = clamp(offset, 0, maxOffset)
+	limit = clamp(limit, minLimit, maxLimit)
+
 	results, err := h.svc.SearchNotes(r.Context(), query, offset, limit)
 	if err != nil {
 		writeDomainError(w, err)
@@ -140,6 +149,16 @@ func parseQueryInt(value string, defaultValue int) (int, error) {
 		return defaultValue, nil
 	}
 	return strconv.Atoi(value)
+}
+
+func clamp(v, min, max int) int {
+	if v < min {
+		return min
+	}
+	if v > max {
+		return max
+	}
+	return v
 }
 
 func (h *notesHandler) delete(w http.ResponseWriter, r *http.Request) {

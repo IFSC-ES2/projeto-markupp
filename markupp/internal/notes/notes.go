@@ -157,7 +157,7 @@ func (s *Service) validateContent(content string) error {
 	return nil
 }
 
-func (s *Service) Search(ctx context.Context, query string, offset, limit int) ([]SearchResult, error) {
+func (s *Service) SearchNotes(ctx context.Context, query string, offset, limit int) ([]SearchResult, error) {
 	if offset < 0 {
 		offset = 0
 	}
@@ -171,8 +171,4 @@ func (s *Service) Search(ctx context.Context, query string, offset, limit int) (
 		return nil, fmt.Errorf("buscar notas: %w", err)
 	}
 	return results, nil
-}
-
-func (s *Service) SearchNotes(ctx context.Context, query string, offset, limit int) ([]SearchResult, error) {
-	return s.Search(ctx, query, offset, limit)
 }

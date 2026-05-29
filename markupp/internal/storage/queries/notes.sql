@@ -20,6 +20,6 @@ DELETE FROM notes WHERE id = ?;
 
 -- name: SearchNotes :many
 SELECT id, path, updated_at FROM notes
-WHERE content GLOB ?
+WHERE content LIKE ?
 ORDER BY updated_at DESC
 LIMIT ? OFFSET ?;
