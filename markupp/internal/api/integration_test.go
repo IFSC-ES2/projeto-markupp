@@ -102,8 +102,9 @@ func TestIntegration_AtualizarNota_FluxoCompleto(t *testing.T) {
 	_ = created.Body.Close()
 	id, _ := createdBody["id"].(string)
 	require.NotEmpty(t, id)
+	updatedAtStr, _ := createdBody["updated_at"].(string)
 
-	updated := putNote(t, server.URL, id, `{"path":"renomeada.md","content":"v2"}`)
+	updated := putNote(t, server.URL, id, `{"path":"renomeada.md","content":"v2","lastModifiedAt":"`+updatedAtStr+`","force":false}`)
 	defer func() { _ = updated.Body.Close() }()
 	require.Equal(t, http.StatusOK, updated.StatusCode)
 
@@ -120,8 +121,9 @@ func TestIntegration_AtualizarNota_FluxoCompleto(t *testing.T) {
 
 func TestIntegration_AtualizarNotaInexistente_Retorna404(t *testing.T) {
 	server, _ := setupIntegrationServer(t)
+	now := "2026-05-29T10:00:00Z"
 
-	resp := putNote(t, server.URL, "fantasma", `{"path":"x.md","content":"y"}`)
+	resp := putNote(t, server.URL, "fantasma", `{"path":"x.md","content":"y","lastModifiedAt":"`+now+`","force":false}`)
 	defer func() { _ = resp.Body.Close() }()
 
 	require.Equal(t, http.StatusNotFound, resp.StatusCode)
@@ -141,12 +143,67 @@ func TestIntegration_AtualizarParaPathDuplicado_Retorna409(t *testing.T) {
 	bBody := decodeJSON(t, r2.Body)
 	_ = r2.Body.Close()
 	idB, _ := bBody["id"].(string)
+	updatedAtStr, _ := bBody["updated_at"].(string)
 
-	conflict := putNote(t, server.URL, idB, `{"path":"a.md","content":"x"}`)
+	conflict := putNote(t, server.URL, idB, `{"path":"a.md","content":"x","lastModifiedAt":"`+updatedAtStr+`","force":false}`)
 	defer func() { _ = conflict.Body.Close() }()
 	require.Equal(t, http.StatusConflict, conflict.StatusCode)
 	body := decodeJSON(t, conflict.Body)
 	assert.Equal(t, "duplicate_path", body["error"])
+}
+
+func TestIntegration_ConflictoPorVersao_Force_False_Retorna409(t *testing.T) {
+	server, _ := setupIntegrationServer(t)
+
+	// Criar nota
+	r1 := postNotes(t, server.URL, `{"path":"test.md","content":"v1"}`)
+	require.Equal(t, http.StatusCreated, r1.StatusCode)
+	body1 := decodeJSON(t, r1.Body)
+	_ = r1.Body.Close()
+	id, _ := body1["id"].(string)
+	updatedAtStr1, _ := body1["updated_at"].(string)
+
+	// Cliente 1 atualiza (sucesso)
+	r2 := putNote(t, server.URL, id, `{"path":"test.md","content":"v2","lastModifiedAt":"`+updatedAtStr1+`","force":false}`)
+	defer func() { _ = r2.Body.Close() }()
+	require.Equal(t, http.StatusOK, r2.StatusCode)
+
+	// Cliente 2 tenta atualizar com versão antiga (force=false) -> 409
+	r3 := putNote(t, server.URL, id, `{"path":"test.md","content":"v3","lastModifiedAt":"`+updatedAtStr1+`","force":false}`)
+	defer func() { _ = r3.Body.Close() }()
+	require.Equal(t, http.StatusConflict, r3.StatusCode)
+	body3 := decodeJSON(t, r3.Body)
+	assert.Equal(t, "conflict", body3["error"])
+}
+
+func TestIntegration_ConflictoPorVersao_Force_True_Sucesso(t *testing.T) {
+	server, db := setupIntegrationServer(t)
+
+	// Criar nota
+	r1 := postNotes(t, server.URL, `{"path":"test.md","content":"v1"}`)
+	require.Equal(t, http.StatusCreated, r1.StatusCode)
+	body1 := decodeJSON(t, r1.Body)
+	_ = r1.Body.Close()
+	id, _ := body1["id"].(string)
+	updatedAtStr1, _ := body1["updated_at"].(string)
+
+	// Cliente 1 atualiza (sucesso)
+	r2 := putNote(t, server.URL, id, `{"path":"test.md","content":"v2","lastModifiedAt":"`+updatedAtStr1+`","force":false}`)
+	defer func() { _ = r2.Body.Close() }()
+	require.Equal(t, http.StatusOK, r2.StatusCode)
+
+	// Cliente 2 tenta atualizar com versão antiga mas com force=true -> 200
+	r3 := putNote(t, server.URL, id, `{"path":"test.md","content":"v3","lastModifiedAt":"`+updatedAtStr1+`","force":true}`)
+	defer func() { _ = r3.Body.Close() }()
+	require.Equal(t, http.StatusOK, r3.StatusCode)
+	body3 := decodeJSON(t, r3.Body)
+	assert.Equal(t, id, body3["id"])
+	assert.Equal(t, "v3", body3["content"])
+
+	// Verificar no banco
+	var dbContent string
+	require.NoError(t, db.QueryRow("SELECT content FROM notes WHERE id = ?", id).Scan(&dbContent))
+	assert.Equal(t, "v3", dbContent)
 }
 
 func TestIntegration_DeletarNota_FluxoCompleto(t *testing.T) {
