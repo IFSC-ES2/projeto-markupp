@@ -10,15 +10,19 @@
 | 5       | Luiz Renato Freitas de Almeida  | 29c6e1e | 07/05/26 | 24/05/26 | 8,5  | 10   |
 | 5       | Nícolas Arthur Raulino Oliveira | 29c6e1e | 07/05/26 | 24/05/26 | 8,1  | 10   |
 | 5       | Nicolas Pitz                    | 29c6e1e | 07/05/26 | 24/05/26 | 7,9  | 10   |
+| 6       | Gabriela Riedel                 | 2653ad6 | 21/05/26 | 28/05/26 | 6,8  | 10   |
+| 6       | Luiz Renato Freitas de Almeida  | 2653ad6 | 21/05/26 | 28/05/26 | 7,1  | 10   |
+| 6       | Nícolas Arthur Raulino Oliveira | 2653ad6 | 21/05/26 | 28/05/26 | 7,8  | 10   |
+| 6       | Nicolas Pitz                    | 2653ad6 | 21/05/26 | 28/05/26 | 5,8  | 10   |
 
 ## Nota parcial
 
 | aluno                           | nota parcial |
 | ------------------------------- | ------------ |
-| Gabriela Riedel                 | 8,3          |
-| Luiz Renato Freitas de Almeida  | 8,9          |
-| Nícolas Arthur Raulino Oliveira | 8,7          |
-| Nicolas Pitz                    | 8,6          |
+| Gabriela Riedel                 | 7,8          |
+| Luiz Renato Freitas de Almeida  | 8,3          |
+| Nícolas Arthur Raulino Oliveira | 8,4          |
+| Nicolas Pitz                    | 7,7          |
 
 ## Comentários
 
@@ -105,4 +109,38 @@
    - `obsidian-plugin/README.md` descreve build, testes e configuração do plugin.
    - O README raiz não informa como executar backend, testes, Docker Compose ou plugin, apesar de ser o ponto principal de entrada do projeto.
 8. Release do marco: não atendido.
-   - Não existe tag `v0.1.0` localmente nem release `v0.1.0` no GitHub.
+    - Não existe tag `v0.1.0` localmente nem release `v0.1.0` no GitHub.
+
+### Entrega 6
+
+1. Incremento funcional do MVP: parcial.
+   - Funcionalidade declaradas para entrega na Sprint 2:
+      - #20 - Frontend: UI de Exclusão e Sincronização de Estado
+      - #48 - Documentação das rotas já existentes
+      - #44 - Configuração do servidor via arquivo JSON
+   - A issue `#7` foi fechada, mas um critério de aceitação importante não está implementado: não há versionamento, histórico ou log de alteração antes de sobrescrever conteúdo; a tabela `notes` mantém apenas o estado atual.
+   - A sincronização detecta conflito quando servidor e arquivo local mudaram desde a última sincronização, mas não há resolução guiada além de o usuário escolher manualmente subir ou baixar.
+   - O plugin depende do ambiente real do Obsidian para demonstração completa; os testes cobrem os comandos por mocks, mas não foi verificada uma execução ponta a ponta dentro do Obsidian.
+2. Testes automatizados: atendido.
+3. Integração contínua mínima: parcial.
+   - O CI não executa `npm run lint`, embora o lint exista e passe localmente.
+4. Pull requests com revisão: atendido.
+   - O PR consolidador `#69` é grande e incorpora muitos commits antigos e PRs já existentes, o que reduz um pouco a clareza da rastreabilidade fina da sprint.
+5. Aplicação justificada de padrões OO: não atendido.
+   - Não há indicação ou justificativa específica de padrão de projeto para a Sprint 2 além das ADRs e da estrutura em camadas já usada.
+6. Atualização das métricas: não atendido.
+   - Não há valores observados da Sprint 2, data de coleta, análise de tendência ou comparação entre planejado e realizado.
+7. Atualização dos riscos: não atendido.
+   - A atualização permanece genérica; não registra acompanhamento concreto do fim da Sprint 2, riscos materializados, riscos encerrados ou mudanças de probabilidade/impacto baseadas na execução.
+8. Release do marco: parcial.
+   - A descrição da release é uma lista de PRs, sem relatório claro da Sprint 2 com escopo planejado, concluído, pendente, métricas e justificativas.
+9. Registro das contribuições individuais: parcial.
+    - Não há relatório específico de contribuições individuais da Sprint 2; a distribuição foi inferida por PRs, commits e autoria.
+    - Contribuições individuais:
+      - Gabriela: implementou `PUT /notes/{id}` e `DELETE /notes/{id}` no PR `#54`, adicionou OpenAPI no `#60` e trabalhou em Docker/Makefile no `#61`. A contribuição técnica é relevante, mas a nota é limitada porque o Makefile entregue quebra na tag e parte da documentação/reprodutibilidade ficou incompleta.
+      - Luiz Renato: contribuiu com configuração JSON (`#62`), ajustes estruturais, documentação/ADRs, revisão de PRs e consolidação da Sprint 2 no `#69`. A participação foi importante para integração e arquitetura, mas menos central que a implementação do plugin nesta entrega e a release consolidada saiu atrasada.
+      - Nícolas Arthur: foi o principal responsável pelo incremento do plugin e da sincronização no PR `#58`, incluindo comandos, metadados locais, importação, sincronização em lote, tratamento de conflitos e testes. Recebe a maior nota individual, limitada por pendências do produto, pela ausência de versionamento/log e pela dependência de validação manual no Obsidian.
+      - Nicolas Pitz: atualizou o baseline no `#63` e realizou contribuições pontuais/anteriores em backend e testes, mas a documentação da Sprint 2 ficou incompleta e as métricas sob sua responsabilidade não tiveram coleta de valores observados. A nota individual é menor pela menor entrega rastreável no incremento funcional avaliado.
+10. Documentação e reprodutibilidade: parcial.
+   - O README da raiz não concentra instruções completas de execução/teste da entrega.
+   - O comando automatizado `make all` falha na tag avaliada com `Makefile:20: *** faltando o separador.  Pare.`, o que compromete a reprodutibilidade, embora os comandos diretos equivalentes funcionem.
