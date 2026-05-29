@@ -138,7 +138,7 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 -  **Não iniciado** — fora do escopo deste período, previsto para sprints futuras
 -  **Feito** — Item finalizado para o MVP
 
-> **Observação:** revisaremos este baseline ao final da Sprint 2.
+> **Observação:** revisaremos este baseline ao final da Sprint 4.
 
 ---
 
