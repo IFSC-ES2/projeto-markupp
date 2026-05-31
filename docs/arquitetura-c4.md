@@ -5,57 +5,50 @@ Documento único com a visão C4 do projeto Markupp, considerando o plugin Obsid
 ## 1. Contexto
 
 ```mermaid
-flowchart LR
-    user[Usuário]
-    obsidian[Obsidian Desktop]
-    plugin[Plugin Markupp]
-    server[Servidor Markupp]
-
-    user --> obsidian
-    obsidian --> plugin
-    plugin -->|HTTP/JSON| server
+C4Context
+    Person(user, "Usuário", "Usuário do Obsidian que quer sincronizar notas")
+    System(obsidian, "Obsidian", "Aplicação de anotações desktop com suporte a plugins")
+    System(markupp, "Markupp", "Sistema de sincronização de notas com servidor persistente")
+    Rel(user, obsidian, "Usa")
+    Rel(obsidian, markupp, "Sincroniza com", "HTTP/JSON")
 ```
 
 ## 2. Contêineres
 
 ```mermaid
-flowchart LR
-    obsidian[Obsidian Desktop]
-    plugin[Plugin Markupp - TypeScript]
-    vault[(Vault Obsidian - Markdown)]
-    api[API REST - Go + chi]
-    service[Serviço de Notas]
-    repo[Repositório SQLite]
-    db[(SQLite - markupp.db)]
-
-    obsidian --> plugin
-    plugin --> vault
-    plugin -->|HTTP/JSON| api
-    api --> service
-    service --> repo
-    repo --> db
+C4Container
+    Person(user, "Usuário", "Usuário do Obsidian")
+    System_Boundary(obsidian_system, "Obsidian Desktop"){
+        Container(plugin, "Plugin Markupp", "TypeScript", "Interface de sincronização dentro do Obsidian")
+        Container(vault, "Vault Obsidian", "Markdown Files", "Armazena as notas localmente")
+    }
+    System_Boundary(markupp_system, "Servidor Markupp"){
+        Container(api_server, "API REST", "Go + Chi", "API que gerencia as notas")
+        Container(database, "SQLite", "SQLite Database", "Armazena as notas persistentemente")
+    }
+    Rel(user, plugin, "Usa", "via Obsidian")
+    Rel(plugin, vault, "Lê/Escreve")
+    Rel(plugin, api_server, "Sincroniza", "HTTP/JSON")
+    Rel(api_server, database, "Persiste", "SQL")
 ```
 
 ## 3. Componentes do Servidor
 
 ```mermaid
-flowchart LR
-    subgraph server[Servidor Markupp]
-        direction LR
-
-        router[Router\ninternal/api/router.go]
-        handler[notesHandler\ninternal/api/notes_handler.go]
-        service[notes.Service\ninternal/notes/notes.go]
-        repo[SqliteNotesRepository\ninternal/storage/notes.go]
-        queries[sqlc Queries\ninternal/storage/gen]
-        db[(SQLite)]
-
-        router --> handler
-        handler --> service
-        service --> repo
-        repo --> queries
-        queries --> db
-    end
+C4Component
+    Boundary(server, "Servidor Markupp"){
+        Component(router, "Router", "Go + Chi", "Define as rotas HTTP da API")
+        Component(handler, "Notes Handler", "Go", "Processa requisições de notas")
+        Component(service, "Serviço de Notas", "Go", "Lógica de negócio das notas")
+        Component(repo, "Repositório SQLite", "Go", "Acessa o banco de dados")
+        Component(queries, "Queries sqlc", "Go", "Gerado automaticamente pelo sqlc")
+        ComponentDb(database, "SQLite", "Armazena as notas")
+    }
+    Rel(router, handler, "Roteia para")
+    Rel(handler, service, "Usa")
+    Rel(service, repo, "Usa")
+    Rel(repo, queries, "Usa")
+    Rel(queries, database, "Executa queries")
 ```
 
 ## 4. Leitura Arquitetural
@@ -67,6 +60,7 @@ flowchart LR
 
 ## 5. Decisões Estruturais
 
-- Separação clara entre interface de usuário, API e persistência.
+- Separação clara entre interface de usuário (plugin), API (servidor) e persistência (SQLite).
 - Persistência única em SQLite, acessada via `sqlc`.
-- O plugin permanece desacoplado do banco, falando apenas com a API.
+- O plugin permanece desacoplado do banco, falando apenas com a API REST.
+- No nível de contêineres, o plugin e o servidor são sistemas independentes que se comunicam por HTTP/JSON.
