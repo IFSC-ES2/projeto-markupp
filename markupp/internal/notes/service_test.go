@@ -24,12 +24,12 @@ type fakeRepo struct {
 	updateNote notes.Note
 	updateErr  error
 	updateArgs struct {
-		id              string
-		path            string
-		content         string
-		lastModifiedAt  time.Time
-		force           bool
-		called          bool
+		id             string
+		path           string
+		content        string
+		lastModifiedAt time.Time
+		force          bool
+		called         bool
 	}
 
 	deleteErr    error
@@ -201,7 +201,7 @@ func TestUpdate_ContentMuitoGrande_RetornaErrInvalidContent(t *testing.T) {
 }
 
 func TestUpdate_RepoRetornaErrNotFound_Propagado(t *testing.T) {
-	repo := &fakeRepo{updateErr: notes.ErrNotFound, note: notes.Note{}}
+	repo := &fakeRepo{getErr: notes.ErrNotFound}
 	svc := newServiceForTest(repo)
 	now := time.Now()
 
@@ -212,11 +212,20 @@ func TestUpdate_RepoRetornaErrNotFound_Propagado(t *testing.T) {
 }
 
 func TestUpdate_RepoRetornaErrDuplicatePath_Propagado(t *testing.T) {
-	repo := &fakeRepo{updateErr: notes.ErrDuplicatePath, note: notes.Note{}}
+	original := notes.Note{
+		ID:        "id-1",
+		Path:      "original.md",
+		Content:   "antigo",
+		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: time.Date(2026, 5, 3, 0, 0, 0, 0, time.UTC),
+	}
+	repo := &fakeRepo{
+		note:      original,
+		updateErr: notes.ErrDuplicatePath,
+	}
 	svc := newServiceForTest(repo)
-	now := time.Now()
 
-	_, err := svc.Update(context.Background(), "id-x", "ok.md", "x", now, false)
+	_, err := svc.Update(context.Background(), "id-1", "ok.md", "x", original.UpdatedAt, false)
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
@@ -270,8 +279,8 @@ func TestUpdate_ConflictoPorVersao_Force_False_RetornaErrConflict(t *testing.T) 
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrConflict))
-	// Nao deve ter chamado repo.Update se detectou conflito
-	assert.True(t, repo.updateArgs.called) // Na verdade é chamado, mas retorna erro
+	// Deve retornar erro SEM chamar repo.Update (conflito detectado antes)
+	assert.False(t, repo.updateArgs.called)
 }
 
 func TestUpdate_ConflictoPorVersao_Force_True_Sucesso(t *testing.T) {

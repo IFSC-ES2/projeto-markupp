@@ -124,41 +124,6 @@ func TestSqliteRepo_Update_PathDuplicado_RetornaErrDuplicatePath(t *testing.T) {
 	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
 }
 
-func TestSqliteRepo_Update_ConflictoPorVersao_Force_False_RetornaErrConflict(t *testing.T) {
-	db := setupTestDB(t)
-	repo := storage.NewSqliteNotesRepository(db)
-	original := sampleNote()
-	require.NoError(t, repo.Save(context.Background(), original))
-
-	// Simular que o servidor foi atualizado
-	_, err := repo.Update(context.Background(), original.ID, original.Path, "conteudo no servidor", original.UpdatedAt, true)
-	require.NoError(t, err)
-
-	// Cliente tenta atualizar com lastModifiedAt antigo e force=false
-	_, err = repo.Update(context.Background(), original.ID, original.Path, "conteudo novo", original.UpdatedAt, false)
-
-	require.Error(t, err)
-	assert.True(t, errors.Is(err, notes.ErrConflict))
-}
-
-func TestSqliteRepo_Update_ConflictoPorVersao_Force_True_Sucesso(t *testing.T) {
-	db := setupTestDB(t)
-	repo := storage.NewSqliteNotesRepository(db)
-	original := sampleNote()
-	require.NoError(t, repo.Save(context.Background(), original))
-
-	// Simular que o servidor foi atualizado
-	_, err := repo.Update(context.Background(), original.ID, original.Path, "conteudo no servidor", original.UpdatedAt, true)
-	require.NoError(t, err)
-
-	// Cliente tenta atualizar com lastModifiedAt antigo mas force=true
-	got, err := repo.Update(context.Background(), original.ID, original.Path, "conteudo novo", original.UpdatedAt, true)
-
-	require.NoError(t, err)
-	assert.Equal(t, "conteudo novo", got.Content)
-	assert.True(t, got.UpdatedAt.After(original.UpdatedAt))
-}
-
 func TestSqliteRepo_Delete_RemoveLinha(t *testing.T) {
 	db := setupTestDB(t)
 	repo := storage.NewSqliteNotesRepository(db)

@@ -97,60 +97,26 @@ func (q *Queries) ListNotes(ctx context.Context) ([]Note, error) {
 	return items, nil
 }
 
-const updateNoteForced = `-- name: UpdateNoteForced :one
+const updateNote = `-- name: UpdateNote :one
 UPDATE notes
 SET path = ?, content = ?, updated_at = ?
 WHERE id = ?
 RETURNING id, path, content, created_at, updated_at
 `
 
-type UpdateNoteForcedParams struct {
+type UpdateNoteParams struct {
 	Path      string
 	Content   string
 	UpdatedAt time.Time
 	ID        string
 }
 
-func (q *Queries) UpdateNoteForced(ctx context.Context, arg UpdateNoteForcedParams) (Note, error) {
-	row := q.db.QueryRowContext(ctx, updateNoteForced,
+func (q *Queries) UpdateNote(ctx context.Context, arg UpdateNoteParams) (Note, error) {
+	row := q.db.QueryRowContext(ctx, updateNote,
 		arg.Path,
 		arg.Content,
 		arg.UpdatedAt,
 		arg.ID,
-	)
-	var i Note
-	err := row.Scan(
-		&i.ID,
-		&i.Path,
-		&i.Content,
-		&i.CreatedAt,
-		&i.UpdatedAt,
-	)
-	return i, err
-}
-
-const updateNoteWithVersionCheck = `-- name: UpdateNoteWithVersionCheck :one
-UPDATE notes
-SET path = ?, content = ?, updated_at = ?
-WHERE id = ? AND updated_at = ?
-RETURNING id, path, content, created_at, updated_at
-`
-
-type UpdateNoteWithVersionCheckParams struct {
-	Path        string
-	Content     string
-	UpdatedAt   time.Time
-	ID          string
-	UpdatedAt_2 time.Time
-}
-
-func (q *Queries) UpdateNoteWithVersionCheck(ctx context.Context, arg UpdateNoteWithVersionCheckParams) (Note, error) {
-	row := q.db.QueryRowContext(ctx, updateNoteWithVersionCheck,
-		arg.Path,
-		arg.Content,
-		arg.UpdatedAt,
-		arg.ID,
-		arg.UpdatedAt_2,
 	)
 	var i Note
 	err := row.Scan(

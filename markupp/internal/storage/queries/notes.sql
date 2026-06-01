@@ -9,13 +9,7 @@ SELECT id, path, content, created_at, updated_at FROM notes WHERE id = ?;
 SELECT id, path, content, created_at, updated_at FROM notes
 ORDER BY path;
 
--- name: UpdateNoteWithVersionCheck :one
-UPDATE notes
-SET path = ?, content = ?, updated_at = ?
-WHERE id = ? AND updated_at = ?
-RETURNING id, path, content, created_at, updated_at;
-
--- name: UpdateNoteForced :one
+-- name: UpdateNote :one
 UPDATE notes
 SET path = ?, content = ?, updated_at = ?
 WHERE id = ?
