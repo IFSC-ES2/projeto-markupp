@@ -27,7 +27,7 @@ type SearchResult struct {
 
 type Repository interface {
 	Save(ctx context.Context, note Note) error
-	Update(ctx context.Context, id, path, content string, updatedAt time.Time) (Note, error)
+	Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (Note, error)
 	Delete(ctx context.Context, id string) error
 	GetNoteByID(ctx context.Context, id string) (Note, error)
 	ListNotes(ctx context.Context) ([]Note, error)
@@ -41,6 +41,7 @@ var (
 	ErrNotFound       = errors.New("nota não encontrada")
 	ErrInvalidId      = errors.New("ID inválido")
 	ErrNotFoundId     = errors.New("ID não encontrado")
+	ErrConflict       = errors.New("nota foi atualizada por outro cliente")
 )
 
 type Service struct {
@@ -96,7 +97,7 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 	return note, nil
 }
 
-func (s *Service) Update(ctx context.Context, id, path, content string) (Note, error) {
+func (s *Service) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (Note, error) {
 	if strings.TrimSpace(id) == "" {
 		return Note{}, ErrNotFound
 	}
@@ -106,9 +107,23 @@ func (s *Service) Update(ctx context.Context, id, path, content string) (Note, e
 	if err := s.validateContent(content); err != nil {
 		return Note{}, err
 	}
-	updated, err := s.repo.Update(ctx, id, path, content, s.clock())
+
+	currentNote, err := s.repo.GetNoteByID(ctx, id)
 	if err != nil {
-		if errors.Is(err, ErrNotFound) || errors.Is(err, ErrDuplicatePath) {
+		if errors.Is(err, sql.ErrNoRows) {
+			return Note{}, ErrNotFound
+		}
+		return Note{}, fmt.Errorf("obter nota %q: %w", id, err)
+	}
+
+	// Verificar versão: se nota no servidor mudou e force=false, rejeitar
+	if !currentNote.UpdatedAt.Equal(lastModifiedAt) && !force {
+		return Note{}, ErrConflict
+	}
+
+	updated, err := s.repo.Update(ctx, id, path, content, lastModifiedAt, force)
+	if err != nil {
+		if errors.Is(err, ErrDuplicatePath) {
 			return Note{}, err
 		}
 		return Note{}, fmt.Errorf("atualizar nota %q: %w", id, err)

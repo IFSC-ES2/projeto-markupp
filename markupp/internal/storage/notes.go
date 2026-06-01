@@ -39,13 +39,14 @@ func (r *SqliteNotesRepository) Save(ctx context.Context, note notes.Note) error
 	return err
 }
 
-func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content string, updatedAt time.Time) (notes.Note, error) {
+func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (notes.Note, error) {
 	row, err := r.q.UpdateNote(ctx, gen.UpdateNoteParams{
 		ID:        id,
 		Path:      path,
 		Content:   content,
-		UpdatedAt: updatedAt,
+		UpdatedAt: time.Now(),
 	})
+
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return notes.Note{}, notes.ErrNotFound
@@ -55,6 +56,7 @@ func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content st
 		}
 		return notes.Note{}, err
 	}
+
 	return notes.Note{
 		ID:        row.ID,
 		Path:      row.Path,

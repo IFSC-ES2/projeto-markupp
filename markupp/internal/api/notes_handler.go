@@ -16,7 +16,7 @@ import (
 
 type NoteService interface {
 	Create(ctx context.Context, path, content string) (notes.Note, error)
-	Update(ctx context.Context, id, path, content string) (notes.Note, error)
+	Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (notes.Note, error)
 	Delete(ctx context.Context, id string) error
 	GetNoteById(ctx context.Context, id string) (notes.Note, error)
 	ListNotes(ctx context.Context) ([]notes.Note, error)
@@ -76,14 +76,16 @@ func (h *notesHandler) create(w http.ResponseWriter, r *http.Request) {
 func (h *notesHandler) update(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var req struct {
-		Path    string `json:"path"`
-		Content string `json:"content"`
+		Path           string    `json:"path"`
+		Content        string    `json:"content"`
+		LastModifiedAt time.Time `json:"lastModifiedAt"`
+		Force          bool      `json:"force"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		writeError(w, "invalid_request", "JSON inválido", http.StatusBadRequest)
 		return
 	}
-	note, err := h.svc.Update(r.Context(), id, req.Path, req.Content)
+	note, err := h.svc.Update(r.Context(), id, req.Path, req.Content, req.LastModifiedAt, req.Force)
 	if err != nil {
 		writeDomainError(w, err)
 		return
@@ -190,6 +192,8 @@ func writeDomainError(w http.ResponseWriter, err error) {
 		writeError(w, "invalid_content", notes.ErrInvalidContent.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrDuplicatePath):
 		writeError(w, "duplicate_path", notes.ErrDuplicatePath.Error(), http.StatusConflict)
+	case errors.Is(err, notes.ErrConflict):
+		writeError(w, "conflict", notes.ErrConflict.Error(), http.StatusConflict)
 	case errors.Is(err, notes.ErrNotFound):
 		writeError(w, "not_found", notes.ErrNotFound.Error(), http.StatusNotFound)
 	case errors.Is(err, notes.ErrInvalidId):

@@ -80,7 +80,13 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     put:
       summary: Atualiza uma nota existente
-      description: Atualiza o caminho e conteúdo de uma nota existente.
+      description: |
+        Atualiza o caminho e conteúdo de uma nota existente.
+        
+        Implementa optimistic locking: o cliente deve enviar o `lastModifiedAt` da última vez que leu a nota.
+        Se a nota foi modificada no servidor desde então:
+        - Sem flag `force`: retorna erro 409 Conflict
+        - Com flag `force: true`: atualiza mesmo assim (sobrescrita)
       parameters:
         - name: id
           in: path
@@ -93,7 +99,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NoteRequest'
+              $ref: '#/components/schemas/NoteUpdateRequest'
       responses:
         '200':
           description: Nota atualizada com sucesso
@@ -114,7 +120,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '409':
-          description: Caminho de nota duplicado
+          description: |
+            Conflito: a nota foi modificada no servidor desde a última leitura (e force não foi ativado),
+            ou caminho de nota duplicado.
           content:
             application/json:
               schema:
@@ -172,6 +180,36 @@ components:
           type: string
           description: Conteúdo da nota
           example: "# Reunião\n- Tarefa 1\n- Tarefa 2"
+    NoteUpdateRequest:
+      type: object
+      required:
+        - path
+        - content
+        - lastModifiedAt
+      properties:
+        path:
+          type: string
+          description: Caminho/identificador do arquivo de nota
+          example: "notas/meeting.md"
+        content:
+          type: string
+          description: Conteúdo da nota
+          example: "# Reunião\n- Tarefa 1\n- Tarefa 2"
+        lastModifiedAt:
+          type: string
+          format: date-time
+          description: |
+            Timestamp da última leitura da nota pelo cliente.
+            Usado para detectar conflitos: se a nota foi modificada no servidor
+            desde este timestamp, e force não é true, retorna 409 Conflict.
+          example: "2026-05-14T12:00:00Z"
+        force:
+          type: boolean
+          description: |
+            Se true, permite sobrescrever a nota mesmo que tenha sido modificada
+            no servidor desde o lastModifiedAt. Padrão: false.
+          default: false
+          example: false
     NoteResponse:
       type: object
       properties:

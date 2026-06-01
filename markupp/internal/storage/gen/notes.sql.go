@@ -74,7 +74,7 @@ func (q *Queries) ListNotes(ctx context.Context) ([]Note, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []Note{}
+	var items []Note
 	for rows.Next() {
 		var i Note
 		if err := rows.Scan(

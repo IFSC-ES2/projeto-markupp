@@ -24,11 +24,12 @@ type fakeRepo struct {
 	updateNote notes.Note
 	updateErr  error
 	updateArgs struct {
-		id        string
-		path      string
-		content   string
-		updatedAt time.Time
-		called    bool
+		id             string
+		path           string
+		content        string
+		lastModifiedAt time.Time
+		force          bool
+		called         bool
 	}
 
 	deleteErr    error
@@ -58,12 +59,13 @@ func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
 	return f.saveErr
 }
 
-func (f *fakeRepo) Update(ctx context.Context, id, path, content string, updatedAt time.Time) (notes.Note, error) {
+func (f *fakeRepo) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (notes.Note, error) {
 	f.updateArgs.called = true
 	f.updateArgs.id = id
 	f.updateArgs.path = path
 	f.updateArgs.content = content
-	f.updateArgs.updatedAt = updatedAt
+	f.updateArgs.lastModifiedAt = lastModifiedAt
+	f.updateArgs.force = force
 	return f.updateNote, f.updateErr
 }
 
@@ -181,8 +183,9 @@ func TestCreate_RepoRetornaErrDuplicatePath_PropagadoAoCaller(t *testing.T) {
 func TestUpdate_IDVazio_RetornaErrNotFound(t *testing.T) {
 	repo := &fakeRepo{}
 	svc := newServiceForTest(repo)
+	now := time.Now()
 
-	_, err := svc.Update(context.Background(), "", "ok.md", "x")
+	_, err := svc.Update(context.Background(), "", "ok.md", "x", now, false)
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrNotFound))
@@ -192,8 +195,9 @@ func TestUpdate_IDVazio_RetornaErrNotFound(t *testing.T) {
 func TestUpdate_PathInvalido_RetornaErrInvalidPath(t *testing.T) {
 	repo := &fakeRepo{}
 	svc := newServiceForTest(repo)
+	now := time.Now()
 
-	_, err := svc.Update(context.Background(), "id-1", "", "x")
+	_, err := svc.Update(context.Background(), "id-1", "", "x", now, false)
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrInvalidPath))
@@ -204,8 +208,9 @@ func TestUpdate_ContentMuitoGrande_RetornaErrInvalidContent(t *testing.T) {
 	repo := &fakeRepo{}
 	svc := newServiceForTest(repo)
 	bigContent := strings.Repeat("x", testMaxContentSize+1)
+	now := time.Now()
 
-	_, err := svc.Update(context.Background(), "id-1", "ok.md", bigContent)
+	_, err := svc.Update(context.Background(), "id-1", "ok.md", bigContent, now, false)
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrInvalidContent))
@@ -213,20 +218,31 @@ func TestUpdate_ContentMuitoGrande_RetornaErrInvalidContent(t *testing.T) {
 }
 
 func TestUpdate_RepoRetornaErrNotFound_Propagado(t *testing.T) {
-	repo := &fakeRepo{updateErr: notes.ErrNotFound}
+	repo := &fakeRepo{getErr: notes.ErrNotFound}
 	svc := newServiceForTest(repo)
+	now := time.Now()
 
-	_, err := svc.Update(context.Background(), "id-x", "ok.md", "x")
+	_, err := svc.Update(context.Background(), "id-x", "ok.md", "x", now, false)
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrNotFound))
 }
 
 func TestUpdate_RepoRetornaErrDuplicatePath_Propagado(t *testing.T) {
-	repo := &fakeRepo{updateErr: notes.ErrDuplicatePath}
+	original := notes.Note{
+		ID:        "id-1",
+		Path:      "original.md",
+		Content:   "antigo",
+		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: time.Date(2026, 5, 3, 0, 0, 0, 0, time.UTC),
+	}
+	repo := &fakeRepo{
+		note:      original,
+		updateErr: notes.ErrDuplicatePath,
+	}
 	svc := newServiceForTest(repo)
 
-	_, err := svc.Update(context.Background(), "id-x", "ok.md", "x")
+	_, err := svc.Update(context.Background(), "id-1", "ok.md", "x", original.UpdatedAt, false)
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
@@ -240,10 +256,17 @@ func TestUpdate_CaminhoFeliz_RetornaNotaAtualizada(t *testing.T) {
 		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
 		UpdatedAt: time.Date(2026, 5, 4, 0, 0, 0, 0, time.UTC),
 	}
-	repo := &fakeRepo{updateNote: updated}
+	original := notes.Note{
+		ID:        "id-1",
+		Path:      "novo.md",
+		Content:   "antigo",
+		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: time.Date(2026, 5, 3, 0, 0, 0, 0, time.UTC),
+	}
+	repo := &fakeRepo{updateNote: updated, note: original}
 	svc := newServiceForTest(repo)
 
-	got, err := svc.Update(context.Background(), "id-1", "novo.md", "novo")
+	got, err := svc.Update(context.Background(), "id-1", "novo.md", "novo", original.UpdatedAt, false)
 
 	require.NoError(t, err)
 	assert.Equal(t, updated, got)
@@ -251,7 +274,58 @@ func TestUpdate_CaminhoFeliz_RetornaNotaAtualizada(t *testing.T) {
 	assert.Equal(t, "id-1", repo.updateArgs.id)
 	assert.Equal(t, "novo.md", repo.updateArgs.path)
 	assert.Equal(t, "novo", repo.updateArgs.content)
-	assert.False(t, repo.updateArgs.updatedAt.IsZero())
+	assert.Equal(t, original.UpdatedAt, repo.updateArgs.lastModifiedAt)
+	assert.False(t, repo.updateArgs.force)
+}
+
+func TestUpdate_ConflictoPorVersao_Force_False_RetornaErrConflict(t *testing.T) {
+	currentVersion := time.Date(2026, 5, 4, 0, 0, 0, 0, time.UTC)
+	clientVersion := time.Date(2026, 5, 3, 0, 0, 0, 0, time.UTC) // é mais antigo
+
+	nota := notes.Note{
+		ID:        "id-1",
+		Path:      "test.md",
+		Content:   "server version",
+		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: currentVersion,
+	}
+	repo := &fakeRepo{note: nota}
+	svc := newServiceForTest(repo)
+
+	_, err := svc.Update(context.Background(), "id-1", "test.md", "novo", clientVersion, false)
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrConflict))
+	// Deve retornar erro SEM chamar repo.Update (conflito detectado antes)
+	assert.False(t, repo.updateArgs.called)
+}
+
+func TestUpdate_ConflictoPorVersao_Force_True_Sucesso(t *testing.T) {
+	currentVersion := time.Date(2026, 5, 4, 0, 0, 0, 0, time.UTC)
+	clientVersion := time.Date(2026, 5, 3, 0, 0, 0, 0, time.UTC)
+
+	nota := notes.Note{
+		ID:        "id-1",
+		Path:      "test.md",
+		Content:   "server version",
+		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: currentVersion,
+	}
+	updated := notes.Note{
+		ID:        "id-1",
+		Path:      "test.md",
+		Content:   "novo",
+		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: time.Now(),
+	}
+	repo := &fakeRepo{note: nota, updateNote: updated}
+	svc := newServiceForTest(repo)
+
+	got, err := svc.Update(context.Background(), "id-1", "test.md", "novo", clientVersion, true)
+
+	require.NoError(t, err)
+	assert.Equal(t, updated, got)
+	assert.True(t, repo.updateArgs.force)
 }
 
 func TestDelete_IDVazio_RetornaErrInvalidIdSemChamarRepo(t *testing.T) {
