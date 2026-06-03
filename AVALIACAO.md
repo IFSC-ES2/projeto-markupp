@@ -14,15 +14,23 @@
 | 6       | Luiz Renato Freitas de Almeida  | 2653ad6 | 21/05/26 | 28/05/26 | 7,1  | 10   |
 | 6       | Nícolas Arthur Raulino Oliveira | 2653ad6 | 21/05/26 | 28/05/26 | 7,8  | 10   |
 | 6       | Nicolas Pitz                    | 2653ad6 | 21/05/26 | 28/05/26 | 5,8  | 10   |
+| 7       | Gabriela Riedel                 | e4f7d2d | 29/05/26 | 03/06/26 | 5,6  | 10   |
+| 7       | Luiz Renato Freitas de Almeida  | e4f7d2d | 29/05/26 | 03/06/26 | 5,4  | 10   |
+| 7       | Nícolas Arthur Raulino Oliveira | e4f7d2d | 29/05/26 | 03/06/26 | 4,4  | 10   |
+| 7       | Nicolas Pitz                    | e4f7d2d | 29/05/26 | 03/06/26 | 5,0  | 10   |
+| 8       |                                 |         |          |          |      | 10   |
+| 9       |                                 |         |          |          |      | 10   |
+| 10      |                                 |         |          |          |      | 10   |
+| 11/12   |                                 |         |          |          |      | 30   |
 
 ## Nota parcial
 
 | aluno                           | nota parcial |
 | ------------------------------- | ------------ |
-| Gabriela Riedel                 | 7,8          |
-| Luiz Renato Freitas de Almeida  | 8,3          |
-| Nícolas Arthur Raulino Oliveira | 8,4          |
-| Nicolas Pitz                    | 7,7          |
+| Gabriela Riedel                 | 7,2          |
+| Luiz Renato Freitas de Almeida  | 7,6          |
+| Nícolas Arthur Raulino Oliveira | 7,4          |
+| Nicolas Pitz                    | 7,0          |
 
 ## Comentários
 
@@ -109,15 +117,15 @@
    - `obsidian-plugin/README.md` descreve build, testes e configuração do plugin.
    - O README raiz não informa como executar backend, testes, Docker Compose ou plugin, apesar de ser o ponto principal de entrada do projeto.
 8. Release do marco: não atendido.
-    - Não existe tag `v0.1.0` localmente nem release `v0.1.0` no GitHub.
+   - Não existe tag `v0.1.0` localmente nem release `v0.1.0` no GitHub.
 
 ### Entrega 6
 
 1. Incremento funcional do MVP: parcial.
    - Funcionalidade declaradas para entrega na Sprint 2:
-      - #20 - Frontend: UI de Exclusão e Sincronização de Estado
-      - #48 - Documentação das rotas já existentes
-      - #44 - Configuração do servidor via arquivo JSON
+     - #20 - Frontend: UI de Exclusão e Sincronização de Estado
+     - #48 - Documentação das rotas já existentes
+     - #44 - Configuração do servidor via arquivo JSON
    - A issue `#7` foi fechada, mas um critério de aceitação importante não está implementado: não há versionamento, histórico ou log de alteração antes de sobrescrever conteúdo; a tabela `notes` mantém apenas o estado atual.
    - A sincronização detecta conflito quando servidor e arquivo local mudaram desde a última sincronização, mas não há resolução guiada além de o usuário escolher manualmente subir ou baixar.
    - O plugin depende do ambiente real do Obsidian para demonstração completa; os testes cobrem os comandos por mocks, mas não foi verificada uma execução ponta a ponta dentro do Obsidian.
@@ -135,12 +143,50 @@
 8. Release do marco: parcial.
    - A descrição da release é uma lista de PRs, sem relatório claro da Sprint 2 com escopo planejado, concluído, pendente, métricas e justificativas.
 9. Registro das contribuições individuais: parcial.
-    - Não há relatório específico de contribuições individuais da Sprint 2; a distribuição foi inferida por PRs, commits e autoria.
-    - Contribuições individuais:
-      - Gabriela: implementou `PUT /notes/{id}` e `DELETE /notes/{id}` no PR `#54`, adicionou OpenAPI no `#60` e trabalhou em Docker/Makefile no `#61`. A contribuição técnica é relevante, mas a nota é limitada porque o Makefile entregue quebra na tag e parte da documentação/reprodutibilidade ficou incompleta.
-      - Luiz Renato: contribuiu com configuração JSON (`#62`), ajustes estruturais, documentação/ADRs, revisão de PRs e consolidação da Sprint 2 no `#69`. A participação foi importante para integração e arquitetura, mas menos central que a implementação do plugin nesta entrega e a release consolidada saiu atrasada.
-      - Nícolas Arthur: foi o principal responsável pelo incremento do plugin e da sincronização no PR `#58`, incluindo comandos, metadados locais, importação, sincronização em lote, tratamento de conflitos e testes. Recebe a maior nota individual, limitada por pendências do produto, pela ausência de versionamento/log e pela dependência de validação manual no Obsidian.
-      - Nicolas Pitz: atualizou o baseline no `#63` e realizou contribuições pontuais/anteriores em backend e testes, mas a documentação da Sprint 2 ficou incompleta e as métricas sob sua responsabilidade não tiveram coleta de valores observados. A nota individual é menor pela menor entrega rastreável no incremento funcional avaliado.
+   - Não há relatório específico de contribuições individuais da Sprint 2; a distribuição foi inferida por PRs, commits e autoria.
+   - Contribuições individuais:
+     - Gabriela: implementou `PUT /notes/{id}` e `DELETE /notes/{id}` no PR `#54`, adicionou OpenAPI no `#60` e trabalhou em Docker/Makefile no `#61`. A contribuição técnica é relevante, mas a nota é limitada porque o Makefile entregue quebra na tag e parte da documentação/reprodutibilidade ficou incompleta.
+     - Luiz Renato: contribuiu com configuração JSON (`#62`), ajustes estruturais, documentação/ADRs, revisão de PRs e consolidação da Sprint 2 no `#69`. A participação foi importante para integração e arquitetura, mas menos central que a implementação do plugin nesta entrega e a release consolidada saiu atrasada.
+     - Nícolas Arthur: foi o principal responsável pelo incremento do plugin e da sincronização no PR `#58`, incluindo comandos, metadados locais, importação, sincronização em lote, tratamento de conflitos e testes. Recebe a maior nota individual, limitada por pendências do produto, pela ausência de versionamento/log e pela dependência de validação manual no Obsidian.
+     - Nicolas Pitz: atualizou o baseline no `#63` e realizou contribuições pontuais/anteriores em backend e testes, mas a documentação da Sprint 2 ficou incompleta e as métricas sob sua responsabilidade não tiveram coleta de valores observados. A nota individual é menor pela menor entrega rastreável no incremento funcional avaliado.
 10. Documentação e reprodutibilidade: parcial.
-   - O README da raiz não concentra instruções completas de execução/teste da entrega.
-   - O comando automatizado `make all` falha na tag avaliada com `Makefile:20: *** faltando o separador.  Pare.`, o que compromete a reprodutibilidade, embora os comandos diretos equivalentes funcionem.
+    - O README da raiz não concentra instruções completas de execução/teste da entrega.
+    - O comando automatizado `make all` falha na tag avaliada com `Makefile:20: *** faltando o separador.  Pare.`, o que compromete a reprodutibilidade, embora os comandos diretos equivalentes funcionem.
+
+### Entrega 7
+
+1. Incremento funcional da Sprint 3: parcial.
+   - Não há tag `v0.3.0` local nem remota e não há release da Sprint 3 no GitHub. A única release listada continua sendo `v0.2.0`.
+   - Entrega avaliada em `e4f7d2d`, mas `v0.2.0..HEAD` em `main` contém apenas commits de avaliação, sem commits da equipe integrando a Sprint 3 na branch principal.
+   - Há evidências de trabalho em PRs para `dev`: `#72` adiciona lint/formatação ao CI, `#73` renomeia `backend` para `markupp`, `#74` adiciona rota de busca `GET /notes/search` e `#76` atualiza baseline. Porém, isso não foi consolidado em `main` nem empacotado em release/tag do marco.
+   - Issues da Sprint 3 existem, mas parte permanece aberta ou incompleta: `#68` e `#78` estão abertas; `#77` e `#79` estão abertas com mudanças solicitadas; `#75` de arquitetura também ficou aberto.
+   - O backend da branch principal já possui CRUD e listagem de notas, e os testes passam, mas o incremento funcional específico da Sprint 3 não foi entregue de forma rastreável no marco obrigatório.
+2. Documentação da arquitetura: não atendido.
+   - Não há diagrama C4 ou equivalente integrado em `main`.
+   - O documento `arquitetura-c4.md` existe apenas no PR `#75`, que ficou aberto e com `CHANGES_REQUESTED` antes de receber aprovação posterior em 01/06; portanto não foi entregue no marco.
+3. ADRs consolidados: parcial.
+   - Existem ADRs anteriores para linguagem, mas não encontrei ADR novo consolidado para as mudanças da Sprint 3.
+   - Parte dos ajustes de nomenclatura em ADRs aparece no PR `#73`, mas a consolidação não chegou à branch principal/tag do marco.
+4. Atualização das métricas: não atendido.
+   - `metricas.md` continua apenas como definição das métricas; não registra valores observados ao final da Sprint 3, comparação com Sprint 2 nem análise dos fatores que influenciaram o resultado.
+   - `baseline.md` em `main` ainda marca `#66`, `#67` e `#68` como “Não iniciado (Sprint 3)”. A atualização em `origin/dev` foi feita no PR `#76`, mas não traz análise completa de métricas antes/depois.
+   - Não há arquivo específico de comparação de métricas antes/depois da manutenção/reengenharia.
+5. Testes automatizados integrados ao pipeline: parcial.
+   - Na branch principal, o workflow executa `go test ./... -race -count=1` no backend e `npm ci`, `npm run build` e `npm test --if-present` no plugin.
+   - Execução local: `go test ./... -race -count=1` passou; `npm test` passou com 44 testes; `npm run build` passou; `npm run lint` passou.
+   - O CI de `main` ainda não executa `npm run lint`, `gofmt`, `go vet` ou `golangci-lint`; essas melhorias aparecem no PR `#72`/`origin/dev`, mas não foram integradas na branch principal nem em release.
+6. Integração contínua mínima: parcial.
+   - Há CI em PRs e checks verdes em PRs como `#72`, `#73` e `#74`.
+   - O PR `#77` tem check de backend falhando e está com mudanças solicitadas; `#79` também ficou aberto com mudanças solicitadas.
+   - A branch principal não reflete o pipeline mais completo da Sprint 3, e não há evidência de check obrigatório associado a uma release/tag `v0.3.0`.
+7. Release/tag do marco: não atendido.
+   - O projeto ainda conta apenas com a tag `v0.2.0`.
+   - O projeto ainda conta apenas com a release “Sprint 2”.
+   - Ausência de tag/release `v0.3.0` compromete a rastreabilidade do marco e a definição do commit exato da entrega.
+8. Registro de contribuição individual: parcial.
+   - Não há relatório específico da Sprint 3 consolidando o que cada integrante implementou, revisou, testou ou documentou com links para commits/PRs.
+   - Como `main` não recebeu commits da equipe depois de `v0.2.0`, as contribuições foram inferidas principalmente pelos PRs em `dev` e branches remotas.
+   - Gabriela: contribuiu tecnicamente no PR `#74` com busca `GET /notes/search`, paginação, testes e correção do Makefile, além de commits de ajuste/review. A nota fica abaixo de 6 por estar fora de `main`, sem tag/release.
+   - Luiz Renato: contribuiu no PR `#73` com refatoração de nomenclatura `backend` -> `markupp`, ajustes em CI, Docker, docs e plugin, além de revisão de PRs. A contribuição é relevante para reengenharia/manutenibilidade, mas não substitui a ausência de arquitetura/métricas/release consolidadas.
+   - Nícolas Oliveira: aparece em merge tardio do PR `#76` e em PRs abertos de plugin/source control (`#79`) e sincronização, mas as principais evidências da Sprint 3 ficaram abertas, com mudanças solicitadas ou depois do prazo. A nota é limitada porque houve menos entrega integrada e aceita no marco.
+   - Nicolas Pitz: contribuiu com PR `#72` de CI/lint/formatação e tentou documentar C4 no PR `#75`, além de atualizar baseline no PR `#76`. A nota reconhece contribuição em qualidade/documentação, mas penaliza a arquitetura não integrada, métricas insuficientes e fechamento posterior ao prazo.
