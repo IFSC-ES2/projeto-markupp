@@ -410,9 +410,8 @@ func TestSearch_PaginacaoComOffset_PassaParametrosCorretosAoRepo(t *testing.T) {
 	require.Len(t, results, 2)
 	assert.Equal(t, "id-2", results[0].ID)
 	assert.Equal(t, "id-3", results[1].ID)
-	// Valida que os parâmetros foram passados corretamente (com wildcards)
 	assert.True(t, repo.searchArgs.called)
-	assert.Equal(t, "%golang%", repo.searchArgs.query)
+	assert.Equal(t, "golang", repo.searchArgs.query)
 	assert.Equal(t, int32(1), repo.searchArgs.offset)
 	assert.Equal(t, int32(2), repo.searchArgs.limit)
 }
@@ -447,22 +446,22 @@ func TestSearch_OffsetNegativo_UsaZero(t *testing.T) {
 	assert.Equal(t, int32(0), repo.searchArgs.offset)
 }
 
-func TestSearch_AdicionaWildcardsNaQuery(t *testing.T) {
+func TestSearch_PassaQueryCruaAoRepo(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
 	_, err := svc.SearchNotes(context.Background(), "test", 0, 10)
 	require.NoError(t, err)
 
-	assert.Equal(t, "%test%", repo.searchArgs.query)
+	assert.Equal(t, "test", repo.searchArgs.query)
 }
 
-func TestSearch_QueryVazioComWildcards(t *testing.T) {
+func TestSearch_QueryVazia_PassaVaziaAoRepo(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
 	_, err := svc.SearchNotes(context.Background(), "", 0, 10)
 	require.NoError(t, err)
 
-	assert.Equal(t, "%%", repo.searchArgs.query)
+	assert.Equal(t, "", repo.searchArgs.query)
 }
