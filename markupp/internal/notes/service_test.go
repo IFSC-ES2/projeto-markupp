@@ -2,7 +2,6 @@ package notes_test
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	"strings"
 	"testing"
@@ -296,14 +295,14 @@ func TestGetNoteById_IDVazio_RetornaErrInvalidId(t *testing.T) {
 	assert.True(t, errors.Is(err, notes.ErrInvalidId))
 }
 
-func TestGetNoteById_IDNaoEncontrado_RetornaErrNotFoundId(t *testing.T) {
-	repo := &fakeRepo{getErr: sql.ErrNoRows}
+func TestGetNoteById_IDNaoEncontrado_RetornaErrNotFound(t *testing.T) {
+	repo := &fakeRepo{getErr: notes.ErrNotFound}
 	svc := newServiceForTest(repo)
 
 	_, err := svc.GetNoteById(context.Background(), "id-inexistente")
 
 	require.Error(t, err)
-	assert.True(t, errors.Is(err, notes.ErrNotFoundId))
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
 }
 
 func TestGetNoteById_CaminhoFeliz_RetornaNotaCorreta(t *testing.T) {

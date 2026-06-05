@@ -3,7 +3,6 @@ package api_test
 import (
 	"bytes"
 	"context"
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -298,7 +297,7 @@ func TestGetNotes_IDVazio_Retorna404(t *testing.T) {
 }
 
 func TestGetNotes_IDNaoEncontrado_Retorna404(t *testing.T) {
-	svc := &fakeService{err: sql.ErrNoRows}
+	svc := &fakeService{err: notes.ErrNotFound}
 	rec := doGet(t, svc, "id-inexistente")
 
 	assert.Equal(t, http.StatusNotFound, rec.Code)
@@ -341,7 +340,7 @@ func (s *stubRepository) SearchNotes(ctx context.Context, query string, offset, 
 }
 
 func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
-	repo := &stubRepository{getError: sql.ErrNoRows}
+	repo := &stubRepository{getError: notes.ErrNotFound}
 	svc := notes.NewService(repo, 1000)
 
 	router := api.NewRouter(svc)

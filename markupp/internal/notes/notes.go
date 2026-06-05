@@ -2,7 +2,6 @@ package notes
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
@@ -40,7 +39,6 @@ var (
 	ErrDuplicatePath  = errors.New("path já existe")
 	ErrNotFound       = errors.New("nota não encontrada")
 	ErrInvalidId      = errors.New("ID inválido")
-	ErrNotFoundId     = errors.New("ID não encontrado")
 )
 
 type Service struct {
@@ -63,12 +61,7 @@ func (s *Service) GetNoteById(ctx context.Context, id string) (Note, error) {
 	if err := s.validateId(ctx, id); err != nil {
 		return Note{}, err
 	}
-
-	note, err := s.repo.GetNoteByID(ctx, id)
-	if errors.Is(err, sql.ErrNoRows) {
-		return Note{}, ErrNotFoundId
-	}
-	return note, err
+	return s.repo.GetNoteByID(ctx, id)
 }
 
 func (s *Service) ListNotes(ctx context.Context) ([]Note, error) {
