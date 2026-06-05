@@ -58,7 +58,7 @@ func NewService(repo Repository, maxContentSize int64) *Service {
 }
 
 func (s *Service) GetNoteById(ctx context.Context, id string) (Note, error) {
-	if err := s.validateId(ctx, id); err != nil {
+	if err := validateId(id); err != nil {
 		return Note{}, err
 	}
 	return s.repo.GetNoteByID(ctx, id)
@@ -90,8 +90,8 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 }
 
 func (s *Service) Update(ctx context.Context, id, path, content string) (Note, error) {
-	if strings.TrimSpace(id) == "" {
-		return Note{}, ErrNotFound
+	if err := validateId(id); err != nil {
+		return Note{}, err
 	}
 	if err := validatePath(path); err != nil {
 		return Note{}, err
@@ -110,7 +110,7 @@ func (s *Service) Update(ctx context.Context, id, path, content string) (Note, e
 }
 
 func (s *Service) Delete(ctx context.Context, id string) error {
-	if err := s.validateId(ctx, id); err != nil {
+	if err := validateId(id); err != nil {
 		return err
 	}
 	if err := s.repo.Delete(ctx, id); err != nil {
@@ -122,7 +122,7 @@ func (s *Service) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-func (s *Service) validateId(ctx context.Context, id string) error {
+func validateId(id string) error {
 	if strings.TrimSpace(id) == "" {
 		return ErrInvalidId
 	}
