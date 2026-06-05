@@ -20,7 +20,6 @@ func TestSearchNotes_ComResultados_RetornaPaginado(t *testing.T) {
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
-	// Inserir dados de teste
 	now := time.Now()
 	notesData := []notes.Note{
 		{ID: "1", Path: "golang1.md", Content: "golang tutorial", CreatedAt: now, UpdatedAt: now},
@@ -37,7 +36,6 @@ func TestSearchNotes_ComResultados_RetornaPaginado(t *testing.T) {
 
 	require.NoError(t, err)
 	require.Len(t, results, 3)
-	// Verificar que retorna apenas id, path e updatedAt
 	assert.Equal(t, "1", results[0].ID)
 	assert.Equal(t, "golang1.md", results[0].Path)
 	assert.Equal(t, now.Unix(), results[0].UpdatedAt.Unix())
@@ -49,7 +47,6 @@ func TestSearchNotes_ComPaginacao_RetornaApenasLimitAndOffset(t *testing.T) {
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
-	// Inserir 5 notas com "golang"
 	now := time.Now()
 	for i := 1; i <= 5; i++ {
 		note := notes.Note{
@@ -159,7 +156,6 @@ func setupIntegrationTestDB(t *testing.T) *sql.DB {
 	db, err := sql.Open("sqlite", ":memory:")
 	require.NoError(t, err)
 
-	// Criar tabela de testes
 	_, err = db.Exec(`
 		CREATE TABLE notes (
 			id TEXT PRIMARY KEY,
