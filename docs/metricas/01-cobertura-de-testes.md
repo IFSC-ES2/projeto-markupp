@@ -1,5 +1,9 @@
 # 01. Cobertura de testes
 
+## Sprint 1
+
+![Cobertura na Sprint 1](img/01-cobertura-sprint1.png)
+
 ## Sprint 2
 
 ![Cobertura na Sprint 2](img/01-cobertura-sprint2.png)

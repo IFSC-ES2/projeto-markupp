@@ -1,5 +1,9 @@
 # 06. Burndown do backlog
 
+## Sprint 1
+
+![Burndown na Sprint 1](img/06-burndown-sprint1.png)
+
 ## Sprint 2
 
 ![Burndown na Sprint 2](img/06-burndown-sprint2.png)
