@@ -31,7 +31,7 @@ beforeEach(() => {
 });
 
 function makeSettings(notes: Record<string, NoteMeta> = {}): MarkuppSettings {
-	return { backendUrl: "http://localhost:8080", notes };
+	return { serverUrl: "http://localhost:8080", notes };
 }
 
 describe("importFromServer", () => {

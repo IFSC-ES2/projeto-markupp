@@ -8,7 +8,7 @@ import {
 import type { MarkuppSettings, NoteMeta } from "../settings";
 
 function emptySettings(): MarkuppSettings {
-	return { backendUrl: "http://localhost:8080", notes: {} };
+	return { serverUrl: "http://localhost:8080", notes: {} };
 }
 
 const meta: NoteMeta = {

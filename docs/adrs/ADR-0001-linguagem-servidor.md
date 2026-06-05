@@ -1,4 +1,4 @@
-# ADR-0001: Go como linguagem do backend
+# ADR-0001: Go como linguagem do servidor
 
 ## Contexto
 

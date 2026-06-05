@@ -19,8 +19,8 @@ export class MarkuppApiError extends Error {
 	}
 }
 
-function notesUrl(backendUrl: string, suffix = ""): string {
-	return backendUrl.replace(/\/+$/, "") + "/notes" + suffix;
+function notesUrl(serverUrl: string, suffix = ""): string {
+	return serverUrl.replace(/\/+$/, "") + "/notes" + suffix;
 }
 
 function toApiError(res: { status: number; json: unknown }): MarkuppApiError {
@@ -33,12 +33,12 @@ function toApiError(res: { status: number; json: unknown }): MarkuppApiError {
 }
 
 export async function createNote(
-	backendUrl: string,
+	serverUrl: string,
 	path: string,
 	content: string,
 ): Promise<NoteResponse> {
 	const res = await requestUrl({
-		url: notesUrl(backendUrl),
+		url: notesUrl(serverUrl),
 		method: "POST",
 		contentType: "application/json",
 		body: JSON.stringify({ path, content }),
@@ -52,13 +52,13 @@ export async function createNote(
 }
 
 export async function updateNote(
-	backendUrl: string,
+	serverUrl: string,
 	id: string,
 	path: string,
 	content: string,
 ): Promise<NoteResponse> {
 	const res = await requestUrl({
-		url: notesUrl(backendUrl, "/" + encodeURIComponent(id)),
+		url: notesUrl(serverUrl, "/" + encodeURIComponent(id)),
 		method: "PUT",
 		contentType: "application/json",
 		body: JSON.stringify({ path, content }),
@@ -72,11 +72,11 @@ export async function updateNote(
 }
 
 export async function getNote(
-	backendUrl: string,
+	serverUrl: string,
 	id: string,
 ): Promise<NoteResponse> {
 	const res = await requestUrl({
-		url: notesUrl(backendUrl, "/" + encodeURIComponent(id)),
+		url: notesUrl(serverUrl, "/" + encodeURIComponent(id)),
 		method: "GET",
 		throw: false,
 	});
@@ -87,9 +87,9 @@ export async function getNote(
 	throw toApiError(res);
 }
 
-export async function listNotes(backendUrl: string): Promise<NoteResponse[]> {
+export async function listNotes(serverUrl: string): Promise<NoteResponse[]> {
 	const res = await requestUrl({
-		url: notesUrl(backendUrl),
+		url: notesUrl(serverUrl),
 		method: "GET",
 		throw: false,
 	});

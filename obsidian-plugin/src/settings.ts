@@ -8,12 +8,12 @@ export type NoteMeta = {
 };
 
 export interface MarkuppSettings {
-	backendUrl: string;
+	serverUrl: string;
 	notes: Record<string, NoteMeta>;
 }
 
 export const DEFAULT_SETTINGS: MarkuppSettings = {
-	backendUrl: "http://localhost:8080",
+	serverUrl: "http://localhost:8080",
 	notes: {},
 };
 
@@ -30,14 +30,14 @@ export class MarkuppSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName("Backend URL")
+			.setName("URL do servidor")
 			.setDesc("Endereço do servidor Markupp para onde as notas serão enviadas.")
 			.addText((text) =>
 				text
 					.setPlaceholder("http://localhost:8080")
-					.setValue(this.plugin.settings.backendUrl)
+					.setValue(this.plugin.settings.serverUrl)
 					.onChange(async (value) => {
-						this.plugin.settings.backendUrl = value.trim();
+						this.plugin.settings.serverUrl = value.trim();
 						await this.plugin.saveSettings();
 					}),
 			);

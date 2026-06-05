@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ifsc-ES2/projeto-markupp/backend/internal/config"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/internal/config"
 )
 
 func TestDefault_RetornaValoresPadrao(t *testing.T) {

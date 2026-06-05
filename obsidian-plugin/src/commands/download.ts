@@ -27,7 +27,7 @@ export async function downloadActiveNote(
 	}
 
 	try {
-		const note = await getNote(settings.backendUrl, meta.id);
+		const note = await getNote(settings.serverUrl, meta.id);
 		await plugin.app.vault.modify(file, note.content);
 
 		setNoteMeta(settings, path, {
@@ -45,11 +45,11 @@ export async function downloadActiveNote(
 			removeNoteMeta(settings, path);
 			await plugin.saveData(settings);
 		}
-		new Notice(buildErrorMessage(err, settings.backendUrl));
+		new Notice(buildErrorMessage(err, settings.serverUrl));
 	}
 }
 
-function buildErrorMessage(err: unknown, backendUrl: string): string {
+function buildErrorMessage(err: unknown, serverUrl: string): string {
 	if (err instanceof MarkuppApiError) {
 		switch (err.code) {
 			case "not_found":
@@ -60,5 +60,5 @@ function buildErrorMessage(err: unknown, backendUrl: string): string {
 				return `Erro do servidor (${err.status}): ${err.message}`;
 		}
 	}
-	return `Não foi possível conectar a ${backendUrl}. Verifique se o backend está rodando.`;
+	return `Não foi possível conectar a ${serverUrl}. Verifique se o servidor está rodando.`;
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/pressly/goose/v3"
 	_ "modernc.org/sqlite"
 
-	"github.com/ifsc-ES2/projeto-markupp/backend/migrations"
+	"github.com/ifsc-ES2/projeto-markupp/markupp/migrations"
 )
 
 func OpenDB(path string) (*sql.DB, error) {
