@@ -158,8 +158,7 @@ func (s *Service) SearchNotes(ctx context.Context, query string, offset, limit i
 		limit = 10
 	}
 
-	searchQuery := "%" + query + "%"
-	results, err := s.repo.SearchNotes(ctx, searchQuery, int32(offset), int32(limit))
+	results, err := s.repo.SearchNotes(ctx, query, int32(offset), int32(limit))
 	if err != nil {
 		return nil, fmt.Errorf("buscar notas: %w", err)
 	}

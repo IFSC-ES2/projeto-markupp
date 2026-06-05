@@ -94,7 +94,7 @@ func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (not
 
 func (r *SqliteNotesRepository) SearchNotes(ctx context.Context, query string, offset, limit int32) ([]notes.SearchResult, error) {
 	rows, err := r.q.SearchNotes(ctx, gen.SearchNotesParams{
-		Content: query,
+		Content: "%" + query + "%",
 		Limit:   int64(limit),
 		Offset:  int64(offset),
 	})
