@@ -15,14 +15,28 @@ import (
 const sqliteUniqueConstraintCode = 2067
 
 type SqliteNotesRepository struct {
-	q *gen.Queries
+	q     *gen.Queries
+	clock func() time.Time
 }
 
 func NewSqliteNotesRepository(db *sql.DB) *SqliteNotesRepository {
-	return &SqliteNotesRepository{q: gen.New(db)}
+	return &SqliteNotesRepository{
+		q:     gen.New(db),
+		clock: time.Now,
+	}
+}
+
+func NewSqliteNotesRepositoryWithClock(db *sql.DB, clock func() time.Time) *SqliteNotesRepository {
+	return &SqliteNotesRepository{
+		q:     gen.New(db),
+		clock: clock,
+	}
 }
 
 func (r *SqliteNotesRepository) Save(ctx context.Context, note notes.Note) error {
+	note.CreatedAt = note.CreatedAt.UTC().Truncate(time.Millisecond)
+	note.UpdatedAt = note.UpdatedAt.UTC().Truncate(time.Millisecond)
+
 	err := r.q.CreateNote(ctx, gen.CreateNoteParams{
 		ID:        note.ID,
 		Path:      note.Path,
@@ -40,15 +54,39 @@ func (r *SqliteNotesRepository) Save(ctx context.Context, note notes.Note) error
 }
 
 func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (notes.Note, error) {
-	row, err := r.q.UpdateNote(ctx, gen.UpdateNoteParams{
-		ID:        id,
-		Path:      path,
-		Content:   content,
-		UpdatedAt: time.Now(),
-	})
+	now := r.clock()
+	var row gen.Note
+	var err error
+
+	lastModifiedAt = lastModifiedAt.UTC().Truncate(time.Millisecond)
+	now = now.UTC().Truncate(time.Millisecond)
+
+	if force {
+		row, err = r.q.UpdateNoteForced(ctx, gen.UpdateNoteForcedParams{
+			ID:        id,
+			Path:      path,
+			Content:   content,
+			UpdatedAt: now,
+		})
+	} else {
+		row, err = r.q.UpdateNoteWithVersionCheck(ctx, gen.UpdateNoteWithVersionCheckParams{
+			ID:            id,
+			Path:          path,
+			Content:       content,
+			UpdatedAt:     now,
+			PrevUpdatedAt: lastModifiedAt,
+		})
+	}
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
+			if !force {
+				_, checkErr := r.q.GetNoteByID(ctx, id)
+				if errors.Is(checkErr, sql.ErrNoRows) {
+					return notes.Note{}, notes.ErrNotFound
+				}
+				return notes.Note{}, notes.ErrConflict
+			}
 			return notes.Note{}, notes.ErrNotFound
 		}
 		if isUniqueConstraintViolation(err) {
@@ -61,8 +99,8 @@ func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content st
 		ID:        row.ID,
 		Path:      row.Path,
 		Content:   row.Content,
-		CreatedAt: row.CreatedAt,
-		UpdatedAt: row.UpdatedAt,
+		CreatedAt: row.CreatedAt.UTC().Truncate(time.Millisecond),
+		UpdatedAt: row.UpdatedAt.UTC().Truncate(time.Millisecond),
 	}, nil
 }
 
@@ -86,8 +124,8 @@ func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (not
 		ID:        row.ID,
 		Path:      row.Path,
 		Content:   row.Content,
-		CreatedAt: row.CreatedAt,
-		UpdatedAt: row.UpdatedAt,
+		CreatedAt: row.CreatedAt.UTC().Truncate(time.Millisecond),
+		UpdatedAt: row.UpdatedAt.UTC().Truncate(time.Millisecond),
 	}, nil
 }
 
@@ -102,8 +140,8 @@ func (r *SqliteNotesRepository) ListNotes(ctx context.Context) ([]notes.Note, er
 			ID:        row.ID,
 			Path:      row.Path,
 			Content:   row.Content,
-			CreatedAt: row.CreatedAt,
-			UpdatedAt: row.UpdatedAt,
+			CreatedAt: row.CreatedAt.UTC().Truncate(time.Millisecond),
+			UpdatedAt: row.UpdatedAt.UTC().Truncate(time.Millisecond),
 		})
 	}
 	return out, nil

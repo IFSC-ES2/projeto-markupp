@@ -201,7 +201,7 @@ func TestUpdate_ContentMuitoGrande_RetornaErrInvalidContent(t *testing.T) {
 }
 
 func TestUpdate_RepoRetornaErrNotFound_Propagado(t *testing.T) {
-	repo := &fakeRepo{getErr: notes.ErrNotFound}
+	repo := &fakeRepo{updateErr: notes.ErrNotFound}
 	svc := newServiceForTest(repo)
 	now := time.Now()
 
@@ -262,25 +262,16 @@ func TestUpdate_CaminhoFeliz_RetornaNotaAtualizada(t *testing.T) {
 }
 
 func TestUpdate_ConflictoPorVersao_Force_False_RetornaErrConflict(t *testing.T) {
-	currentVersion := time.Date(2026, 5, 4, 0, 0, 0, 0, time.UTC)
-	clientVersion := time.Date(2026, 5, 3, 0, 0, 0, 0, time.UTC) // é mais antigo
+	clientVersion := time.Date(2026, 5, 3, 0, 0, 0, 0, time.UTC)
 
-	nota := notes.Note{
-		ID:        "id-1",
-		Path:      "test.md",
-		Content:   "server version",
-		CreatedAt: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
-		UpdatedAt: currentVersion,
-	}
-	repo := &fakeRepo{note: nota}
+	repo := &fakeRepo{updateErr: notes.ErrConflict}
 	svc := newServiceForTest(repo)
 
 	_, err := svc.Update(context.Background(), "id-1", "test.md", "novo", clientVersion, false)
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrConflict))
-	// Deve retornar erro SEM chamar repo.Update (conflito detectado antes)
-	assert.False(t, repo.updateArgs.called)
+	assert.True(t, repo.updateArgs.called)
 }
 
 func TestUpdate_ConflictoPorVersao_Force_True_Sucesso(t *testing.T) {

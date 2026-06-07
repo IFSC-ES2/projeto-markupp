@@ -101,22 +101,9 @@ func (s *Service) Update(ctx context.Context, id, path, content string, lastModi
 		return Note{}, err
 	}
 
-	currentNote, err := s.repo.GetNoteByID(ctx, id)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return Note{}, ErrNotFound
-		}
-		return Note{}, fmt.Errorf("obter nota %q: %w", id, err)
-	}
-
-	// Verificar versão: se nota no servidor mudou e force=false, rejeitar
-	if !currentNote.UpdatedAt.Equal(lastModifiedAt) && !force {
-		return Note{}, ErrConflict
-	}
-
 	updated, err := s.repo.Update(ctx, id, path, content, lastModifiedAt, force)
 	if err != nil {
-		if errors.Is(err, ErrDuplicatePath) {
+		if errors.Is(err, ErrDuplicatePath) || errors.Is(err, ErrNotFound) || errors.Is(err, ErrConflict) {
 			return Note{}, err
 		}
 		return Note{}, fmt.Errorf("atualizar nota %q: %w", id, err)

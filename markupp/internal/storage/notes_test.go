@@ -94,7 +94,6 @@ func TestSqliteRepo_Update_AtualizaCamposEPreservaCreatedAt(t *testing.T) {
 	assert.Equal(t, "renomeado.md", got.Path)
 	assert.Equal(t, "novo conteudo", got.Content)
 	assert.True(t, original.CreatedAt.Equal(got.CreatedAt))
-	// UpdatedAt deve ter avançado
 	assert.True(t, got.UpdatedAt.After(original.UpdatedAt))
 }
 
@@ -118,7 +117,7 @@ func TestSqliteRepo_Update_PathDuplicado_RetornaErrDuplicatePath(t *testing.T) {
 	require.NoError(t, repo.Save(context.Background(), n1))
 	require.NoError(t, repo.Save(context.Background(), n2))
 
-	_, err := repo.Update(context.Background(), n2.ID, n1.Path, n2.Content, time.Now(), false)
+	_, err := repo.Update(context.Background(), n2.ID, n1.Path, n2.Content, n2.UpdatedAt, false)
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
@@ -146,6 +145,80 @@ func TestSqliteRepo_Delete_IDInexistente_RetornaErrNotFound(t *testing.T) {
 
 	require.Error(t, err)
 	assert.True(t, errors.Is(err, notes.ErrNotFound))
+}
+
+func TestSqliteRepo_Update_ComVersaoCorreta_Force_False_Sucesso(t *testing.T) {
+	db := setupTestDB(t)
+	repo := storage.NewSqliteNotesRepository(db)
+	original := sampleNote()
+	require.NoError(t, repo.Save(context.Background(), original))
+
+	got, err := repo.Update(context.Background(), original.ID, "renomeado.md", "novo conteudo", original.UpdatedAt, false)
+
+	require.NoError(t, err)
+	assert.Equal(t, "renomeado.md", got.Path)
+	assert.Equal(t, "novo conteudo", got.Content)
+}
+
+func TestSqliteRepo_Update_ComVersaoIncorreta_Force_False_RetornaErrConflict(t *testing.T) {
+	db := setupTestDB(t)
+	repo := storage.NewSqliteNotesRepository(db)
+	original := sampleNote()
+	require.NoError(t, repo.Save(context.Background(), original))
+
+	versioneAnterior := original.UpdatedAt.Add(-1 * time.Second)
+	_, err := repo.Update(context.Background(), original.ID, "renomeado.md", "novo conteudo", versioneAnterior, false)
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrConflict))
+}
+
+func TestSqliteRepo_Update_ComVersaoIncorreta_Force_True_Sucesso(t *testing.T) {
+	db := setupTestDB(t)
+	repo := storage.NewSqliteNotesRepository(db)
+	original := sampleNote()
+	require.NoError(t, repo.Save(context.Background(), original))
+
+	versioneAnterior := original.UpdatedAt.Add(-1 * time.Second)
+	got, err := repo.Update(context.Background(), original.ID, "renomeado.md", "novo conteudo", versioneAnterior, true)
+
+	require.NoError(t, err)
+	assert.Equal(t, "renomeado.md", got.Path)
+	assert.Equal(t, "novo conteudo", got.Content)
+}
+
+func TestSqliteRepo_Update_IDInexistente_Force_False_RetornaErrNotFound(t *testing.T) {
+	db := setupTestDB(t)
+	repo := storage.NewSqliteNotesRepository(db)
+
+	_, err := repo.Update(context.Background(), "nao-existe", "x.md", "y", time.Now(), false)
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
+}
+
+func TestSqliteRepo_Update_IDInexistente_Force_True_RetornaErrNotFound(t *testing.T) {
+	db := setupTestDB(t)
+	repo := storage.NewSqliteNotesRepository(db)
+
+	_, err := repo.Update(context.Background(), "nao-existe", "x.md", "y", time.Now(), true)
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
+}
+
+func TestSqliteRepo_Update_ComClockInjetado(t *testing.T) {
+	db := setupTestDB(t)
+	agora := time.Date(2026, 6, 7, 12, 0, 0, 0, time.UTC)
+	clock := func() time.Time { return agora }
+	repo := storage.NewSqliteNotesRepositoryWithClock(db, clock)
+	original := sampleNote()
+	require.NoError(t, repo.Save(context.Background(), original))
+
+	got, err := repo.Update(context.Background(), original.ID, "novo.md", "novo", original.UpdatedAt, false)
+
+	require.NoError(t, err)
+	assert.True(t, got.UpdatedAt.Equal(agora))
 }
 
 func TestSqliteRepo_ListNotes_DBVazio_RetornaSliceVazio(t *testing.T) {
