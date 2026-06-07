@@ -26,12 +26,12 @@ type fakeService struct {
 	updateNote notes.Note
 	updateErr  error
 	updateArgs struct {
-		id              string
-		path            string
-		content         string
-		lastModifiedAt  time.Time
-		force           bool
-		called          bool
+		id             string
+		path           string
+		content        string
+		lastModifiedAt time.Time
+		force          bool
+		called         bool
 	}
 
 	deleteErr    error
