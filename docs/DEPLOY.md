@@ -60,8 +60,6 @@ curl -s -X DELETE http://localhost:8080/notes/$ID -w '%{http_code}\n'
 
 Esperado: `POST` retorna JSON com `id` UUID, `GET` traz a nota, `DELETE` responde `204`. Rotas completas em `markupp/openapi.yaml`.
 
-Validação pelo plugin: abra uma nota no Obsidian e execute o comando **"Subir nota ativa"**.
-
 ## Build a partir do código fonte
 
 Útil pra contribuir ou reproduzir a imagem localmente.
