@@ -76,7 +76,7 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 	if err := s.validateContent(content); err != nil {
 		return Note{}, err
 	}
-	now := s.clock()
+	now := canonicalTime(s.clock())
 	note := Note{
 		ID:        s.newID(),
 		Path:      path,
@@ -129,6 +129,10 @@ func validateId(id string) error {
 		return ErrInvalidId
 	}
 	return nil
+}
+
+func canonicalTime(t time.Time) time.Time {
+	return t.UTC().Truncate(time.Millisecond)
 }
 
 func validatePath(path string) error {

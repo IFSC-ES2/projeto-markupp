@@ -153,7 +153,7 @@ func TestCreate_CaminhoFeliz_GeraNotaCompleta(t *testing.T) {
 	repo := &fakeRepo{}
 	svc := newServiceForTest(repo)
 
-	before := time.Now()
+	before := time.Now().Truncate(time.Millisecond)
 	note, err := svc.Create(context.Background(), "minha.md", "conteudo")
 	after := time.Now()
 
