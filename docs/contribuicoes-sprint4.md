@@ -9,9 +9,9 @@ Janela: marco da Sprint 3 (29/05) ao marco da Sprint 4 (08/06). Cada membro conf
 
 ## Luís Renato Freitas de Almeida
 
-- a confirmar pelo próprio
-- Reengenharia de isolamento da persistência na camada de storage (ADR-0010).
+- Reengenharia de isolamento da persistência na camada de storage, com ADR-0010 e testes (#81).
 - Consolidação do marco v0.4.0 no `main` (#82).
+- Revisões de PRs.
 
 ## Nícolas Arthur Raulino Oliveira
 
