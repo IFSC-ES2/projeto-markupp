@@ -91,8 +91,8 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 }
 
 func (s *Service) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (Note, error) {
-	if strings.TrimSpace(id) == "" {
-		return Note{}, ErrNotFound
+	if err := validateId(id); err != nil {
+		return Note{}, err
 	}
 	if err := validatePath(path); err != nil {
 		return Note{}, err
@@ -125,6 +125,13 @@ func (s *Service) Delete(ctx context.Context, id string) error {
 }
 
 func (s *Service) validateId(ctx context.Context, id string) error {
+	if strings.TrimSpace(id) == "" {
+		return ErrInvalidId
+	}
+	return nil
+}
+
+func validateId(id string) error {
 	if strings.TrimSpace(id) == "" {
 		return ErrInvalidId
 	}

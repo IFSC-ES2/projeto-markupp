@@ -163,7 +163,7 @@ func TestCreate_RepoRetornaErrDuplicatePath_PropagadoAoCaller(t *testing.T) {
 	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
 }
 
-func TestUpdate_IDVazio_RetornaErrNotFound(t *testing.T) {
+func TestUpdate_IDVazio_RetornaErrInvalidId(t *testing.T) {
 	repo := &fakeRepo{}
 	svc := newServiceForTest(repo)
 	now := time.Now()
@@ -171,7 +171,7 @@ func TestUpdate_IDVazio_RetornaErrNotFound(t *testing.T) {
 	_, err := svc.Update(context.Background(), "", "ok.md", "x", now, false)
 
 	require.Error(t, err)
-	assert.True(t, errors.Is(err, notes.ErrNotFound))
+	assert.True(t, errors.Is(err, notes.ErrInvalidId))
 	assert.False(t, repo.updateArgs.called)
 }
 
