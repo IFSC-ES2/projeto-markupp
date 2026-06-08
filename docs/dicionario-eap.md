@@ -25,8 +25,8 @@
 - Busca híbrida textual + semântica
 - Regras de atualização do índice
 
-## Backend e API REST
-- Estrutura base do serviço backend
+## Servidor e API REST
+- Estrutura base do servidor
 - CRUD de documentos markdown
 - Organização hierárquica por caminhos lógicos
 - Versionamento de documentos

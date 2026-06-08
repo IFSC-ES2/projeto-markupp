@@ -34,4 +34,4 @@ Próximo marco: Entrega 3 - 9/4/2026
 ## Fatores que podem afetar produtividade
 
 - Período de provas de outras matérias
-- Curva de aprendizado com a stack escolhida (Go no backend, TypeScript e API do Obsidian no plugin)
+- Curva de aprendizado com a stack escolhida (Go no servidor, TypeScript e API do Obsidian no plugin)
