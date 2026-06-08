@@ -11,3 +11,7 @@
 ## Sprint 3
 
 ![PRs revisados na Sprint 3](img/04-prs-revisados-sprint3.png)
+
+## Sprint 4
+
+![PRs revisados na Sprint 4](img/04-prs-revisados-sprint4.png)

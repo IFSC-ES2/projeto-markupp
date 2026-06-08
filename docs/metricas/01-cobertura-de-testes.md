@@ -11,3 +11,7 @@
 ## Sprint 3
 
 ![Cobertura na Sprint 3](img/01-cobertura-sprint3.png)
+
+## Sprint 4
+
+![Cobertura na Sprint 4](img/01-cobertura-sprint4.png)
