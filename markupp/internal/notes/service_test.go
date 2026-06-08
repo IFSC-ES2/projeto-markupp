@@ -169,6 +169,19 @@ func TestCreate_CaminhoFeliz_GeraNotaCompleta(t *testing.T) {
 	assert.Equal(t, note, repo.saved)
 }
 
+func TestCreate_NormalizaTimestampParaUTCMilissegundo(t *testing.T) {
+	repo := &fakeRepo{}
+	svc := newServiceForTest(repo)
+
+	got, err := svc.Create(context.Background(), "a.md", "conteudo")
+
+	require.NoError(t, err)
+	assert.Equal(t, "UTC", got.CreatedAt.Location().String())
+	assert.Equal(t, "UTC", got.UpdatedAt.Location().String())
+	assert.True(t, got.UpdatedAt.Equal(got.UpdatedAt.Truncate(time.Millisecond)))
+	assert.Equal(t, got.CreatedAt, got.UpdatedAt)
+}
+
 func TestCreate_RepoRetornaErrDuplicatePath_PropagadoAoCaller(t *testing.T) {
 	repo := &fakeRepo{saveErr: notes.ErrDuplicatePath}
 	svc := newServiceForTest(repo)
