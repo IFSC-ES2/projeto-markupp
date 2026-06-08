@@ -1,8 +1,8 @@
 # Planejamento Inicial e Baseline
 
 > **Projeto:** Markupp
-> **Versão:** 1.0
-> **Data de Registro da Linha de Base:** 09/04/2026
+> **Versão:** 1.3
+> **Data de Registro da Linha de Base:** 08/06/2026
 
 ---
 
@@ -91,7 +91,7 @@ Premissas que assumimos ao construir este planejamento. Caso se mostrem inválid
 
 ## (f) Capacidade Planejada da Equipe
 
-Nossa disponibilidade até o próximo marco do projeto — **Entrega 3, em 09/04/2026**.
+Nossa disponibilidade até o próximo marco do projeto — **Entrega 8, em 08/06/2026**.
 
 | Membro          | Papel                   | Disponibilidade             |
 |-----------------|-------------------------|-----------------------------|
@@ -101,7 +101,7 @@ Nossa disponibilidade até o próximo marco do projeto — **Entrega 3, em 09/04
 | Nícolas Pitz    | Engenheiro de Qualidade | Horas de aula + finais de semana |
 
 > **Período coberto por esta linha de base:** início do semestre até 09/04/2026
-> **Próximo marco:** Entrega 3 — Estimativas e Métricas (Baseline)
+> **Próximo marco:** Entrega 8
 
 ---
 
@@ -126,7 +126,7 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 | #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature |  Não iniciado (Sprint 4)    |
 | #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature |  Não iniciado (Sprint 4)    |
 | #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature |  Feito                      |
-| #20 | Frontend: UI de Exclusão e Sincronização de Estado                 | Feature |  Feito (Sprint 3)           | 
+| #20 | Frontend: UI de Exclusão e Sincronização de Estado                 | Feature |  Em andamento (Sprint 4)           | 
 | #48 | Documentação das rotas já existentes                               | Feature |  Feito                      | 
 | #44 | Configuração do servidor via arquivo JSON                          | Feature |  Feito                      |
 | #68 | Trazer notas do servidor para o vault do Obsidian                  | Feature |  Não iniciado (Sprint 4)    |
@@ -146,9 +146,9 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 
 | Campo                         | Valor                    |
 |-------------------------------|--------------------------|
-| **Data de registro**          | 09/04/2026               |
+| **Data de registro**          | 08/06/2026               |
 | **Responsável pelo registro** | Gabriela Riedel          |
-| **Versão do documento**       | 1.0                      |
+| **Versão do documento**       | 1.3                      |
 | **Aprovado por**              | Adriano Lima / Professor |
 
 ---

@@ -3,7 +3,6 @@ package api_test
 import (
 	"bytes"
 	"context"
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -26,10 +25,12 @@ type fakeService struct {
 	updateNote notes.Note
 	updateErr  error
 	updateArgs struct {
-		id      string
-		path    string
-		content string
-		called  bool
+		id             string
+		path           string
+		content        string
+		lastModifiedAt time.Time
+		force          bool
+		called         bool
 	}
 
 	deleteErr    error
@@ -54,11 +55,13 @@ func (f *fakeService) Create(ctx context.Context, path, content string) (notes.N
 	return f.note, f.err
 }
 
-func (f *fakeService) Update(ctx context.Context, id, path, content string) (notes.Note, error) {
+func (f *fakeService) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (notes.Note, error) {
 	f.updateArgs.called = true
 	f.updateArgs.id = id
 	f.updateArgs.path = path
 	f.updateArgs.content = content
+	f.updateArgs.lastModifiedAt = lastModifiedAt
+	f.updateArgs.force = force
 	return f.updateNote, f.updateErr
 }
 
@@ -199,7 +202,9 @@ func TestPutNotes_BodyValido_Retorna200(t *testing.T) {
 	svc := &fakeService{
 		updateNote: notes.Note{ID: "id-1", Path: "novo.md", Content: "novo"},
 	}
-	rec := doPut(t, svc, "id-1", `{"path":"novo.md","content":"novo"}`)
+	now := time.Now().UTC()
+	nowStr := now.Format(time.RFC3339)
+	rec := doPut(t, svc, "id-1", `{"path":"novo.md","content":"novo","lastModifiedAt":"`+nowStr+`","force":false}`)
 
 	assert.Equal(t, http.StatusOK, rec.Code)
 
@@ -226,7 +231,8 @@ func TestPutNotes_JSONMalformado_Retorna400(t *testing.T) {
 
 func TestPutNotes_ErrNotFound_Retorna404(t *testing.T) {
 	svc := &fakeService{updateErr: notes.ErrNotFound}
-	rec := doPut(t, svc, "fantasma", `{"path":"x.md","content":"y"}`)
+	now := time.Now().UTC().Format(time.RFC3339)
+	rec := doPut(t, svc, "fantasma", `{"path":"x.md","content":"y","lastModifiedAt":"`+now+`","force":false}`)
 
 	assert.Equal(t, http.StatusNotFound, rec.Code)
 	var resp map[string]any
@@ -236,7 +242,8 @@ func TestPutNotes_ErrNotFound_Retorna404(t *testing.T) {
 
 func TestPutNotes_ErrDuplicatePath_Retorna409(t *testing.T) {
 	svc := &fakeService{updateErr: notes.ErrDuplicatePath}
-	rec := doPut(t, svc, "id-1", `{"path":"existente.md","content":"y"}`)
+	now := time.Now().UTC().Format(time.RFC3339)
+	rec := doPut(t, svc, "id-1", `{"path":"existente.md","content":"y","lastModifiedAt":"`+now+`","force":false}`)
 
 	assert.Equal(t, http.StatusConflict, rec.Code)
 	var resp map[string]any
@@ -246,7 +253,8 @@ func TestPutNotes_ErrDuplicatePath_Retorna409(t *testing.T) {
 
 func TestPutNotes_ErrInvalidPath_Retorna400(t *testing.T) {
 	svc := &fakeService{updateErr: notes.ErrInvalidPath}
-	rec := doPut(t, svc, "id-1", `{"path":"","content":"y"}`)
+	now := time.Now().UTC().Format(time.RFC3339)
+	rec := doPut(t, svc, "id-1", `{"path":"","content":"y","lastModifiedAt":"`+now+`","force":false}`)
 
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	var resp map[string]any
@@ -290,7 +298,7 @@ func TestGetNotes_IDValido_Retorna200(t *testing.T) {
 	assert.Equal(t, "y", resp["content"])
 }
 
-func TestGetNotes_IDVazio_Retorna404(t *testing.T) {
+func TestGetNotes_RotaSemId_Retorna404(t *testing.T) {
 	svc := &fakeService{}
 	rec := doGet(t, svc, "")
 
@@ -298,7 +306,7 @@ func TestGetNotes_IDVazio_Retorna404(t *testing.T) {
 }
 
 func TestGetNotes_IDNaoEncontrado_Retorna404(t *testing.T) {
-	svc := &fakeService{err: sql.ErrNoRows}
+	svc := &fakeService{err: notes.ErrNotFound}
 	rec := doGet(t, svc, "id-inexistente")
 
 	assert.Equal(t, http.StatusNotFound, rec.Code)
@@ -320,7 +328,7 @@ func (s *stubRepository) Save(ctx context.Context, n notes.Note) error {
 	return nil
 }
 
-func (s *stubRepository) Update(ctx context.Context, id, path, content string, updatedAt time.Time) (notes.Note, error) {
+func (s *stubRepository) Update(ctx context.Context, id, path, content string, updatedAt, lastModifiedAt time.Time, force bool) (notes.Note, error) {
 	return notes.Note{}, nil
 }
 
@@ -341,7 +349,7 @@ func (s *stubRepository) SearchNotes(ctx context.Context, query string, offset, 
 }
 
 func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
-	repo := &stubRepository{getError: sql.ErrNoRows}
+	repo := &stubRepository{getError: notes.ErrNotFound}
 	svc := notes.NewService(repo, 1000)
 
 	router := api.NewRouter(svc)
@@ -356,16 +364,20 @@ func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
 	assert.Equal(t, "not_found", resp["error"])
 }
 
-func TestGetNotes_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
+func TestGetNotes_IdEmBranco_ComServiceReal_Retorna400(t *testing.T) {
 	repo := &stubRepository{}
 	svc := notes.NewService(repo, 1000)
 
 	router := api.NewRouter(svc)
-	req := httptest.NewRequest(http.MethodGet, "/notes/", nil)
+	req := httptest.NewRequest(http.MethodGet, "/notes/%20", nil)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)
 
-	assert.Equal(t, http.StatusNotFound, rec.Code)
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "invalid_id", resp["error"])
 }
 
 func TestGetNotes_IDValido_ComServiceReal_Retorna200(t *testing.T) {
