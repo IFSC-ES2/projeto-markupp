@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -182,8 +181,6 @@ func writeError(w http.ResponseWriter, code, message string, status int) {
 
 func writeDomainError(w http.ResponseWriter, err error) {
 	switch {
-	case errors.Is(err, sql.ErrNoRows):
-		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	case errors.Is(err, notes.ErrInvalidPath):
 		writeError(w, "invalid_path", notes.ErrInvalidPath.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrInvalidContent):
@@ -194,8 +191,6 @@ func writeDomainError(w http.ResponseWriter, err error) {
 		writeError(w, "not_found", notes.ErrNotFound.Error(), http.StatusNotFound)
 	case errors.Is(err, notes.ErrInvalidId):
 		writeError(w, "invalid_id", notes.ErrInvalidId.Error(), http.StatusBadRequest)
-	case errors.Is(err, notes.ErrNotFoundId):
-		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	default:
 		writeError(w, "internal", "erro interno", http.StatusInternalServerError)
 	}

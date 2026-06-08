@@ -3,7 +3,6 @@ package api_test
 import (
 	"bytes"
 	"context"
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -290,7 +289,7 @@ func TestGetNotes_IDValido_Retorna200(t *testing.T) {
 	assert.Equal(t, "y", resp["content"])
 }
 
-func TestGetNotes_IDVazio_Retorna404(t *testing.T) {
+func TestGetNotes_RotaSemId_Retorna404(t *testing.T) {
 	svc := &fakeService{}
 	rec := doGet(t, svc, "")
 
@@ -298,7 +297,7 @@ func TestGetNotes_IDVazio_Retorna404(t *testing.T) {
 }
 
 func TestGetNotes_IDNaoEncontrado_Retorna404(t *testing.T) {
-	svc := &fakeService{err: sql.ErrNoRows}
+	svc := &fakeService{err: notes.ErrNotFound}
 	rec := doGet(t, svc, "id-inexistente")
 
 	assert.Equal(t, http.StatusNotFound, rec.Code)
@@ -341,7 +340,7 @@ func (s *stubRepository) SearchNotes(ctx context.Context, query string, offset, 
 }
 
 func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
-	repo := &stubRepository{getError: sql.ErrNoRows}
+	repo := &stubRepository{getError: notes.ErrNotFound}
 	svc := notes.NewService(repo, 1000)
 
 	router := api.NewRouter(svc)
@@ -356,16 +355,20 @@ func TestGetNotes_IDNaoEncontrado_ComServiceReal_Retorna404(t *testing.T) {
 	assert.Equal(t, "not_found", resp["error"])
 }
 
-func TestGetNotes_IDVazio_ComServiceReal_Retorna400(t *testing.T) {
+func TestGetNotes_IdEmBranco_ComServiceReal_Retorna400(t *testing.T) {
 	repo := &stubRepository{}
 	svc := notes.NewService(repo, 1000)
 
 	router := api.NewRouter(svc)
-	req := httptest.NewRequest(http.MethodGet, "/notes/", nil)
+	req := httptest.NewRequest(http.MethodGet, "/notes/%20", nil)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)
 
-	assert.Equal(t, http.StatusNotFound, rec.Code)
+	assert.Equal(t, http.StatusBadRequest, rec.Code)
+
+	var resp map[string]any
+	require.NoError(t, json.NewDecoder(rec.Body).Decode(&resp))
+	assert.Equal(t, "invalid_id", resp["error"])
 }
 
 func TestGetNotes_IDValido_ComServiceReal_Retorna200(t *testing.T) {

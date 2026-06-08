@@ -2,7 +2,6 @@ package notes_test
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	"strings"
 	"testing"
@@ -178,14 +177,14 @@ func TestCreate_RepoRetornaErrDuplicatePath_PropagadoAoCaller(t *testing.T) {
 	assert.True(t, errors.Is(err, notes.ErrDuplicatePath))
 }
 
-func TestUpdate_IDVazio_RetornaErrNotFound(t *testing.T) {
+func TestUpdate_IDVazio_RetornaErrInvalidId(t *testing.T) {
 	repo := &fakeRepo{}
 	svc := newServiceForTest(repo)
 
 	_, err := svc.Update(context.Background(), "", "ok.md", "x")
 
 	require.Error(t, err)
-	assert.True(t, errors.Is(err, notes.ErrNotFound))
+	assert.True(t, errors.Is(err, notes.ErrInvalidId))
 	assert.False(t, repo.updateArgs.called)
 }
 
@@ -296,14 +295,14 @@ func TestGetNoteById_IDVazio_RetornaErrInvalidId(t *testing.T) {
 	assert.True(t, errors.Is(err, notes.ErrInvalidId))
 }
 
-func TestGetNoteById_IDNaoEncontrado_RetornaErrNotFoundId(t *testing.T) {
-	repo := &fakeRepo{getErr: sql.ErrNoRows}
+func TestGetNoteById_IDNaoEncontrado_RetornaErrNotFound(t *testing.T) {
+	repo := &fakeRepo{getErr: notes.ErrNotFound}
 	svc := newServiceForTest(repo)
 
 	_, err := svc.GetNoteById(context.Background(), "id-inexistente")
 
 	require.Error(t, err)
-	assert.True(t, errors.Is(err, notes.ErrNotFoundId))
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
 }
 
 func TestGetNoteById_CaminhoFeliz_RetornaNotaCorreta(t *testing.T) {
@@ -411,9 +410,8 @@ func TestSearch_PaginacaoComOffset_PassaParametrosCorretosAoRepo(t *testing.T) {
 	require.Len(t, results, 2)
 	assert.Equal(t, "id-2", results[0].ID)
 	assert.Equal(t, "id-3", results[1].ID)
-	// Valida que os parâmetros foram passados corretamente (com wildcards)
 	assert.True(t, repo.searchArgs.called)
-	assert.Equal(t, "%golang%", repo.searchArgs.query)
+	assert.Equal(t, "golang", repo.searchArgs.query)
 	assert.Equal(t, int32(1), repo.searchArgs.offset)
 	assert.Equal(t, int32(2), repo.searchArgs.limit)
 }
@@ -448,22 +446,22 @@ func TestSearch_OffsetNegativo_UsaZero(t *testing.T) {
 	assert.Equal(t, int32(0), repo.searchArgs.offset)
 }
 
-func TestSearch_AdicionaWildcardsNaQuery(t *testing.T) {
+func TestSearch_PassaQueryCruaAoRepo(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
 	_, err := svc.SearchNotes(context.Background(), "test", 0, 10)
 	require.NoError(t, err)
 
-	assert.Equal(t, "%test%", repo.searchArgs.query)
+	assert.Equal(t, "test", repo.searchArgs.query)
 }
 
-func TestSearch_QueryVazioComWildcards(t *testing.T) {
+func TestSearch_QueryVazia_PassaVaziaAoRepo(t *testing.T) {
 	repo := &fakeRepo{searchResult: []notes.SearchResult{}}
 	svc := newServiceForTest(repo)
 
 	_, err := svc.SearchNotes(context.Background(), "", 0, 10)
 	require.NoError(t, err)
 
-	assert.Equal(t, "%%", repo.searchArgs.query)
+	assert.Equal(t, "", repo.searchArgs.query)
 }

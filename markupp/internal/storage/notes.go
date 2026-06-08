@@ -78,6 +78,9 @@ func (r *SqliteNotesRepository) Delete(ctx context.Context, id string) error {
 func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (notes.Note, error) {
 	row, err := r.q.GetNoteByID(ctx, id)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return notes.Note{}, notes.ErrNotFound
+		}
 		return notes.Note{}, err
 	}
 	return notes.Note{
@@ -91,7 +94,7 @@ func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (not
 
 func (r *SqliteNotesRepository) SearchNotes(ctx context.Context, query string, offset, limit int32) ([]notes.SearchResult, error) {
 	rows, err := r.q.SearchNotes(ctx, gen.SearchNotesParams{
-		Content: query,
+		Content: "%" + query + "%",
 		Limit:   int64(limit),
 		Offset:  int64(offset),
 	})

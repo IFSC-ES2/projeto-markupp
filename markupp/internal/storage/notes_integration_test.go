@@ -20,7 +20,6 @@ func TestSearchNotes_ComResultados_RetornaPaginado(t *testing.T) {
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
-	// Inserir dados de teste
 	now := time.Now()
 	notesData := []notes.Note{
 		{ID: "1", Path: "golang1.md", Content: "golang tutorial", CreatedAt: now, UpdatedAt: now},
@@ -33,12 +32,10 @@ func TestSearchNotes_ComResultados_RetornaPaginado(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	// Buscar por "golang"
-	results, err := repo.SearchNotes(ctx, "%golang%", 0, 10)
+	results, err := repo.SearchNotes(ctx, "golang", 0, 10)
 
 	require.NoError(t, err)
 	require.Len(t, results, 3)
-	// Verificar que retorna apenas id, path e updatedAt
 	assert.Equal(t, "1", results[0].ID)
 	assert.Equal(t, "golang1.md", results[0].Path)
 	assert.Equal(t, now.Unix(), results[0].UpdatedAt.Unix())
@@ -50,7 +47,6 @@ func TestSearchNotes_ComPaginacao_RetornaApenasLimitAndOffset(t *testing.T) {
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
-	// Inserir 5 notas com "golang"
 	now := time.Now()
 	for i := 1; i <= 5; i++ {
 		note := notes.Note{
@@ -64,8 +60,7 @@ func TestSearchNotes_ComPaginacao_RetornaApenasLimitAndOffset(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	// Buscar com offset=1 e limit=2
-	results, err := repo.SearchNotes(ctx, "%golang%", 1, 2)
+	results, err := repo.SearchNotes(ctx, "golang", 1, 2)
 
 	require.NoError(t, err)
 	require.Len(t, results, 2)
@@ -88,8 +83,7 @@ func TestSearchNotes_OffsetMaiorQueTotal_RetornaVazio(t *testing.T) {
 	err := repo.Save(ctx, note)
 	require.NoError(t, err)
 
-	// Offset > total de resultados
-	results, err := repo.SearchNotes(ctx, "%golang%", 100, 10)
+	results, err := repo.SearchNotes(ctx, "golang", 100, 10)
 
 	require.NoError(t, err)
 	assert.Empty(t, results)
@@ -112,8 +106,7 @@ func TestSearchNotes_NaoEncontra_RetornaVazio(t *testing.T) {
 	err := repo.Save(ctx, note)
 	require.NoError(t, err)
 
-	// Buscar por algo que não existe
-	results, err := repo.SearchNotes(ctx, "%golang%", 0, 10)
+	results, err := repo.SearchNotes(ctx, "golang", 0, 10)
 
 	require.NoError(t, err)
 	assert.Empty(t, results)
@@ -135,18 +128,34 @@ func TestSearchNotes_LikeEhCaseInsensitive(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	// Buscar por "golang" (minúscula) - LIKE é case-insensitive
-	results, err := repo.SearchNotes(ctx, "%golang%", 0, 10)
+	results, err := repo.SearchNotes(ctx, "golang", 0, 10)
 
 	require.NoError(t, err)
 	require.Len(t, results, 2)
+}
+
+func TestSearchNotes_QueryParcial_CasaSubstring(t *testing.T) {
+	db := setupIntegrationTestDB(t)
+	defer db.Close()
+	repo := storage.NewSqliteNotesRepository(db)
+	ctx := context.Background()
+
+	now := time.Now()
+	require.NoError(t, repo.Save(ctx, notes.Note{
+		ID: "1", Path: "g.md", Content: "golang tutorial", CreatedAt: now, UpdatedAt: now,
+	}))
+
+	results, err := repo.SearchNotes(ctx, "olang", 0, 10)
+
+	require.NoError(t, err)
+	require.Len(t, results, 1)
+	assert.Equal(t, "1", results[0].ID)
 }
 
 func setupIntegrationTestDB(t *testing.T) *sql.DB {
 	db, err := sql.Open("sqlite", ":memory:")
 	require.NoError(t, err)
 
-	// Criar tabela de testes
 	_, err = db.Exec(`
 		CREATE TABLE notes (
 			id TEXT PRIMARY KEY,
