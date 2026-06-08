@@ -254,3 +254,13 @@ func TestSqliteRepo_ListNotes_RetornaTodasNotasOrdenadasPorPath(t *testing.T) {
 	assert.Equal(t, "c.md", got[2].Path)
 	assert.Equal(t, "aaa", got[0].Content)
 }
+
+func TestSqliteRepo_GetNoteByID_IDInexistente_RetornaErrNotFound(t *testing.T) {
+	db := setupTestDB(t)
+	repo := storage.NewSqliteNotesRepository(db)
+
+	_, err := repo.GetNoteByID(context.Background(), "nao-existe")
+
+	require.Error(t, err)
+	assert.True(t, errors.Is(err, notes.ErrNotFound))
+}

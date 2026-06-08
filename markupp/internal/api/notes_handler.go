@@ -2,10 +2,10 @@ package api
 
 import (
 	"context"
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -19,6 +19,7 @@ type NoteService interface {
 	Delete(ctx context.Context, id string) error
 	GetNoteById(ctx context.Context, id string) (notes.Note, error)
 	ListNotes(ctx context.Context) ([]notes.Note, error)
+	SearchNotes(ctx context.Context, query string, offset, limit int) ([]notes.SearchResult, error)
 }
 
 type notesHandler struct {
@@ -37,6 +38,12 @@ type errorResponse struct {
 	Error   string `json:"error"`
 	Message string `json:"message"`
 }
+
+const (
+	maxOffset = 10_000
+	maxLimit  = 100
+	minLimit  = 1
+)
 
 func toResponse(n notes.Note) noteResponse {
 	return noteResponse{
@@ -108,6 +115,53 @@ func (h *notesHandler) list(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, out)
 }
 
+func (h *notesHandler) search(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query().Get("query")
+	if query == "" {
+		writeError(w, "invalid_request", "query string 'query' é obrigatória", http.StatusBadRequest)
+		return
+	}
+
+	offset, err := parseQueryInt(r.URL.Query().Get("offset"), 0)
+	if err != nil {
+		writeError(w, "invalid_request", "offset deve ser um inteiro", http.StatusBadRequest)
+		return
+	}
+
+	limit, err := parseQueryInt(r.URL.Query().Get("limit"), 10)
+	if err != nil {
+		writeError(w, "invalid_request", "limit deve ser um inteiro", http.StatusBadRequest)
+		return
+	}
+
+	offset = clamp(offset, 0, maxOffset)
+	limit = clamp(limit, minLimit, maxLimit)
+
+	results, err := h.svc.SearchNotes(r.Context(), query, offset, limit)
+	if err != nil {
+		writeDomainError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, results)
+}
+
+func parseQueryInt(value string, defaultValue int) (int, error) {
+	if value == "" {
+		return defaultValue, nil
+	}
+	return strconv.Atoi(value)
+}
+
+func clamp(v, min, max int) int {
+	if v < min {
+		return min
+	}
+	if v > max {
+		return max
+	}
+	return v
+}
+
 func (h *notesHandler) delete(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if err := h.svc.Delete(r.Context(), id); err != nil {
@@ -129,8 +183,6 @@ func writeError(w http.ResponseWriter, code, message string, status int) {
 
 func writeDomainError(w http.ResponseWriter, err error) {
 	switch {
-	case errors.Is(err, sql.ErrNoRows):
-		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	case errors.Is(err, notes.ErrInvalidPath):
 		writeError(w, "invalid_path", notes.ErrInvalidPath.Error(), http.StatusBadRequest)
 	case errors.Is(err, notes.ErrInvalidContent):
@@ -143,8 +195,6 @@ func writeDomainError(w http.ResponseWriter, err error) {
 		writeError(w, "not_found", notes.ErrNotFound.Error(), http.StatusNotFound)
 	case errors.Is(err, notes.ErrInvalidId):
 		writeError(w, "invalid_id", notes.ErrInvalidId.Error(), http.StatusBadRequest)
-	case errors.Is(err, notes.ErrNotFoundId):
-		writeError(w, "not_found", "nota não encontrada", http.StatusNotFound)
 	default:
 		writeError(w, "internal", "erro interno", http.StatusInternalServerError)
 	}
