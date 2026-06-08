@@ -11,3 +11,7 @@
 ## Sprint 3
 
 ![Burndown na Sprint 3](img/06-burndown-sprint3.png)
+
+## Sprint 4
+
+![Burndown na Sprint 4](img/06-burndown-sprint4.png)

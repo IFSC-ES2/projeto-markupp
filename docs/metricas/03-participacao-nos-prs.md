@@ -11,3 +11,7 @@
 ## Sprint 3
 
 ![Reviews na Sprint 3](img/03-reviews-sprint3.png)
+
+## Sprint 4
+
+![Reviews na Sprint 4](img/03-reviews-sprint4.png)
