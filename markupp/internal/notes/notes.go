@@ -132,13 +132,6 @@ func validateId(id string) error {
 	return nil
 }
 
-func validateId(id string) error {
-	if strings.TrimSpace(id) == "" {
-		return ErrInvalidId
-	}
-	return nil
-}
-
 func validatePath(path string) error {
 	p := strings.TrimSpace(path)
 	if p == "" {
