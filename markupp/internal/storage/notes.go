@@ -15,28 +15,14 @@ import (
 const sqliteUniqueConstraintCode = 2067
 
 type SqliteNotesRepository struct {
-	q     *gen.Queries
-	clock func() time.Time
+	q *gen.Queries
 }
 
 func NewSqliteNotesRepository(db *sql.DB) *SqliteNotesRepository {
-	return &SqliteNotesRepository{
-		q:     gen.New(db),
-		clock: time.Now,
-	}
-}
-
-func NewSqliteNotesRepositoryWithClock(db *sql.DB, clock func() time.Time) *SqliteNotesRepository {
-	return &SqliteNotesRepository{
-		q:     gen.New(db),
-		clock: clock,
-	}
+	return &SqliteNotesRepository{q: gen.New(db)}
 }
 
 func (r *SqliteNotesRepository) Save(ctx context.Context, note notes.Note) error {
-	note.CreatedAt = note.CreatedAt.UTC().Truncate(time.Millisecond)
-	note.UpdatedAt = note.UpdatedAt.UTC().Truncate(time.Millisecond)
-
 	err := r.q.CreateNote(ctx, gen.CreateNoteParams{
 		ID:        note.ID,
 		Path:      note.Path,
@@ -53,27 +39,23 @@ func (r *SqliteNotesRepository) Save(ctx context.Context, note notes.Note) error
 	return err
 }
 
-func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (notes.Note, error) {
-	now := r.clock()
+func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content string, updatedAt, lastModifiedAt time.Time, force bool) (notes.Note, error) {
 	var row gen.Note
 	var err error
-
-	lastModifiedAt = lastModifiedAt.UTC().Truncate(time.Millisecond)
-	now = now.UTC().Truncate(time.Millisecond)
 
 	if force {
 		row, err = r.q.UpdateNoteForced(ctx, gen.UpdateNoteForcedParams{
 			ID:        id,
 			Path:      path,
 			Content:   content,
-			UpdatedAt: now,
+			UpdatedAt: updatedAt,
 		})
 	} else {
 		row, err = r.q.UpdateNoteWithVersionCheck(ctx, gen.UpdateNoteWithVersionCheckParams{
 			ID:            id,
 			Path:          path,
 			Content:       content,
-			UpdatedAt:     now,
+			UpdatedAt:     updatedAt,
 			PrevUpdatedAt: lastModifiedAt,
 		})
 	}
@@ -99,8 +81,8 @@ func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content st
 		ID:        row.ID,
 		Path:      row.Path,
 		Content:   row.Content,
-		CreatedAt: row.CreatedAt.UTC().Truncate(time.Millisecond),
-		UpdatedAt: row.UpdatedAt.UTC().Truncate(time.Millisecond),
+		CreatedAt: row.CreatedAt,
+		UpdatedAt: row.UpdatedAt,
 	}, nil
 }
 
@@ -127,8 +109,8 @@ func (r *SqliteNotesRepository) GetNoteByID(ctx context.Context, id string) (not
 		ID:        row.ID,
 		Path:      row.Path,
 		Content:   row.Content,
-		CreatedAt: row.CreatedAt.UTC().Truncate(time.Millisecond),
-		UpdatedAt: row.UpdatedAt.UTC().Truncate(time.Millisecond),
+		CreatedAt: row.CreatedAt,
+		UpdatedAt: row.UpdatedAt,
 	}, nil
 }
 
@@ -163,8 +145,8 @@ func (r *SqliteNotesRepository) ListNotes(ctx context.Context) ([]notes.Note, er
 			ID:        row.ID,
 			Path:      row.Path,
 			Content:   row.Content,
-			CreatedAt: row.CreatedAt.UTC().Truncate(time.Millisecond),
-			UpdatedAt: row.UpdatedAt.UTC().Truncate(time.Millisecond),
+			CreatedAt: row.CreatedAt,
+			UpdatedAt: row.UpdatedAt,
 		})
 	}
 	return out, nil

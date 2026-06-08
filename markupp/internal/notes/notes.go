@@ -26,7 +26,7 @@ type SearchResult struct {
 
 type Repository interface {
 	Save(ctx context.Context, note Note) error
-	Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (Note, error)
+	Update(ctx context.Context, id, path, content string, updatedAt, lastModifiedAt time.Time, force bool) (Note, error)
 	Delete(ctx context.Context, id string) error
 	GetNoteByID(ctx context.Context, id string) (Note, error)
 	ListNotes(ctx context.Context) ([]Note, error)
@@ -101,7 +101,8 @@ func (s *Service) Update(ctx context.Context, id, path, content string, lastModi
 		return Note{}, err
 	}
 
-	updated, err := s.repo.Update(ctx, id, path, content, lastModifiedAt, force)
+	now := canonicalTime(s.clock())
+	updated, err := s.repo.Update(ctx, id, path, content, now, canonicalTime(lastModifiedAt), force)
 	if err != nil {
 		if errors.Is(err, ErrDuplicatePath) || errors.Is(err, ErrNotFound) || errors.Is(err, ErrConflict) {
 			return Note{}, err

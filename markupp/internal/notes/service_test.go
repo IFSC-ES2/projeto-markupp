@@ -26,6 +26,7 @@ type fakeRepo struct {
 		id             string
 		path           string
 		content        string
+		updatedAt      time.Time
 		lastModifiedAt time.Time
 		force          bool
 		called         bool
@@ -58,11 +59,12 @@ func (f *fakeRepo) Save(ctx context.Context, n notes.Note) error {
 	return f.saveErr
 }
 
-func (f *fakeRepo) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (notes.Note, error) {
+func (f *fakeRepo) Update(ctx context.Context, id, path, content string, updatedAt, lastModifiedAt time.Time, force bool) (notes.Note, error) {
 	f.updateArgs.called = true
 	f.updateArgs.id = id
 	f.updateArgs.path = path
 	f.updateArgs.content = content
+	f.updateArgs.updatedAt = updatedAt
 	f.updateArgs.lastModifiedAt = lastModifiedAt
 	f.updateArgs.force = force
 	return f.updateNote, f.updateErr

@@ -328,7 +328,7 @@ func (s *stubRepository) Save(ctx context.Context, n notes.Note) error {
 	return nil
 }
 
-func (s *stubRepository) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (notes.Note, error) {
+func (s *stubRepository) Update(ctx context.Context, id, path, content string, updatedAt, lastModifiedAt time.Time, force bool) (notes.Note, error) {
 	return notes.Note{}, nil
 }
 
