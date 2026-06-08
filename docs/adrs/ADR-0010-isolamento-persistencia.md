@@ -1,4 +1,4 @@
-# ADR-0009: Detalhes de persistência isolados na camada de storage
+# ADR-0010: Detalhes de persistência isolados na camada de storage
 
 ## Contexto
 
