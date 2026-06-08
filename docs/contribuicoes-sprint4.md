@@ -4,7 +4,8 @@ Janela: marco da Sprint 3 (29/05) ao marco da Sprint 4 (08/06). Cada membro conf
 
 ## Gabriela Riedel
 
-- a confirmar pela própria
+- Adição do arquivo DEPLOY.md
+- Adição do Dockerfile para publicação no Dockerhub + uso na CI
 
 ## Luís Renato Freitas de Almeida
 
