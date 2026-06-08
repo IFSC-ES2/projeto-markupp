@@ -39,7 +39,6 @@ var (
 	ErrDuplicatePath  = errors.New("path já existe")
 	ErrNotFound       = errors.New("nota não encontrada")
 	ErrInvalidId      = errors.New("ID inválido")
-	ErrNotFoundId     = errors.New("ID não encontrado")
 	ErrConflict       = errors.New("nota foi atualizada por outro cliente")
 )
 
