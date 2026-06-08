@@ -60,6 +60,8 @@ curl -s -X DELETE http://localhost:8080/notes/$ID -w '%{http_code}\n'
 
 Esperado: `POST` retorna JSON com `id` UUID, `GET` traz a nota, `DELETE` responde `204`. Rotas completas em `markupp/openapi.yaml`.
 
+Para validar pelo plugin: abra a Source Control View (ícone na barra lateral ou o comando "Abrir source control"), edite/crie uma nota no vault e rode Push (ou Sync). A nota deve aparecer no servidor (confirme com o GET /notes).
+
 ## Build a partir do código fonte
 
 Útil pra contribuir ou reproduzir a imagem localmente.
