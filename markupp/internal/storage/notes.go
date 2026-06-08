@@ -39,15 +39,36 @@ func (r *SqliteNotesRepository) Save(ctx context.Context, note notes.Note) error
 	return err
 }
 
-func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content string, updatedAt time.Time) (notes.Note, error) {
-	row, err := r.q.UpdateNote(ctx, gen.UpdateNoteParams{
-		ID:        id,
-		Path:      path,
-		Content:   content,
-		UpdatedAt: updatedAt,
-	})
+func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content string, updatedAt, lastModifiedAt time.Time, force bool) (notes.Note, error) {
+	var row gen.Note
+	var err error
+
+	if force {
+		row, err = r.q.UpdateNoteForced(ctx, gen.UpdateNoteForcedParams{
+			ID:        id,
+			Path:      path,
+			Content:   content,
+			UpdatedAt: updatedAt,
+		})
+	} else {
+		row, err = r.q.UpdateNoteWithVersionCheck(ctx, gen.UpdateNoteWithVersionCheckParams{
+			ID:            id,
+			Path:          path,
+			Content:       content,
+			UpdatedAt:     updatedAt,
+			PrevUpdatedAt: lastModifiedAt,
+		})
+	}
+
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
+			if !force {
+				_, checkErr := r.q.GetNoteByID(ctx, id)
+				if errors.Is(checkErr, sql.ErrNoRows) {
+					return notes.Note{}, notes.ErrNotFound
+				}
+				return notes.Note{}, notes.ErrConflict
+			}
 			return notes.Note{}, notes.ErrNotFound
 		}
 		if isUniqueConstraintViolation(err) {
@@ -55,6 +76,7 @@ func (r *SqliteNotesRepository) Update(ctx context.Context, id, path, content st
 		}
 		return notes.Note{}, err
 	}
+
 	return notes.Note{
 		ID:        row.ID,
 		Path:      row.Path,

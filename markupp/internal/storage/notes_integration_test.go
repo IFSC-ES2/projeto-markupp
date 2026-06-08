@@ -16,7 +16,6 @@ import (
 
 func TestSearchNotes_ComResultados_RetornaPaginado(t *testing.T) {
 	db := setupIntegrationTestDB(t)
-	defer db.Close()
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
@@ -43,7 +42,6 @@ func TestSearchNotes_ComResultados_RetornaPaginado(t *testing.T) {
 
 func TestSearchNotes_ComPaginacao_RetornaApenasLimitAndOffset(t *testing.T) {
 	db := setupIntegrationTestDB(t)
-	defer db.Close()
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
@@ -68,7 +66,6 @@ func TestSearchNotes_ComPaginacao_RetornaApenasLimitAndOffset(t *testing.T) {
 
 func TestSearchNotes_OffsetMaiorQueTotal_RetornaVazio(t *testing.T) {
 	db := setupIntegrationTestDB(t)
-	defer db.Close()
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
@@ -91,7 +88,6 @@ func TestSearchNotes_OffsetMaiorQueTotal_RetornaVazio(t *testing.T) {
 
 func TestSearchNotes_NaoEncontra_RetornaVazio(t *testing.T) {
 	db := setupIntegrationTestDB(t)
-	defer db.Close()
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
@@ -114,7 +110,6 @@ func TestSearchNotes_NaoEncontra_RetornaVazio(t *testing.T) {
 
 func TestSearchNotes_LikeEhCaseInsensitive(t *testing.T) {
 	db := setupIntegrationTestDB(t)
-	defer db.Close()
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
@@ -136,7 +131,6 @@ func TestSearchNotes_LikeEhCaseInsensitive(t *testing.T) {
 
 func TestSearchNotes_QueryParcial_CasaSubstring(t *testing.T) {
 	db := setupIntegrationTestDB(t)
-	defer db.Close()
 	repo := storage.NewSqliteNotesRepository(db)
 	ctx := context.Background()
 
@@ -153,8 +147,10 @@ func TestSearchNotes_QueryParcial_CasaSubstring(t *testing.T) {
 }
 
 func setupIntegrationTestDB(t *testing.T) *sql.DB {
+	t.Helper()
 	db, err := sql.Open("sqlite", ":memory:")
 	require.NoError(t, err)
+	t.Cleanup(func() { _ = db.Close() })
 
 	_, err = db.Exec(`
 		CREATE TABLE notes (

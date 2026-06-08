@@ -26,7 +26,7 @@ type SearchResult struct {
 
 type Repository interface {
 	Save(ctx context.Context, note Note) error
-	Update(ctx context.Context, id, path, content string, updatedAt time.Time) (Note, error)
+	Update(ctx context.Context, id, path, content string, updatedAt, lastModifiedAt time.Time, force bool) (Note, error)
 	Delete(ctx context.Context, id string) error
 	GetNoteByID(ctx context.Context, id string) (Note, error)
 	ListNotes(ctx context.Context) ([]Note, error)
@@ -39,6 +39,7 @@ var (
 	ErrDuplicatePath  = errors.New("path já existe")
 	ErrNotFound       = errors.New("nota não encontrada")
 	ErrInvalidId      = errors.New("ID inválido")
+	ErrConflict       = errors.New("nota foi atualizada por outro cliente")
 )
 
 type Service struct {
@@ -75,7 +76,7 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 	if err := s.validateContent(content); err != nil {
 		return Note{}, err
 	}
-	now := s.clock()
+	now := canonicalTime(s.clock())
 	note := Note{
 		ID:        s.newID(),
 		Path:      path,
@@ -89,7 +90,7 @@ func (s *Service) Create(ctx context.Context, path, content string) (Note, error
 	return note, nil
 }
 
-func (s *Service) Update(ctx context.Context, id, path, content string) (Note, error) {
+func (s *Service) Update(ctx context.Context, id, path, content string, lastModifiedAt time.Time, force bool) (Note, error) {
 	if err := validateId(id); err != nil {
 		return Note{}, err
 	}
@@ -99,9 +100,11 @@ func (s *Service) Update(ctx context.Context, id, path, content string) (Note, e
 	if err := s.validateContent(content); err != nil {
 		return Note{}, err
 	}
-	updated, err := s.repo.Update(ctx, id, path, content, s.clock())
+
+	now := canonicalTime(s.clock())
+	updated, err := s.repo.Update(ctx, id, path, content, now, canonicalTime(lastModifiedAt), force)
 	if err != nil {
-		if errors.Is(err, ErrNotFound) || errors.Is(err, ErrDuplicatePath) {
+		if errors.Is(err, ErrDuplicatePath) || errors.Is(err, ErrNotFound) || errors.Is(err, ErrConflict) {
 			return Note{}, err
 		}
 		return Note{}, fmt.Errorf("atualizar nota %q: %w", id, err)
@@ -127,6 +130,10 @@ func validateId(id string) error {
 		return ErrInvalidId
 	}
 	return nil
+}
+
+func canonicalTime(t time.Time) time.Time {
+	return t.UTC().Truncate(time.Millisecond)
 }
 
 func validatePath(path string) error {
