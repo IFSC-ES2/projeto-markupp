@@ -1,8 +1,8 @@
 # Planejamento Inicial e Baseline
 
 > **Projeto:** Markupp
-> **Versão:** 1.0
-> **Data de Registro da Linha de Base:** 09/04/2026
+> **Versão:** 0.4
+> **Data de Registro da Linha de Base:** 08/06/2026
 
 ---
 
@@ -91,7 +91,7 @@ Premissas que assumimos ao construir este planejamento. Caso se mostrem inválid
 
 ## (f) Capacidade Planejada da Equipe
 
-Nossa disponibilidade até o próximo marco do projeto — **Entrega 3, em 09/04/2026**.
+Nossa disponibilidade até o próximo marco do projeto — **Entrega 8, em 08/06/2026**.
 
 | Membro          | Papel                   | Disponibilidade             |
 |-----------------|-------------------------|-----------------------------|
@@ -101,7 +101,7 @@ Nossa disponibilidade até o próximo marco do projeto — **Entrega 3, em 09/04
 | Nícolas Pitz    | Engenheiro de Qualidade | Horas de aula + finais de semana |
 
 > **Período coberto por esta linha de base:** início do semestre até 09/04/2026
-> **Próximo marco:** Entrega 3 — Estimativas e Métricas (Baseline)
+> **Próximo marco:** Entrega 8
 
 ---
 
@@ -123,13 +123,13 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 | #15 | Implementar Endpoint POST /files para Upload de Markdown           | Task    |  Feito                      |
 | #16 | Implementar Endpoint GET /files/{id} para Recuperação de Conteúdo  | Task    |  Feito                      |
 | #1  | [RF2] Criação de Arquivos via Plugin Obsidian                      | Feature |  Feito                      |
-| #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature |  Não iniciado (Sprint 4)    |
-| #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature |  Não iniciado (Sprint 4)    |
+| #5  | [RF3] Exclusão de Arquivos via Plugin Obsidian                     | Feature |  Feito                      |
+| #6  | [RF4] Renomear Arquivos via Plugin Obsidian                        | Feature |  Feito                      |
 | #7  | [RF5] Edição de Conteúdo Markdown                                  | Feature |  Feito                      |
-| #20 | Frontend: UI de Exclusão e Sincronização de Estado                 | Feature |  Feito (Sprint 3)           | 
+| #20 | Frontend: UI de Exclusão e Sincronização de Estado                 | Feature |  Feito                      | 
 | #48 | Documentação das rotas já existentes                               | Feature |  Feito                      | 
 | #44 | Configuração do servidor via arquivo JSON                          | Feature |  Feito                      |
-| #68 | Trazer notas do servidor para o vault do Obsidian                  | Feature |  Não iniciado (Sprint 4)    |
+| #68 | Trazer notas do servidor para o vault do Obsidian                  | Feature |  Feito                      |
 | #67 | Listar notas via GET /notes no servidor                            | Feature |  Feito                      |
 | #66 | Adicionar lint e format checks ao CI                               | Feature |  Feito                      |
 
@@ -146,9 +146,9 @@ A tabela abaixo registra nossa previsão inicial para este período, considerand
 
 | Campo                         | Valor                    |
 |-------------------------------|--------------------------|
-| **Data de registro**          | 09/04/2026               |
+| **Data de registro**          | 08/06/2026               |
 | **Responsável pelo registro** | Gabriela Riedel          |
-| **Versão do documento**       | 1.0                      |
+| **Versão do documento**       | 0.4                      |
 | **Aprovado por**              | Adriano Lima / Professor |
 
 ---
