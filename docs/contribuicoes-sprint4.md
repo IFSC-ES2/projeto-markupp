@@ -27,5 +27,7 @@ Janela: marco da Sprint 3 (29/05) ao marco da Sprint 4 (08/06). Cada membro conf
 
 ## Nicolas Pitz
 
-- a confirmar pelo próprio
+- Adicionada feature de sincronização do servidor, com flags e uma nova rota.
+- Atualiza Testes para incluir nova rota e services.
+- Atualiza baseline registrando os novos avanços do projeto.
 - Métricas da Sprint 4 nas fichas de `docs/metricas/`.
