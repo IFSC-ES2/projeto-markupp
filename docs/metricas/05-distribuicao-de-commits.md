@@ -11,3 +11,7 @@
 ## Sprint 3
 
 ![Commits na Sprint 3](img/05-commits-sprint3.png)
+
+## Sprint 4
+
+![Commits na Sprint 4](img/05-commits-sprint4.png)
