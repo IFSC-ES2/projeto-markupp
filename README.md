@@ -25,6 +25,15 @@ Excesso de informação descentralizada e dados desestruturados sem métodos de 
 - Expor uma API REST que permita integração com clientes
 - Processar documentos automaticamente para busca semântica
 
+## Instalação do plugin (Obsidian)
+1. Baixe o artefato da release `v0.4.0`: `markupp-plugin-v0.4.0.zip` (ou os arquivos `main.js`, `manifest.json` e `styles.css` anexados à release).
+2. Crie a pasta `<seu-vault>/.obsidian/plugins/obsidian-markupp-plugin/` e coloque os três arquivos nela (extraia o zip aqui).
+3. No Obsidian: **Configurações → Plugins da comunidade**, ative o **Markupp**.
+4. Nas opções do plugin, ajuste o **`serverUrl`** (padrão `http://localhost:8080`) para o endereço do servidor Markupp.
+5. Use o ícone na barra lateral ou os comandos **Fetch / Pull / Push / Sync** para sincronizar suas notas.
+
+> Para subir o servidor e validar o ambiente, veja [docs/DEPLOY.md](docs/DEPLOY.md).
+
 ## Governança
 **Q: Quem pode abrir PR?**
 > `A: Todos.`
@@ -57,3 +66,4 @@ O fluxo de trabalho do projeto está documentado em [fluxo de trabalho](docs/flu
 - [ADRs](docs/adrs/)
 - [Métricas](docs/metricas.md)
 - [Contribuições da Sprint 3](docs/contribuicoes-sprint3.md)
+- [Contribuições da Sprint 4](docs/contribuicoes-sprint4.md)
