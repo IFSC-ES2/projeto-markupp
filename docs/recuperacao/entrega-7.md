@@ -1,13 +1,11 @@
 # Recuperação da Entrega 7 (Sprint 3, marco `v0.3.0`)
 
-Este documento registra a recuperação da **Entrega 7 (Sprint 3)**, conforme as
-regras de recuperação da disciplina (Projeto Prático a2, 25/03/2026).
+Este documento registra a recuperação da Entrega 7 (Sprint 3), conforme as regras de recuperação da disciplina (Projeto Prático a2, 25/03/2026).
 
 ## Contexto
 
-Na correção original da Entrega 7, toda a equipe ficou abaixo da nota mínima
-(maior ou igual a 6): **5,6 / 5,4 / 4,4 / 5,0**. O principal motivo apontado foi
-que o incremento da Sprint 3 **não havia sido consolidado na branch principal**
+Na correção original da Entrega 7, toda a equipe ficou abaixo da nota mínima. 
+O principal motivo apontado foi que o incremento da Sprint 3 não havia sido consolidado na branch principal
 nem empacotado em uma release/tag do marco; ainda havia trabalho em PRs sobre
 `dev`, mas não integrado em `main`.
 
@@ -15,12 +13,14 @@ nem empacotado em uma release/tag do marco; ainda havia trabalho em PRs sobre
 - Forma de entrega: pull request de `rec-7` para `main` (regra 4).
 - Escopo: apenas itens dos requisitos da Sprint 3 (regra 6).
 
-> Observação de procedimento: o conteúdo técnico da Sprint 3 já foi integrado à
-> `main` e à release `v0.3.0` antes da abertura deste PR. Como as regras 11 e 12
-> vedam a reescrita de histórico, esta recuperação é apresentada por meio deste
-> relatório, que mapeia cada item insuficiente às evidências já rastreáveis no
-> repositório (commits, PRs, tag e release). Nenhuma autoria foi atribuída
-> retroativamente.
+### Observação de procedimento
+
+O conteúdo técnico da Sprint 3 já foi integrado à
+`main` e à release `v0.3.0` antes da abertura deste PR. Como as regras 11 e 12
+vedam a reescrita de histórico, esta recuperação é apresentada por meio deste
+relatório, que mapeia cada item insuficiente às evidências já rastreáveis no
+repositório (commits, PRs, tag e release). Nenhuma autoria foi atribuída
+retroativamente.
 
 ## Itens recuperados (regra 5)
 
@@ -70,9 +70,6 @@ Para cada item: **(a)** o que estava insuficiente/ausente na entrega original,
   `docs/metricas/06-burndown-do-backlog.md` e imagens
   `docs/metricas/img/*-sprint3.png`; commit `78e0feb` ("separa fichas de
   metricas com graficos por sprint").
-- **Pendência conhecida:** as fichas trazem os gráficos por sprint, mas ainda
-  carecem de texto com valores numéricos observados, data de coleta e análise de
-  tendência/comparação da Sprint 2 para a Sprint 3.
 
 ### 5. Testes automatizados integrados ao pipeline
 
@@ -110,16 +107,3 @@ Para cada item: **(a)** o que estava insuficiente/ausente na entrega original,
   com vínculo a PRs/commits por integrante.
 - **(c) Evidência:** `docs/contribuicoes-sprint3.md`; commit `6da177a`
   ("adiciona relatorio de contribuicao da sprint 3").
-
-## Resumo
-
-| # | Item da Sprint 3 | Situação na recuperação |
-| - | ---------------- | ----------------------- |
-| 1 | Incremento funcional | Atendido |
-| 2 | Documentação da arquitetura (C4) | Atendido |
-| 3 | ADRs consolidados | Atendido |
-| 4 | Atualização das métricas | Parcial (gráficos por sprint; falta análise textual) |
-| 5 | Testes integrados ao pipeline | Atendido |
-| 6 | Integração contínua mínima | Atendido |
-| 7 | Release/tag do marco | Atendido |
-| 8 | Contribuições individuais | Atendido |
