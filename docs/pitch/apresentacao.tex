@@ -5,10 +5,6 @@
 \documentclass[aspectratio=169]{beamer}
 
 \usepackage[english,brazil]{babel}
-\usepackage[style=abnt,noslsn,justify]{biblatex}
-\renewcommand*{\bibfont}{\scriptsize}
-\usepackage{csquotes}
-\addbibresource{referencias_trabalho.bib}
 
 \usepackage{tikz}
 \usetikzlibrary{positioning, arrows.meta, shapes.geometric, fit, backgrounds}
@@ -22,12 +18,12 @@
 
 % -------------------------------------------------%
 \title{Markupp}
-\subtitle{Servidor open-source self-hosted de anotações em Markdown}
+\subtitle{Apresentação final do MVP, v0.4.0}
 \author{
   Renato Freitas \and Nícolas Arthur \and Nícolas Pitz \and Gabriela Riedel
 }
 \institute{Instituto Federal de Santa Catarina}
-\date{Maio de 2026}
+\date{Junho de 2026}
 
 % -------------------------------------------------%
 \begin{document}
@@ -41,89 +37,40 @@
 \end{frame}
 
 % -------------------------------------------------%
-\section{Introdução}
+\section{Identificação do projeto}
 % -------------------------------------------------%
 
-\begin{frame}{Introdução}
+\begin{frame}{Identificação do projeto}
     \begin{itemize}
-        \item O Markupp é um servidor \textit{open source} e \textit{self-hosted} de anotações em \textit{Markdown}, com interface aberta a humanos e a agentes de IA.
-        \item Tem como referência conceitual a prática de \emph{segundo cérebro} digital, consolidada em \emph{Personal Knowledge Management} \cite{forte2022}.
-    \end{itemize}
-
-    \vspace{0.5em}
-    \textbf{Pilares}
-    \begin{itemize}\small
-        \item Soberania de dados: o acervo permanece sob controle direto do usuário.
-        \item Interface aberta a múltiplos clientes, sem capturar o usuário em um aplicativo único.
-        \item \textit{Open source}, \textit{self-hosted} e com licença permissiva.
+        \item \textbf{Sistema}: Markupp, servidor \textit{self-hosted} de notas em Markdown, v0.4.0.
+        \item \textbf{Equipe}: Renato Freitas, Nícolas Arthur, Nícolas Pitz, Gabriela Riedel.
+        \item \textbf{Problema}: notas em Markdown ficam presas a plataformas proprietárias, sem controle do acervo nem interface aberta a outros clientes, em especial agentes de IA.
+        \item \textbf{Público}: usuários e times que querem hospedar o próprio acervo de notas, com integração nativa a agentes de IA.
     \end{itemize}
 \end{frame}
 
 % -------------------------------------------------%
-\section{Tamanho do mercado}
+\section{Proposta e arquitetura}
 % -------------------------------------------------%
 
-\begin{frame}{Dimensão do problema e alcance potencial}
-    \begin{itemize}
-        \item A prática de construir um \emph{segundo cérebro} se firmou como referência cultural do \emph{Personal Knowledge Management} na última década \cite{forte2022}.
-        \item O \textit{Markdown} se consolidou como formato padrão de anotação em comunidades técnicas e acadêmicas \cite{commonmark}.
-        \item Cresce o volume de saídas geradas por agentes de IA que precisam ser armazenadas e organizadas de forma estruturada.
-        \item O Notion ultrapassou 100 milhões de usuários \cite{notion100m}; o Obsidian, que não divulga números oficiais, estima cerca de um milhão \cite{obsidiancult}.
-        \item Esse público de ferramentas proprietárias é um proxy de quem se beneficiaria de uma alternativa aberta.
-    \end{itemize}
-\end{frame}
-
-% -------------------------------------------------%
-\section{Problema}
-% -------------------------------------------------%
-
-\begin{frame}{Problema}
-    \begin{itemize}
-        \item Dependência de plataformas proprietárias, com o acervo hospedado na nuvem do fornecedor e fora do controle do usuário.
-        \item Fragmentação entre clientes: o conteúdo fica amarrado a um aplicativo único, sem interface aberta a outros usos.
-        \item Ausência de infraestrutura aberta pronta para integração com agentes de IA sobre a mesma base de dados.
-        \item Lacuna em desempenho e escalabilidade de soluções que acompanhem o crescimento da base sob \textit{self-hosting}.
-    \end{itemize}
-\end{frame}
-
-% -------------------------------------------------%
-\section{Solução}
-% -------------------------------------------------%
-
-\begin{frame}{Solução}
-    \textbf{O que o Markupp entrega}
-    \begin{itemize}\small
-        \item Servidor \textit{self-hosted} com CRUD completo de notas em \textit{Markdown}.
-        \item Plugin do Obsidian como cliente humano de referência.
-        \item API REST como única interface de acesso ao servidor.
-    \end{itemize}
-
-    \vspace{0.5em}
-    \textbf{Posicionamento}
-    \begin{itemize}\small
-        \item \textit{Self-hosted} real: o usuário mantém o acervo em servidor próprio.
-        \item API aberta pensada para humanos e agentes desde o projeto.
-        \item Licença permissiva e código auditável.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Solução: arquitetura}
+\begin{frame}{Proposta e arquitetura}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.45\textwidth}
             \small
             \begin{itemize}
-                \item Cliente humano (Obsidian) e cliente de software (agente de IA) consomem a mesma interface REST.
-                \item O servidor encapsula a persistência: o cliente nunca acessa o armazenamento diretamente.
-                \item O sistema é distribuído como uma imagem Docker que sobe o servidor e o banco em conjunto.
+                \item Servidor central com API REST como única interface, aberta a humanos e agentes de IA.
+                \item Plugin do Obsidian como cliente humano de referência.
+                \item Persistência local em SQLite; servidor encapsula o armazenamento.
+                \item Distribuição como imagem Docker que sobe servidor e banco em conjunto.
             \end{itemize}
         \end{column}
-        \begin{column}{0.50\textwidth}
+        \begin{column}{0.52\textwidth}
             \centering
             \begin{tikzpicture}[
                 node distance=0.7cm and 0.6cm,
-                client/.style={draw=azul-seg, thick, rounded corners, minimum width=2.2cm, minimum height=0.7cm, align=center, font=\small},
-                core/.style={draw=azul-seg, very thick, fill=azul-seg!10, rounded corners, minimum width=3.2cm, minimum height=0.9cm, align=center, font=\small\bfseries},
-                store/.style={draw=azul-seg, thick, rounded corners, minimum width=2.4cm, minimum height=0.7cm, align=center, font=\small},
+                client/.style={draw=azul-seg, thick, rounded corners, minimum width=2.3cm, minimum height=0.8cm, align=center, font=\small},
+                core/.style={draw=azul-seg, very thick, fill=azul-seg!10, rounded corners, minimum width=3.4cm, minimum height=1cm, align=center, font=\small\bfseries},
+                store/.style={draw=azul-seg, thick, rounded corners, minimum width=2.5cm, minimum height=0.8cm, align=center, font=\small},
                 container/.style={draw=azul-seg!60, thick, dashed, rounded corners, inner sep=0.4cm},
                 arrow/.style={-Stealth, thick, azul-seg}
             ]
@@ -144,90 +91,148 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Solução: decisões técnicas}
-    \begin{itemize}\small
-        \item \textbf{Servidor em Go}: alto desempenho e baixo consumo de recursos, mantendo o sistema leve para \textit{self-hosting} em hardware modesto.
-        \item \textbf{SQLite como armazenamento}: zero configuração; conteúdo, anexos e metadados gravados em uma única transação; \textit{backup} reduzido a copiar um arquivo.
-        \item \textbf{API REST}: contrato HTTP documentado que permite a qualquer cliente, humano ou agente de IA, integrar-se ao sistema.
-        \item \textbf{Plugin do Obsidian em TypeScript}: cliente humano de referência; o servidor permanece aberto a outros clientes.
-        \item \textbf{Distribuição via Docker}: imagem reprodutível que sobe servidor e banco em conjunto, reduzindo o atrito de instalação.
-    \end{itemize}
-\end{frame}
-
 % -------------------------------------------------%
-\section{Alternativas no ecossistema}
+\section{Resumo do MVP}
 % -------------------------------------------------%
 
-\begin{frame}{Alternativas no ecossistema}
-    \begin{itemize}\small
-        \item \textbf{Notion}: rico em \textit{features}, porém proprietário e com os dados na nuvem do fornecedor.
-        \item \textbf{Obsidian com Sync}: cliente excelente, mas sincronização proprietária e paga.
-        \item \textbf{Logseq self-hosted}: aberto e local, focado no cliente, sem servidor de fato.
-        \item \textbf{Markupp}: servidor aberto, API REST como interface primária e integração pensada para agentes desde o projeto.
-    \end{itemize}
-
-    \vspace{0.5em}
-    O Markupp não disputa um ranking: ocupa uma interseção rara do ecossistema, entre servidor aberto, \textit{self-hosting} real e abertura a agentes.
-\end{frame}
-
-% -------------------------------------------------%
-\section{Time}
-% -------------------------------------------------%
-
-\begin{frame}{Time}
-    Todos os integrantes atuaram diretamente no desenvolvimento; cada um conduziu também uma frente do projeto.
-    \vspace{0.5em}
-    \begin{itemize}\small
-        \item \textbf{Renato Freitas}, Arquitetura de Software.
-        \item \textbf{Nícolas Arthur}, DevOps e Infraestrutura.
-        \item \textbf{Nícolas Pitz}, Qualidade.
-        \item \textbf{Gabriela Riedel}, Processo (Scrum Master).
-    \end{itemize}
-\end{frame}
-
-% -------------------------------------------------%
-\section{Feedback}
-% -------------------------------------------------%
-
-\begin{frame}{Feedback}
-    O retorno até aqui é inicial e interno; o projeto mantém um canal aberto para feedback da comunidade:
-    \begin{itemize}
-        \item Repositório público com \textit{issues} e \textit{pull requests} abertos a qualquer pessoa, o espaço onde o feedback externo é recebido.
-        \item Validação de que a arquitetura sustenta o caso de uso real, com CRUD operacional de ponta a ponta entre plugin, API REST e SQLite.
-        \item \textit{Release} v0.2.0 publicada como primeiro passo de exposição pública.
-    \end{itemize}
-\end{frame}
-
-% -------------------------------------------------%
-\section{Próximos passos}
-% -------------------------------------------------%
-
-\begin{frame}{Próximos passos}
+\begin{frame}{Resumo do MVP: planejado, concluído e fora do escopo}
     \begin{columns}[T]
-        \begin{column}{0.50\textwidth}
-            \textbf{Próximas etapas}
+        \begin{column}{0.48\textwidth}
+            \textbf{MVP planejado e concluído}
             \begin{itemize}\small
-                \item Busca léxica em títulos e em conteúdo.
-                \item Indexação vetorial e busca semântica.
-                \item Integração com agentes de IA via MCP \cite{mcp}.
-                \item Taxonomias e classificação de notas.
-                \item Desenvolvimento aberto e contínuo via repositório público.
+                \item CRUD de notas no servidor central.
+                \item Plugin do Obsidian como cliente humano.
+                \item API REST como interface única.
+                \item Imagem Docker pública e contrato OpenAPI.
             \end{itemize}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \textbf{Limitações deliberadas do MVP}
+            \textbf{Fora do escopo do MVP}
             \begin{itemize}\small
-                \item Ausência de TLS, autenticação e \textit{rate limit}.
-                \item Demonstração restrita a ambiente de rede interna.
-                \item Camadas de segurança serão tratadas antes de qualquer exposição pública do servidor.
+                \item Autenticação, TLS e \textit{rate limit} (ADR-0005).
+                \item Busca léxica e semântica.
+                \item Organização hierárquica por pastas.
+                \item Versionamento e histórico de notas.
+                \item Integração com agentes de IA via MCP.
+                \item Colaboração em tempo real.
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
 
+\begin{frame}{Resumo do MVP: mudanças de escopo}
+    \begin{itemize}
+        \item \textbf{Cliente de referência}: o escopo inicial considerava uma interface web como cliente; a decisão foi adotar um \textbf{plugin do Obsidian} como cliente humano único (ADR-0004), aproveitando editor e navegação já estabelecidos.
+        \item \textbf{Identidade do servidor}: a pasta \texttt{backend} foi renomeada para \texttt{markupp} (ADR-0009), refletindo que o servidor é o produto central, não acessório de um cliente.
+        \item \textbf{Sincronização do plugin}: comandos avulsos (\textit{upload}, \textit{download}, \textit{import}, \textit{sync}) consolidados em uma \emph{Source Control View} estilo \textit{git} (ADR-0011), com as operações \textit{fetch}, \textit{pull}, \textit{push} e \textit{sync}.
+    \end{itemize}
+\end{frame}
+
 % -------------------------------------------------%
-\begin{frame}[allowframebreaks, noframenumbering]{Referências}
-    \printbibliography
+\section{Demonstração}
+% -------------------------------------------------%
+
+\begin{frame}{Demonstração: ambiente e cenário}
+    \begin{itemize}
+        \item \textbf{Release demonstrada}: v0.4.0.
+        \item \textbf{Imagem pública}: \texttt{riedelgab/ifsces2:latest} no Docker Hub.
+        \item \textbf{Subida do servidor}: \\
+        \quad{\small\texttt{docker run -d -p 8080:8080 -v markupp\_data:/data riedelgab/ifsces2:latest}}
+        \item \textbf{Plugin}: instalado de \texttt{markupp-plugin-v0.4.0.zip} no \emph{vault} do Obsidian.
+        \item \textbf{Cenário}: servidor recém-iniciado, banco vazio; \emph{vault} com uma nota de exemplo.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Demonstração: fluxo principal de uso}
+    \begin{columns}[T]
+        \begin{column}{0.42\textwidth}
+            \small
+            \textbf{Funcionalidade demonstrada}\\
+            Criação, sincronização, edição e exclusão de notas, ponta a ponta entre Obsidian e servidor.
+
+            \vspace{0.8em}
+            \textbf{Fluxo (criação)}
+            \begin{enumerate}\small
+                \item Usuário cria nota no Obsidian.
+                \item Plugin envia \texttt{POST /notes}.
+                \item API grava em SQLite.
+                \item Servidor responde \texttt{201 Created}; plugin atualiza a interface.
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.56\textwidth}
+            \centering
+            \begin{tikzpicture}[
+                actor/.style={draw=azul-seg, thick, rounded corners, fill=azul-seg!10, minimum width=1.6cm, minimum height=0.5cm, align=center, font=\scriptsize\bfseries},
+                msg/.style={-Stealth, thick, azul-seg},
+                msglabel/.style={azul-seg, font=\tiny, fill=white, inner sep=1pt}
+            ]
+                \node[actor] (u) at (0, 0) {Usuário};
+                \node[actor] (p) at (2.2, 0) {Plugin};
+                \node[actor] (a) at (4.4, 0) {API (Go)};
+                \node[actor] (d) at (6.6, 0) {SQLite};
+
+                \draw[dashed, azul-seg!40] (u) -- (0, -4.6);
+                \draw[dashed, azul-seg!40] (p) -- (2.2, -4.6);
+                \draw[dashed, azul-seg!40] (a) -- (4.4, -4.6);
+                \draw[dashed, azul-seg!40] (d) -- (6.6, -4.6);
+
+                \draw[msg] (0, -0.7) -- (2.2, -0.7) node[msglabel, midway, above] {cria nota};
+                \draw[msg] (2.2, -1.4) -- (4.4, -1.4) node[msglabel, midway, above] {\texttt{POST /notes}};
+                \draw[msg] (4.4, -2.1) -- (6.6, -2.1) node[msglabel, midway, above] {\texttt{INSERT}};
+                \draw[msg] (6.6, -2.8) -- (4.4, -2.8) node[msglabel, midway, above] {ok};
+                \draw[msg] (4.4, -3.5) -- (2.2, -3.5) node[msglabel, midway, above] {\texttt{201 Created}};
+                \draw[msg] (2.2, -4.2) -- (0, -4.2) node[msglabel, midway, above] {atualiza UI};
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Situação final}
+% -------------------------------------------------%
+
+\begin{frame}{Situação final: o que está funcionando}
+    Release \textbf{v0.4.0} consolidada em \texttt{main}.
+    \begin{itemize}
+        \item CRUD completo de notas via API REST.
+        \item Sincronização bidirecional entre plugin do Obsidian e servidor.
+        \item Distribuição via imagem Docker pública no Docker Hub.
+        \item Plugin do Obsidian distribuído como artefato versionado na release.
+        \item Suíte de testes com cobertura acima de 80\% no servidor.
+        \item Contrato da API descrito em OpenAPI.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Situação final: limitações e pendências}
+    \begin{columns}[T]
+        \begin{column}{0.50\textwidth}
+            \textbf{Limitações conhecidas}
+            \begin{itemize}
+                \item Sem autenticação, TLS ou \textit{rate limit}, por decisão (ADR-0005); por consequência, o uso é previsto em rede interna.
+                \item Sem upload de anexos binários (imagens e outros arquivos).
+                \item Tamanho máximo de nota: 50\,MB.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \textbf{Bugs e pendências}
+            \begin{itemize}
+                \item 17 de 17 \emph{issues} do MVP fechadas.
+                \item Nenhum \emph{bug} identificado e não corrigido até o momento.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Situação final: próximos passos}
+    Caso o projeto continue, as direções naturais são:
+    \begin{itemize}
+        \item Autenticação e TLS para exposição pública do servidor.
+        \item Upload de anexos binários (imagens e outros arquivos).
+        \item Busca léxica em títulos e conteúdo; indexação vetorial e busca semântica.
+        \item Organização hierárquica por pastas e projetos.
+        \item Versionamento e histórico de notas.
+        \item Integração com agentes de IA via MCP.
+    \end{itemize}
 \end{frame}
 
 \end{document}

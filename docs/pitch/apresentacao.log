@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.4.27)  27 MAY 2026 13:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.6.10)  15 JUN 2026 17:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -723,287 +723,6 @@ Package babel Info: Hyphen rules for 'brazil' set to \l@portuguese
 (babel)             (\language3). Reported on input line 100.
 Package babel Info: Making " an active character on input line 132.
 ))
-(/usr/share/texmf-dist/tex/latex/biblatex/biblatex.sty
-Package: biblatex 2025/07/10 v3.21 programmable bibliographies (PK/MW)
-
-(/usr/share/texmf-dist/tex/latex/logreq/logreq.sty
-Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count360
-
-(/usr/share/texmf-dist/tex/latex/logreq/logreq.def
-File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
-))
-(/usr/share/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
-)
-\c@tabx@nest=\count361
-\c@listtotal=\count362
-\c@listcount=\count363
-\c@liststart=\count364
-\c@liststop=\count365
-\c@citecount=\count366
-\c@citetotal=\count367
-\c@multicitecount=\count368
-\c@multicitetotal=\count369
-\c@instcount=\count370
-\c@maxnames=\count371
-\c@minnames=\count372
-\c@maxitems=\count373
-\c@minitems=\count374
-\c@citecounter=\count375
-\c@maxcitecounter=\count376
-\c@savedcitecounter=\count377
-\c@uniquelist=\count378
-\c@uniquename=\count379
-\c@refsection=\count380
-\c@refsegment=\count381
-\c@maxextratitle=\count382
-\c@maxextratitleyear=\count383
-\c@maxextraname=\count384
-\c@maxextradate=\count385
-\c@maxextraalpha=\count386
-\c@abbrvpenalty=\count387
-\c@highnamepenalty=\count388
-\c@lownamepenalty=\count389
-\c@maxparens=\count390
-\c@parenlevel=\count391
-\blx@tempcnta=\count392
-\blx@tempcntb=\count393
-\blx@tempcntc=\count394
-\c@blx@maxsection=\count395
-\blx@maxsegment@0=\count396
-\blx@notetype=\count397
-\blx@parenlevel@text=\count398
-\blx@parenlevel@foot=\count399
-\blx@sectionciteorder@0=\count400
-\blx@sectionciteorderinternal@0=\count401
-\blx@entrysetcounter=\count402
-\blx@biblioinstance=\count403
-\labelnumberwidth=\skip67
-\labelalphawidth=\skip68
-\biblabelsep=\skip69
-\bibitemsep=\skip70
-\bibnamesep=\skip71
-\bibinitsep=\skip72
-\bibparsep=\skip73
-\bibhang=\skip74
-\blx@bcfin=\read4
-\blx@bcfout=\write5
-\blx@langwohyphens=\language5
-\c@mincomprange=\count404
-\c@maxcomprange=\count405
-\c@mincompwidth=\count406
-Package biblatex Info: Trying to load biblatex default data model...
-Package biblatex Info: ... file 'blx-dm.def' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/blx-dm.def
-File: blx-dm.def 2025/07/10 v3.21 biblatex datamodel (PK/MW)
-)
-Package biblatex Info: Trying to load biblatex style data model...
-Package biblatex Info: ... file 'abnt.dbx' not found.
-Package biblatex Info: Trying to load biblatex custom data model...
-Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count407
-\c@savedafterword=\count408
-\c@annotator=\count409
-\c@savedannotator=\count410
-\c@author=\count411
-\c@savedauthor=\count412
-\c@bookauthor=\count413
-\c@savedbookauthor=\count414
-\c@commentator=\count415
-\c@savedcommentator=\count416
-\c@editor=\count417
-\c@savededitor=\count418
-\c@editora=\count419
-\c@savededitora=\count420
-\c@editorb=\count421
-\c@savededitorb=\count422
-\c@editorc=\count423
-\c@savededitorc=\count424
-\c@foreword=\count425
-\c@savedforeword=\count426
-\c@holder=\count427
-\c@savedholder=\count428
-\c@introduction=\count429
-\c@savedintroduction=\count430
-\c@namea=\count431
-\c@savednamea=\count432
-\c@nameb=\count433
-\c@savednameb=\count434
-\c@namec=\count435
-\c@savednamec=\count436
-\c@translator=\count437
-\c@savedtranslator=\count438
-\c@shortauthor=\count439
-\c@savedshortauthor=\count440
-\c@shorteditor=\count441
-\c@savedshorteditor=\count442
-\c@labelname=\count443
-\c@savedlabelname=\count444
-\c@institution=\count445
-\c@savedinstitution=\count446
-\c@lista=\count447
-\c@savedlista=\count448
-\c@listb=\count449
-\c@savedlistb=\count450
-\c@listc=\count451
-\c@savedlistc=\count452
-\c@listd=\count453
-\c@savedlistd=\count454
-\c@liste=\count455
-\c@savedliste=\count456
-\c@listf=\count457
-\c@savedlistf=\count458
-\c@location=\count459
-\c@savedlocation=\count460
-\c@organization=\count461
-\c@savedorganization=\count462
-\c@origlocation=\count463
-\c@savedoriglocation=\count464
-\c@origpublisher=\count465
-\c@savedorigpublisher=\count466
-\c@publisher=\count467
-\c@savedpublisher=\count468
-\c@language=\count469
-\c@savedlanguage=\count470
-\c@origlanguage=\count471
-\c@savedoriglanguage=\count472
-\c@pageref=\count473
-\c@savedpageref=\count474
-\shorthandwidth=\skip75
-\shortjournalwidth=\skip76
-\shortserieswidth=\skip77
-\shorttitlewidth=\skip78
-\shortauthorwidth=\skip79
-\shorteditorwidth=\skip80
-\locallabelnumberwidth=\skip81
-\locallabelalphawidth=\skip82
-\localshorthandwidth=\skip83
-\localshortjournalwidth=\skip84
-\localshortserieswidth=\skip85
-\localshorttitlewidth=\skip86
-\localshortauthorwidth=\skip87
-\localshorteditorwidth=\skip88
-Package biblatex Info: Trying to load compatibility code...
-Package biblatex Info: ... file 'blx-compat.def' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/blx-compat.def
-File: blx-compat.def 2025/07/10 v3.21 biblatex compatibility (PK/MW)
-)
-Package biblatex Info: Trying to load generic definitions...
-Package biblatex Info: ... file 'biblatex.def' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/biblatex.def
-File: biblatex.def 2025/07/10 v3.21 biblatex compatibility (PK/MW)
-\c@textcitecount=\count475
-\c@textcitetotal=\count476
-\c@textcitemaxnames=\count477
-\c@biburlbigbreakpenalty=\count478
-\c@biburlbreakpenalty=\count479
-\c@biburlnumpenalty=\count480
-\c@biburlucpenalty=\count481
-\c@biburllcpenalty=\count482
-\biburlbigskip=\muskip19
-\biburlnumskip=\muskip20
-\biburlucskip=\muskip21
-\biburllcskip=\muskip22
-\c@smartand=\count483
-)
-Package biblatex Info: Trying to load bibliography style 'abnt'...
-Package biblatex Info: ... file 'abnt.bbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex-abnt/abnt.bbx
-File: abnt.bbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-
-(/usr/share/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-(/usr/share/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2026-01-19 L3 programming layer (loader) 
-
-(/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count484
-))
-Package: xparse 2025-10-09 L3 Experimental document command parser
-)
-(/usr/share/texmf-dist/tex/latex/xpatch/xpatch.sty
-Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
-)
-Package biblatex Info: Trying to load bibliography style 'standard'...
-Package biblatex Info: ... file 'standard.bbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-File: standard.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count485
-\c@bbx:relatedtotal=\count486
-))
-Package biblatex Info: Trying to load citation style 'abnt'...
-Package biblatex Info: ... file 'abnt.cbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex-abnt/abnt.cbx
-File: abnt.cbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-Package biblatex Info: Trying to load citation style 'authoryear-comp'...
-Package biblatex Info: ... file 'authoryear-comp.cbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/cbx/authoryear-comp.cbx
-File: authoryear-comp.cbx 2025/07/10 v3.21 biblatex citation style (PK/MW)
-Package biblatex Info: Redefining '\cite'.
-Package biblatex Info: Redefining '\parencite'.
-Package biblatex Info: Redefining '\footcite'.
-Package biblatex Info: Redefining '\footcitetext'.
-Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\textcite'.
-Package biblatex Info: Redefining '\textcites'.
-Package biblatex Info: Redefining '\cites'.
-Package biblatex Info: Redefining '\parencites'.
-Package biblatex Info: Redefining '\footcites'.
-Package biblatex Info: Redefining '\footcitetexts'.
-Package biblatex Info: Redefining '\smartcites'.
-)
-Package biblatex Info: Redefining '\cite'.
-Package biblatex Info: Redefining '\cites'.
-Package biblatex Info: Redefining '\footcite'.
-Package biblatex Info: Redefining '\footcites'.
-Package biblatex Info: Redefining '\citetitle'.
-Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\citeauthor'.
-Package biblatex Info: Redefining '\citeyear'.
-)
-Package biblatex Info: Trying to load configuration file...
-Package biblatex Info: ... file 'biblatex.cfg' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/biblatex.cfg
-File: biblatex.cfg 
-)
-Package biblatex Info: Input encoding 'utf8' detected.
-Package biblatex Info: Document encoding is UTF8 ....
-Package biblatex Info: ... and expl3
-(biblatex)             2026-01-19 L3 programming layer (loader) 
-(biblatex)             is new enough (at least 2020/04/06),
-(biblatex)             setting 'casechanger=expl3'.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
-Package: blx-case-expl3 2025/07/10 v3.21 expl3 case changing code for biblatex
-))
-(/usr/share/texmf-dist/tex/latex/csquotes/csquotes.sty
-Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
-\csq@reset=\count487
-\csq@gtype=\count488
-\csq@glevel=\count489
-\csq@qlevel=\count490
-\csq@maxlvl=\count491
-\csq@tshold=\count492
-\csq@ltx@everypar=\toks46
-
-(/usr/share/texmf-dist/tex/latex/csquotes/csquotes.def
-File: csquotes.def 2024-04-04 v5.2o csquotes generic definitions (JAW)
-)
-Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
-Package csquotes Info: ... configuration file loaded successfully.
-
-(/usr/share/texmf-dist/tex/latex/csquotes/csquotes.cfg
-File: csquotes.cfg 
-))
 (/usr/share/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (/usr/share/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
@@ -1028,8 +747,8 @@ Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
 Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
 \pgffor@iter=\dimen305
 \pgffor@skip=\dimen306
-\pgffor@stack=\toks47
-\pgffor@toks=\toks48
+\pgffor@stack=\toks46
+\pgffor@toks=\toks47
 ))
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
@@ -1037,7 +756,7 @@ Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
 (/usr/share/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.te
 x
 File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@plot@mark@count=\count493
+\pgf@plot@mark@count=\count360
 \pgfplotmarksize=\dimen307
 )
 \tikz@lastx=\dimen308
@@ -1052,17 +771,17 @@ File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \tikz@figbox@bg=\box80
 \tikz@tempbox=\box81
 \tikz@tempbox@bg=\box82
-\tikztreelevel=\count494
-\tikznumberofchildren=\count495
-\tikznumberofcurrentchild=\count496
-\tikz@fig@count=\count497
+\tikztreelevel=\count361
+\tikznumberofchildren=\count362
+\tikznumberofcurrentchild=\count363
+\tikz@fig@count=\count364
  (/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfmatrixcurrentrow=\count498
-\pgfmatrixcurrentcolumn=\count499
-\pgf@matrix@numberofcolumns=\count500
+\pgfmatrixcurrentrow=\count365
+\pgfmatrixcurrentcolumn=\count366
+\pgf@matrix@numberofcolumns=\count367
 )
-\tikz@expandcount=\count501
+\tikz@expandcount=\count368
 
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 topaths.code.tex
@@ -1125,19 +844,19 @@ Package: xkeyval 2025/11/04 v2.10 package option processing (HA)
 
 (/usr/share/texmf-dist/tex/generic/xkeyval/xkeyval.tex
 (/usr/share/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks49
-\XKV@tempa@toks=\toks50
-\XKV@tempb@toks=\toks51
+\XKV@toks=\toks48
+\XKV@tempa@toks=\toks49
+\XKV@tempb@toks=\toks50
 )
-\XKV@depth=\count502
+\XKV@depth=\count369
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 )))
 LaTeX Info: Redefining \ttfamily on input line 13.
 
 (/usr/share/texmf-dist/tex/generic/xstring/xstring.sty
 (/usr/share/texmf-dist/tex/generic/xstring/xstring.tex
-\xs_counta=\count503
-\xs_countb=\count504
+\xs_counta=\count370
+\xs_countb=\count371
 )
 Package: xstring 2023/08/22 v1.86 String manipulations (CT)
 )
@@ -1153,9 +872,9 @@ math.code.tex
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 fpu.code.tex
 (/usr/share/texmf-dist/tex/generic/pgf/libraries/pgflibraryfpu.code.tex))
-\tikz@math@for@depth=\count505
+\tikz@math@for@depth=\count372
 \tikz@math@dimen=\dimen320
-\tikz@math@toks=\toks52
+\tikz@math@toks=\toks51
 )
 (/usr/share/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumberbeamer.sty)
 (/usr/share/texmf-dist/tex/latex/fontawesome/fontawesome.sty
@@ -1168,9 +887,9 @@ Package: tcolorbox 2025/11/28 version 6.9.0 text color boxes
 
 (/usr/share/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks53
-\verbatim@line=\toks54
-\verbatim@in@stream=\read5
+\every@verbatim=\toks52
+\verbatim@line=\toks53
+\verbatim@in@stream=\read4
 )
 (/usr/share/texmf-dist/tex/latex/environ/environ.sty
 Package: environ 2014/05/04 v0.3 A new way to define environments
@@ -1182,9 +901,9 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \tcb@upperbox=\box86
 \tcb@lowerbox=\box87
 \tcb@phantombox=\box88
-\c@tcbbreakpart=\count506
-\c@tcblayer=\count507
-\c@tcolorbox@number=\count508
+\c@tcbbreakpart=\count373
+\c@tcblayer=\count374
+\c@tcolorbox@number=\count375
 \l__tcobox_tmpa_box=\box89
 \l__tcobox_tmpa_dim=\dimen321
 \tcb@temp=\box90
@@ -1228,24 +947,24 @@ Package caption Info: beamer document class detected.
 File: caption-beamer.sto 2022/01/06 v2.0c Adaption of the caption package to th
 e beamer document classes (AR)
 ))
-\c@caption@flags=\count509
-\c@continuedfloat=\count510
+\c@caption@flags=\count376
+\c@continuedfloat=\count377
 Package caption Info: hyperref package is loaded.
 Package caption Info: Hyperref support is turned off
 (caption)             because hyperref has stopped early.
 )
 (/usr/share/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count511
+\lst@mode=\count378
 \lst@gtempboxa=\box95
-\lst@token=\toks55
-\lst@length=\count512
+\lst@token=\toks54
+\lst@length=\count379
 \lst@currlwidth=\dimen330
-\lst@column=\count513
-\lst@pos=\count514
+\lst@column=\count380
+\lst@pos=\count381
 \lst@lostspace=\dimen331
 \lst@width=\dimen332
-\lst@newlines=\count515
-\lst@lineno=\count516
+\lst@newlines=\count382
+\lst@lineno=\count383
 \lst@maxwidth=\dimen333
 
 (/usr/share/texmf-dist/tex/latex/listings/lstpatch.sty
@@ -1253,8 +972,8 @@ File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
 )
 (/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
-\c@lstnumber=\count517
-\lst@skipnumbers=\count518
+\c@lstnumber=\count384
+\lst@skipnumbers=\count385
 \lst@framebox=\box96
 )
 (/usr/share/texmf-dist/tex/latex/listings/listings.cfg
@@ -1287,12 +1006,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen341
 \cmidrulekern=\dimen342
 \defaultaddspace=\dimen343
-\@cmidla=\count519
-\@cmidlb=\count520
+\@cmidla=\count386
+\@cmidlb=\count387
 \@aboverulesep=\dimen344
 \@belowrulesep=\dimen345
-\@thisruleclass=\count521
-\@lastruleclass=\count522
+\@thisruleclass=\count388
+\@lastruleclass=\count389
 \@thisrulewidth=\dimen346
 )
 (/usr/share/texmf-dist/tex/latex/tools/array.sty
@@ -1300,16 +1019,16 @@ Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \col@sep=\dimen347
 \ar@mcellbox=\box97
 \extrarowheight=\dimen348
-\NC@list=\toks56
-\extratabsurround=\skip89
-\backup@length=\skip90
+\NC@list=\toks55
+\extratabsurround=\skip67
+\backup@length=\skip68
 \ar@cellbox=\box98
 )
 (/usr/share/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
-\multirow@colwidth=\skip91
-\multirow@cntb=\count523
-\multirow@dima=\skip92
+\multirow@colwidth=\skip69
+\multirow@cntb=\count390
+\multirow@dima=\skip70
 \bigstrutjot=\dimen349
 )
 (/usr/share/texmf-dist/tex/latex/ae/ae.sty
@@ -1331,23 +1050,23 @@ Package: soul 2023-06-14 v3.1 Permit use of UTF-8 characters in soul (HO)
 
 (/usr/share/texmf-dist/tex/generic/soul/soul-ori.sty
 Package: soul-ori 2023-06-14 v3.1 letterspacing/underlining (mf)
-\SOUL@word=\toks57
-\SOUL@lasttoken=\toks58
-\SOUL@syllable=\toks59
-\SOUL@cmds=\toks60
-\SOUL@buffer=\toks61
-\SOUL@token=\toks62
+\SOUL@word=\toks56
+\SOUL@lasttoken=\toks57
+\SOUL@syllable=\toks58
+\SOUL@cmds=\toks59
+\SOUL@buffer=\toks60
+\SOUL@token=\toks61
 \SOUL@syllgoal=\dimen350
 \SOUL@syllwidth=\dimen351
 \SOUL@charkern=\dimen352
 \SOUL@hyphkern=\dimen353
 \SOUL@dimen=\dimen354
 \SOUL@dimeni=\dimen355
-\SOUL@minus=\count524
-\SOUL@comma=\count525
-\SOUL@apo=\count526
-\SOUL@grave=\count527
-\SOUL@spaceskip=\skip93
+\SOUL@minus=\count391
+\SOUL@comma=\count392
+\SOUL@apo=\count393
+\SOUL@grave=\count394
+\SOUL@spaceskip=\skip71
 \SOUL@ttwidth=\dimen356
 \SOUL@uldp=\dimen357
 \SOUL@ulht=\dimen358
@@ -1360,26 +1079,26 @@ Package: gensymb 2022/10/17 v1.0.2 (KJH)
 )
 (/usr/share/texmf-dist/tex/latex/xargs/xargs.sty
 Package: xargs 2008/03/22 v1.1  extended macro definitions  (mpg)
-\xargs@max=\count528
-\xargs@toksa=\toks63
-\xargs@toksb=\toks64
+\xargs@max=\count395
+\xargs@toksa=\toks62
+\xargs@toksb=\toks63
 )
 (/usr/share/texmf-dist/tex/latex/siunitx/siunitx.sty
 Package: siunitx 2025-07-09 v3.4.14 A comprehensive (SI) units package
-\l__siunitx_number_uncert_offset_int=\count529
-\l__siunitx_number_exponent_fixed_int=\count530
-\l__siunitx_number_min_decimal_int=\count531
-\l__siunitx_number_min_integer_int=\count532
-\l__siunitx_number_round_precision_int=\count533
-\l__siunitx_number_lower_threshold_int=\count534
-\l__siunitx_number_upper_threshold_int=\count535
-\l__siunitx_number_group_first_int=\count536
-\l__siunitx_number_group_size_int=\count537
-\l__siunitx_number_group_minimum_int=\count538
+\l__siunitx_number_uncert_offset_int=\count396
+\l__siunitx_number_exponent_fixed_int=\count397
+\l__siunitx_number_min_decimal_int=\count398
+\l__siunitx_number_min_integer_int=\count399
+\l__siunitx_number_round_precision_int=\count400
+\l__siunitx_number_lower_threshold_int=\count401
+\l__siunitx_number_upper_threshold_int=\count402
+\l__siunitx_number_group_first_int=\count403
+\l__siunitx_number_group_size_int=\count404
+\l__siunitx_number_group_minimum_int=\count405
 \l__siunitx_angle_tmp_dim=\dimen359
 \l__siunitx_angle_marker_box=\box99
 \l__siunitx_angle_unit_box=\box100
-\l__siunitx_compound_count_int=\count539
+\l__siunitx_compound_count_int=\count406
 
 (/usr/share/texmf-dist/tex/latex/translations/translations.sty
 Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages
@@ -1395,9 +1114,9 @@ Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages
 \l__siunitx_table_after_box=\box106
 \l__siunitx_table_before_dim=\dimen362
 \l__siunitx_table_carry_dim=\dimen363
-\l__siunitx_unit_tmp_int=\count540
-\l__siunitx_unit_position_int=\count541
-\l__siunitx_unit_total_int=\count542
+\l__siunitx_unit_tmp_int=\count407
+\l__siunitx_unit_position_int=\count408
+\l__siunitx_unit_total_int=\count409
 )
 Package hyperref Info: Option `pdffitwindow' set `false' on input line 82.
 Package hyperref Info: Option `colorlinks' set `false' on input line 82.
@@ -1408,22 +1127,22 @@ Package hyperref Info: Option `colorlinks' set `false' on input line 82.
 (./beamerouterthemeifsclean.sty)
 (/usr/share/texmf-dist/tex/latex/ragged2e/ragged2e.sty
 Package: ragged2e 2023/06/22 v3.6 ragged2e Package
-\CenteringLeftskip=\skip94
-\RaggedLeftLeftskip=\skip95
-\RaggedRightLeftskip=\skip96
-\CenteringRightskip=\skip97
-\RaggedLeftRightskip=\skip98
-\RaggedRightRightskip=\skip99
-\CenteringParfillskip=\skip100
-\RaggedLeftParfillskip=\skip101
-\RaggedRightParfillskip=\skip102
-\JustifyingParfillskip=\skip103
-\CenteringParindent=\skip104
-\RaggedLeftParindent=\skip105
-\RaggedRightParindent=\skip106
-\JustifyingParindent=\skip107
+\CenteringLeftskip=\skip72
+\RaggedLeftLeftskip=\skip73
+\RaggedRightLeftskip=\skip74
+\CenteringRightskip=\skip75
+\RaggedLeftRightskip=\skip76
+\RaggedRightRightskip=\skip77
+\CenteringParfillskip=\skip78
+\RaggedLeftParfillskip=\skip79
+\RaggedRightParfillskip=\skip80
+\JustifyingParfillskip=\skip81
+\CenteringParindent=\skip82
+\RaggedLeftParindent=\skip83
+\RaggedRightParindent=\skip84
+\JustifyingParindent=\skip85
 )
-\c@tcb@cnt@caixainfo=\count543
+\c@tcb@cnt@caixainfo=\count410
 \ifsclogo=\box107
 \ifsclogotexto=\box108
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
@@ -1435,34 +1154,34 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
 (Font)              scaled to size 15.76788pt on input line 264.
 )
-Package csquotes Info: Checking for multilingual support...
-Package csquotes Info: ... found 'babel' package.
-Package csquotes Info: Adjusting default style.
-Package csquotes Info: Redefining alias 'default' -> 'brazil'.
- (./apresentacao.aux
+(/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count411
+)
+(./apresentacao.aux
 Package babel Info: 'brazil' activates 'portuges' shorthands.
-(babel)             Reported on input line 9.
+(babel)             Reported on input line 8.
 )
 \openout1 = `apresentacao.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1500,17 +1219,17 @@ LaTeX Font Info:    ... okay on input line 33.
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count544
+\scratchcounter=\count412
 \scratchdimen=\dimen364
 \scratchbox=\box109
-\nofMPsegments=\count545
-\nofMParguments=\count546
-\everyMPshowfont=\toks65
-\MPscratchCnt=\count547
+\nofMPsegments=\count413
+\nofMParguments=\count414
+\everyMPshowfont=\toks64
+\MPscratchCnt=\count415
 \MPscratchDim=\dimen365
-\MPnumerator=\count548
-\makeMPintoPDFobject=\count549
-\everyMPtoPDFconversion=\toks66
+\MPnumerator=\count416
+\makeMPintoPDFobject=\count417
+\everyMPtoPDFconversion=\toks65
 ) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1520,54 +1239,54 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 33.
+Package hyperref Info: Link coloring OFF on input line 29.
 
 (./apresentacao.out) (./apresentacao.out)
-\@outlinefile=\write6
-\openout6 = `apresentacao.out'.
+\@outlinefile=\write5
+\openout5 = `apresentacao.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 33.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 29.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 33.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 29.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/aer/m/n on input line 33.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 33.
+(Font)                  OT1/cmss/m/n --> T1/aer/m/n on input line 29.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> T1/aess/b/n on input line 33.
+(Font)                  OT1/cmr/bx/n --> T1/aess/b/n on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> T1/aess/b/n on input line 33.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 33.
+(Font)                  OT1/cmr/bx/n --> T1/aess/b/n on input line 29.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/aess/m/n on input line 33.
+(Font)                  OT1/cmss/m/n --> T1/aess/m/n on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/aess/m/n on input line 33.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 33.
+(Font)                  OT1/cmss/bx/n --> T1/aess/m/n on input line 29.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> T1/aess/m/it on input line 33.
+(Font)                  OT1/cmr/m/it --> T1/aess/m/it on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> T1/aess/m/it on input line 33.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 33.
+(Font)                  OT1/cmr/bx/it --> T1/aess/m/it on input line 29.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> T1/aett/m/n on input line 33.
+(Font)                  OT1/cmtt/m/n --> T1/aett/m/n on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> T1/aett/m/n on input line 33.
+(Font)                  OT1/cmtt/m/n --> T1/aett/m/n on input line 29.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/aess/m/n --> T1/aess/b/n on input line 33.
+(Font)                  T1/aess/m/n --> T1/aess/b/n on input line 29.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/aess/m/it --> T1/aess/b/it on input line 33.
+(Font)                  T1/aess/m/it --> T1/aess/b/it on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> T1/aer/b/n on input line 33.
+(Font)                  OT1/cmss/b/n --> T1/aer/b/n on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/aess/b/n --> T1/aess/b/n on input line 33.
+(Font)                  T1/aess/b/n --> T1/aess/b/n on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/aess/m/n --> T1/aess/b/n on input line 33.
+(Font)                  T1/aess/m/n --> T1/aess/b/n on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/aess/m/it --> T1/aess/b/it on input line 33.
+(Font)                  T1/aess/m/it --> T1/aess/b/it on input line 29.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/aett/m/n --> T1/aett/b/n on input line 33.
+(Font)                  T1/aett/m/n --> T1/aett/b/n on input line 29.
 
 (/usr/share/texmf-dist/tex/latex/translator/translator-basic-dictionary-English
 .dict
@@ -1593,134 +1312,24 @@ Dictionary: translator-numbers-dictionary, Language: English
 sh.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-Package biblatex Info: Trying to load language 'brazil' -> 'brazil-abnt'...
-Package biblatex Info: ... file 'brazil-abnt.lbx' found.
- (/usr/share/texmf-dist/tex/latex/biblatex-abnt/brazil-abnt.lbx
-File: brazil-abnt.lbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-Package biblatex Info: Trying to load language 'brazilian-abnt'...
-Package biblatex Info: ... file 'brazilian-abnt.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex-abnt/brazilian-abnt.lbx
-File: brazilian-abnt.lbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-Package biblatex Info: Trying to load language 'brazilian' -> 'brazilian-abnt'.
-..
-Package biblatex Info: ... file 'brazilian-abnt.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex-abnt/brazilian-abnt.lbx
-File: brazilian-abnt.lbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-Package biblatex Info: Trying to load language 'brazilian'...
-Package biblatex Info: ... file 'brazilian.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/brazilian.lbx
-File: brazilian.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-)))
-Package biblatex Info: Trying to load language 'brazilian-abnt'...
-Package biblatex Info: ... file 'brazilian-abnt.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex-abnt/brazilian-abnt.lbx
-File: brazilian-abnt.lbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-Package biblatex Info: Trying to load language 'brazilian' -> 'brazilian-abnt'.
-..
-Package biblatex Info: ... file 'brazilian-abnt.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex-abnt/brazilian-abnt.lbx
-File: brazilian-abnt.lbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-Package biblatex Info: Trying to load language 'brazilian'...
-Package biblatex Info: ... file 'brazilian.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/brazilian.lbx
-File: brazilian.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-)
-Package biblatex Info: Trying to load language 'brazil'...
-Package biblatex Info: ... file 'brazil.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/brazil.lbx
-File: brazil.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-Package biblatex Info: Trying to load language 'brazilian'...
-Package biblatex Info: ... file 'brazilian.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/brazilian.lbx
-File: brazilian.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-)))
-Package biblatex Info: Trying to load language 'brazil'...
-Package biblatex Info: ... file 'brazil.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/brazil.lbx
-File: brazil.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-Package biblatex Info: Trying to load language 'brazilian' -> 'brazilian-abnt'.
-..
-Package biblatex Info: ... file 'brazilian-abnt.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex-abnt/brazilian-abnt.lbx
-File: brazilian-abnt.lbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-Package biblatex Info: Trying to load language 'brazilian'...
-Package biblatex Info: ... file 'brazilian.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/brazilian.lbx
-File: brazilian.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-)
-Package biblatex Info: Trying to load language 'brazil'...
-Package biblatex Info: ... file 'brazil.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/brazil.lbx
-File: brazil.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-Package biblatex Info: Trying to load language 'brazilian'...
-Package biblatex Info: ... file 'brazilian.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/brazilian.lbx
-File: brazilian.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-))))))
-Package biblatex Info: Trying to load language 'english' -> 'english-abnt'...
-Package biblatex Info: ... file 'english-abnt.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex-abnt/english-abnt.lbx
-File: english-abnt.lbx 2018-11-17 v3.4 ABNT BibLaTeX citation style
-Package biblatex Info: Trying to load language 'english'...
-Package biblatex Info: ... file 'english.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-)
-Package biblatex Info: Trying to load language 'english'...
-Package biblatex Info: ... file 'english.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-)
-Package biblatex Info: Trying to load language 'english'...
-Package biblatex Info: ... file 'english.lbx' found.
-
-(/usr/share/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-))
-Package biblatex Info: Input encoding 'utf8' detected.
-Package biblatex Info: Automatic encoding selection.
-(biblatex)             Assuming data encoding 'utf8'.
-\openout5 = `apresentacao.bcf'.
-
-Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'apresentacao.bbl' found.
- (./apresentacao.bbl)
-Package biblatex Info: Reference section=0 on input line 33.
-Package biblatex Info: Reference segment=0 on input line 33.
-\c@mv@tabular=\count550
-\c@mv@boldtabular=\count551
+\c@mv@tabular=\count418
+\c@mv@boldtabular=\count419
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count552
+\c@lstlisting=\count420
 \symgns@font=\mathgroup8
 LaTeX Font Info:    Overwriting symbol font `gns@font' in version `bold'
 (Font)                  TS1/opensans-TLF/m/n --> TS1/opensans-TLF/b/n on input 
-line 33.
-Package gensymb Info: Math companion symbols declared on input line 33.
-LaTeX Info: Redefining \degree on input line 33.
-LaTeX Info: Redefining \celsius on input line 33.
+line 29.
+Package gensymb Info: Math companion symbols declared on input line 29.
+LaTeX Info: Redefining \degree on input line 29.
+LaTeX Info: Redefining \celsius on input line 29.
 Package gensymb Info: Using text companion symbols for \degree, \celsius and \p
-erthousand on input line 33.
-LaTeX Info: Redefining \ohm on input line 33.
-Package gensymb Info: Using \textohm for \ohm on input line 33.
-Package gensymb Info: Using \textmu for \micro on input line 33.
+erthousand on input line 29.
+LaTeX Info: Redefining \ohm on input line 29.
+Package gensymb Info: Using \textohm for \ohm on input line 29.
+Package gensymb Info: Using \textmu for \micro on input line 29.
 
 (/usr/share/texmf-dist/tex/latex/translations/translations-basic-dictionary-bra
 zil.trsl
@@ -1728,7 +1337,7 @@ File: translations-basic-dictionary-brazil.trsl (brazil translation file `trans
 lations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `brazil'. on input line 33.
+or `brazil'. on input line 29.
 
 (/usr/share/texmf-dist/tex/latex/translations/translations-basic-dictionary-eng
 lish.trsl
@@ -1736,62 +1345,76 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 33.
+or `english'. on input line 29.
  (./apresentacao.nav)
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 6.0pt on input line 33.
+(Font)              scaled to size 6.0pt on input line 29.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 37.
+(Font)              scaled to size 12.0pt on input line 33.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 37.
+(Font)              scaled to size 10.0pt on input line 33.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf-dist/fonts
 /enc/dvips/opensans/a_jg4h6q.enc}]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 24.88pt on input line 41.
+(Font)              scaled to size 24.88pt on input line 37.
 LaTeX Font Info:    Font shape `U/ccicons/m/n' will be
-(Font)              scaled to size 24.88pt on input line 41.
+(Font)              scaled to size 24.88pt on input line 37.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 14.4pt on input line 41.
+(Font)              scaled to size 14.4pt on input line 37.
  [2
 
 ]
 [3
 
 ]
-LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
-(Font)              scaled to size 10.95pt on input line 60.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 60.
+(Font)              scaled to size 10.95pt on input line 50.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
-(Font)              scaled to size 10.0pt on input line 60.
+(Font)              scaled to size 10.95pt on input line 50.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 4.0pt on input line 60.
+(Font)              scaled to size 4.0pt on input line 50.
  [4
 
 ] [5
 
-] [6
+]
+LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
+(Font)              scaled to size 10.0pt on input line 92.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
+(Font)              scaled to size 8.0pt on input line 92.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
+(Font)              scaled to size 8.0pt on input line 92.
+ [6
 
 ] [7
 
-] [8
+]
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
+(Font)              scaled to size 10.0pt on input line 121.
+ [8
 
-] [9
+]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
+29.
+ (/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [9
 
-] [10
+{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}] [10
+
+] [11
 
 ]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 10.0pt on input line 145.
-LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 145.
-LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
-(Font)              scaled to size 8.0pt on input line 145.
- [11
+(Font)              scaled to size 8.0pt on input line 188.
 
-] [12
+Overfull \hbox (11.04419pt too wide) in paragraph at lines 188--188
+ [][] 
+ []
+
+[12
 
 ] [13
 
@@ -1801,93 +1424,41 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
 
 ] [16
 
-] [17
-
-] [18
-
 ]
-[19
+\tf@nav=\write6
+\openout6 = `apresentacao.nav'.
 
-] [20
+\tf@toc=\write7
+\openout7 = `apresentacao.toc'.
 
-]
-LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 8.0pt on input line 231.
-LaTeX Font Info:    Trying to load font information for T1+aess on input line 2
-31.
- (/usr/share/texmf-dist/tex/latex/ae/t1aess.fd
-File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
-)
-LaTeX Font Info:    Trying to load font information for U+msa on input line 231
-.
-
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 231
-.
-
-(/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <8> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 231.
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <6> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 231.
-LaTeX Font Info:    Font shape `T1/aess/m/it' in size <5> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 231.
-LaTeX Font Info:    Trying to load font information for TS1+opensans-TLF on inp
-ut line 231.
-
-(/usr/share/texmf-dist/tex/latex/opensans/TS1opensans-TLF.fd
-File: TS1opensans-TLF.fd 2019/06/24 Font definitions for TS1/opensans-TLF.
-)
-LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 231.
-LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 6.0pt on input line 231.
-LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 5.0pt on input line 231.
- [21
-
- </usr/share/texmf-dist/tex/latex/beamer/beamericonarticle.pdf>]
-\tf@nav=\write7
-\openout7 = `apresentacao.nav'.
-
-\tf@toc=\write8
-\openout8 = `apresentacao.toc'.
-
-\tf@snm=\write9
-\openout9 = `apresentacao.snm'.
+\tf@snm=\write8
+\openout8 = `apresentacao.snm'.
 
  (./apresentacao.aux)
  ***********
 LaTeX2e <2025-11-01>
-L3 programming layer <2020/03/25>
+L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `apresentacao.out' has not changed.
-(rerunfilecheck)             Checksum: 61B3E3C7B4C8142F0D8FFC9791A5F807;960.
-Package logreq Info: Writing requests to 'apresentacao.run.xml'.
-\openout1 = `apresentacao.run.xml'.
-
+(rerunfilecheck)             Checksum: 81A51C7FBA8C1C469006D28A043230D7;679.
  ) 
 Here is how much of TeX's memory you used:
- 50212 strings out of 469495
- 1061318 string characters out of 5470098
- 1944634 words of memory out of 5000000
- 77965 multiletter control sequences out of 15000+600000
- 656310 words of font info for 103 fonts, out of 8000000 for 9000
+ 41576 strings out of 469495
+ 885940 string characters out of 5470098
+ 1290523 words of memory out of 5000000
+ 69478 multiletter control sequences out of 15000+600000
+ 643576 words of font info for 80 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
- 128i,11n,139p,701b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,11n,139p,636b,1285s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Bold.pfb></usr/
 share/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Italic.pfb></usr/share/
 texmf-dist/fonts/type1/ascender/opensans/OpenSans-Regular.pfb></usr/share/texmf
 -dist/fonts/type1/public/ccicons/ccicons.pfb></usr/share/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmss8.pfb>
-Output written on apresentacao.pdf (21 pages, 97356 bytes).
+/public/lm/lmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt8.pfb>
+Output written on apresentacao.pdf (16 pages, 127424 bytes).
 PDF statistics:
- 233 PDF objects out of 1000 (max. 8388607)
- 189 compressed objects within 2 object streams
- 57 named destinations out of 1000 (max. 500000)
- 115 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 165 PDF objects out of 1000 (max. 8388607)
+ 127 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 83 words of extra memory for PDF output out of 10000 (max. 10000000)
 
