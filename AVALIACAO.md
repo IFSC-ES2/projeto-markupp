@@ -18,8 +18,14 @@
 | 7       | Luiz Renato Freitas de Almeida  | e4f7d2d | 29/05/26 | 03/06/26 | 5,4  | 10   |
 | 7       | Nícolas Arthur Raulino Oliveira | e4f7d2d | 29/05/26 | 03/06/26 | 4,4  | 10   |
 | 7       | Nicolas Pitz                    | e4f7d2d | 29/05/26 | 03/06/26 | 5,0  | 10   |
-| 8       |                                 |         |          |          |      | 10   |
-| 9       |                                 |         |          |          |      | 10   |
+| 8       | Gabriela Riedel                 | af1e784 | 09/06/26 | 11/06/26 | 7,7  | 10   |
+| 8       | Luiz Renato Freitas de Almeida  | af1e784 | 09/06/26 | 11/06/26 | 8,5  | 10   |
+| 8       | Nícolas Arthur Raulino Oliveira | af1e784 | 09/06/26 | 11/06/26 | 8,4  | 10   |
+| 8       | Nicolas Pitz                    | af1e784 | 09/06/26 | 11/06/26 | 8,1  | 10   |
+| 9       | Gabriela Riedel                 | af1e784 | 09/06/26 | 14/06/26 | 6,3  | 10   |
+| 9       | Luiz Renato Freitas de Almeida  | af1e784 | 09/06/26 | 14/06/26 | 7,0  | 10   |
+| 9       | Nícolas Arthur Raulino Oliveira | af1e784 | 09/06/26 | 14/06/26 | 7,2  | 10   |
+| 9       | Nicolas Pitz                    | af1e784 | 09/06/26 | 14/06/26 | 6,8  | 10   |
 | 10      |                                 |         |          |          |      | 10   |
 | 11/12   |                                 |         |          |          |      | 30   |
 
@@ -28,9 +34,9 @@
 | aluno                           | nota parcial |
 | ------------------------------- | ------------ |
 | Gabriela Riedel                 | 7,2          |
-| Luiz Renato Freitas de Almeida  | 7,6          |
-| Nícolas Arthur Raulino Oliveira | 7,4          |
-| Nicolas Pitz                    | 7,0          |
+| Luiz Renato Freitas de Almeida  | 7,7          |
+| Nícolas Arthur Raulino Oliveira | 7,5          |
+| Nicolas Pitz                    | 7,2          |
 
 ## Comentários
 
@@ -186,7 +192,96 @@
 8. Registro de contribuição individual: parcial.
    - Não há relatório específico da Sprint 3 consolidando o que cada integrante implementou, revisou, testou ou documentou com links para commits/PRs.
    - Como `main` não recebeu commits da equipe depois de `v0.2.0`, as contribuições foram inferidas principalmente pelos PRs em `dev` e branches remotas.
-   - Gabriela: contribuiu tecnicamente no PR `#74` com busca `GET /notes/search`, paginação, testes e correção do Makefile, além de commits de ajuste/review. A nota fica abaixo de 6 por estar fora de `main`, sem tag/release.
-   - Luiz Renato: contribuiu no PR `#73` com refatoração de nomenclatura `backend` -> `markupp`, ajustes em CI, Docker, docs e plugin, além de revisão de PRs. A contribuição é relevante para reengenharia/manutenibilidade, mas não substitui a ausência de arquitetura/métricas/release consolidadas.
-   - Nícolas Oliveira: aparece em merge tardio do PR `#76` e em PRs abertos de plugin/source control (`#79`) e sincronização, mas as principais evidências da Sprint 3 ficaram abertas, com mudanças solicitadas ou depois do prazo. A nota é limitada porque houve menos entrega integrada e aceita no marco.
-   - Nicolas Pitz: contribuiu com PR `#72` de CI/lint/formatação e tentou documentar C4 no PR `#75`, além de atualizar baseline no PR `#76`. A nota reconhece contribuição em qualidade/documentação, mas penaliza a arquitetura não integrada, métricas insuficientes e fechamento posterior ao prazo.
+    - Gabriela: contribuiu tecnicamente no PR `#74` com busca `GET /notes/search`, paginação, testes e correção do Makefile, além de commits de ajuste/review. A nota fica abaixo de 6 por estar fora de `main`, sem tag/release.
+    - Luiz Renato: contribuiu no PR `#73` com refatoração de nomenclatura `backend` -> `markupp`, ajustes em CI, Docker, docs e plugin, além de revisão de PRs. A contribuição é relevante para reengenharia/manutenibilidade, mas não substitui a ausência de arquitetura/métricas/release consolidadas.
+    - Nícolas Oliveira: aparece em merge tardio do PR `#76` e em PRs abertos de plugin/source control (`#79`) e sincronização, mas as principais evidências da Sprint 3 ficaram abertas, com mudanças solicitadas ou depois do prazo. A nota é limitada porque houve menos entrega integrada e aceita no marco.
+    - Nicolas Pitz: contribuiu com PR `#72` de CI/lint/formatação e tentou documentar C4 no PR `#75`, além de atualizar baseline no PR `#76`. A nota reconhece contribuição em qualidade/documentação, mas penaliza a arquitetura não integrada, métricas insuficientes e fechamento posterior ao prazo.
+
+### Entrega 8
+
+1. Ambiente de staging ou equivalente acessível: atendido.
+   - O projeto não expõe um SaaS público, mas a entrega define um equivalente self-hosted por imagem Docker publicada em Docker Hub: `riedelgab/ifsces2:latest`.
+   - O smoke test documentado em `DEPLOY.md` funcionou localmente via Docker: `POST /notes` criou nota, `GET /notes/{id}` retornou o conteúdo e `DELETE /notes/{id}` respondeu `204`.
+   - Para o domínio do projeto, que é servidor local/self-hosted com plugin Obsidian, essa solução é compatível com o equivalente de staging, desde que a imagem versionada seja mantida.
+2. Manutenção e atualização da integração contínua: parcial.
+   - `.github/workflows/ci.yml` cobre backend com `gofmt`, `go vet`, `golangci-lint` e testes com `race`, além do plugin com `npm ci`, `npm run lint`, `npm run build` e `npm test`.
+   - Localmente, `go test ./... -race -count=1` passou no backend e o plugin passou em `npm ci`, `npm run lint`, `npm run build` e `npm test` com 55 testes.
+   - O comando do CI `go run github.com/golangci/golangci-lint/cmd/golangci-lint@latest run` falhou localmente porque o linter foi construído com Go 1.25 enquanto o módulo alvo declara `go 1.26.1`. A solução é fixar uma versão/binário de `golangci-lint` compatível com Go 1.26 ou alinhar o `go.mod` a uma versão suportada pelo linter.
+3. Documentação de deploy: atendido com ressalvas.
+   - `DEPLOY.md` descreve pré-requisitos, execução via Docker, instalação do plugin, validação por `curl`, build local e aviso de segurança por ausência de autenticação.
+   - O README referencia o artefato da release `v0.4.0` e o fluxo de instalação do plugin no Obsidian.
+   - A documentação poderia usar imagem/tag versionada no comando principal, em vez de `latest`, para melhorar reprodutibilidade do marco avaliado.
+4. Atualização das métricas do projeto: parcial.
+   - As fichas foram separadas em `metricas/` e há atualização visual para Sprint 4 em cobertura, MVP, reviews, PRs revisados e distribuição de commits.
+   - A evidência está majoritariamente em imagens, com pouca explicação textual, valores numéricos, data de coleta, metodologia e análise de tendência/decisão.
+   - O baseline foi atualizado para marcar itens como feitos, mas ainda mistura linha de base original com acompanhamento posterior e mantém trechos históricos inconsistentes, como período coberto até a Entrega 3 ao mesmo tempo em que a versão é 0.4.
+5. Manutenção/reengenharia: atendido.
+   - `ADR-0010` registra isolamento de detalhes de persistência na camada `storage`, removendo vazamentos de `database/sql` e `sql.ErrNoRows` para camadas superiores.
+   - `ADR-0011` registra a substituição de comandos avulsos pela Source Control View e pela camada `core/operations.ts`/`core/status.ts`.
+   - A reengenharia é coerente com problemas reais de duplicação, coesão e visibilidade de estado para o usuário.
+   - Como evidência funcional associada, a Sprint 4 consolida o produto com Source Control View no plugin, comandos `fetch`, `pull`, `push` e `sync`, fluxo mais próximo de controle de versão, suporte a conflitos/força de sincronização e correções em rotas/serviços do backend.
+   - A validação completa dentro do Obsidian continua dependente de execução manual no aplicativo, mas há testes automatizados expressivos do plugin.
+6. Comparação de métrica antes/depois: atendido.
+   - `ADR-0011` apresenta comparação objetiva entre antes e depois: 5 comandos com 413 LOC de lógica duplicada removidos, persistência de metadados reduzida de 5 pontos para 1 helper e `forcePush` deixando de duplicar CRUD.
+   - A métrica não é apenas contagem de linhas; ela conecta a alteração a manutenibilidade, coesão e visibilidade do fluxo de sincronização.
+7. Release/tag do marco: parcial.
+   - A tag `v0.4.0` existe e aponta para `af1e784`, que também é o `HEAD` de `main`.
+   - A release `Sprint 4` foi publicada para `v0.4.0`, mas em 09/06/2026, após o marco previsto de 08/06/2026.
+   - A entrega recupera parte importante da rastreabilidade perdida na Sprint 3: há também tag/release `v0.3.0` e documento de recuperação da Entrega 7.
+8. Registro de contribuição individual: atendido com ressalvas.
+   - `contribuicoes-sprint4.md` registra contribuições por membro.
+   - O histórico `v0.3.0..v0.4.0` confirma participação dos quatro integrantes, embora com aliases diferentes.
+   - O documento é curto e não vincula todas as contribuições a PRs/commits, mas é suficiente para diferenciar responsabilidades principais.
+Notas individuais:
+    - Gabriela: contribuição relevante em deploy, Dockerfile e documentação operacional. A nota é limitada pelo menor volume relativo de evidências técnicas no incremento principal e pela release após o prazo.
+    - Luiz Renato: contribuição forte em reengenharia de persistência, ADR-0010, testes, consolidação do marco e revisões. Recebe a maior nota por protagonismo técnico e integração da entrega, com ressalva pela falha do lint local e atraso da release.
+    - Nícolas Arthur: contribuição forte no incremento principal do plugin, Source Control View, reorganização de sincronização, ADR-0011, CD do plugin e documentação de instalação. Nota alta, limitada por dependência de validação manual no Obsidian e pela entrega tardia do marco.
+    - Nicolas Pitz: contribuição relevante em sincronização do servidor, testes, baseline e métricas. A nota reconhece sustentação de qualidade, mas é limitada porque as métricas da Sprint 4 ficaram pouco analíticas e baseadas quase só em imagens.
+
+### Entrega 9
+
+1. MVP completo e integrado: parcial.
+   - A versão avaliada foi a maior tag disponível, `v0.4.0` (`af1e784`). Não existe tag de Release Candidate no formato exigido `v1.0.0-rc.1`.
+   - O MVP possui integração relevante entre servidor Go, API REST, SQLite, Docker e plugin Obsidian. A API cobre criação, leitura, atualização, exclusão, listagem, busca e sincronização com controle otimista por `lastModifiedAt`/`force`.
+   - O plugin evoluiu para uma Source Control View com `fetch`, `pull`, `push`, `sync`, status de notas novas/modificadas/deletadas/conflitantes e ações de force pull/push.
+   - A validação por Docker documentada funcionou localmente com imagem `riedelgab/ifsces2:latest`: `POST /notes` criou nota, `GET /notes/{id}` retornou conteúdo e `DELETE /notes/{id}` respondeu `204`.
+   - Para o domínio self-hosted/plugin Obsidian, a solução é plausível como MVP demonstrável, mas a validação completa dentro do Obsidian continua dependente de execução manual no aplicativo.
+   - O escopo documentado ainda promete “controle de versões” no README, mas o produto entrega principalmente sincronização com detecção de conflito e sobrescrita forçada; não há histórico/versionamento real de alterações.
+   - Não há documento final da entrega 9 consolidando backlog concluído, itens removidos, pendências e critérios de aceitação atendidos/justificados.
+2. Hardening do sistema: atendido em boa parte.
+   - Há evidências de estabilização e reengenharia: isolamento de persistência em `storage` (`ADR-0010`), Source Control View e consolidação de sincronização em `core/operations.ts`/`core/status.ts` (`ADR-0011`), tratamento de conflitos 409, validação de path/conteúdo/id, normalização de timestamps e testes adicionais.
+   - A análise estática mostra separação clara entre API, serviço de domínio, storage/sqlc e plugin, com erros de domínio traduzidos em códigos HTTP apropriados.
+   - O `npm ci` do plugin reportou 1 vulnerabilidade high em dependências, que deve ser acompanhada.
+   - O servidor não tem autenticação por decisão explícita (`ADR-0005`), aceitável para uso local/self-hosted, mas a própria documentação alerta para não expor fora de `localhost`.
+3. Integração contínua obrigatória: parcial.
+   - `.github/workflows/ci.yml` executa em `push` para `main` e em `pull_request`.
+   - O pipeline cobre servidor com `gofmt`, `go vet`, `golangci-lint` e `go test ./... -race -count=1`, além do plugin com `npm ci`, `npm run lint`, `npm run build` e `npm test --if-present`.
+   - Evidência no GitHub: PR `#92` teve aprovação e checks verdes (`Servidor (Go) tests` e `Obsidian plugin build`).
+   - Verificação local: `go test ./... -race -count=1`, `gofmt -l .`, `go vet ./...`, `npm run lint`, `npm run build` e `npm test --if-present` passaram; o plugin executou 55 testes.
+   - Ressalva importante: o comando do CI `go run github.com/golangci/golangci-lint/cmd/golangci-lint@latest run` falhou localmente porque o linter foi construído com Go 1.25 e o módulo declara alvo `go 1.26.1`. A correção é alinhar o toolchain do CI/local, por exemplo instalar Go 1.26.1 quando disponível ou ajustar/fixar a versão do módulo/linter de forma compatível.
+4. Testes de aceitação: não atendido.
+   - Há testes automatizados relevantes do backend e do plugin, mas não encontrei definição específica de testes de aceitação para o MVP final.
+   - Não há associação explícita dos testes de aceitação aos critérios das histórias/issues, nem registro formal de execução com resultado aprovado/reprovado/aprovado com ressalvas.
+   - O smoke test em `DEPLOY.md` é útil como validação operacional da API, mas não substitui um roteiro de aceite do MVP incluindo fluxo no Obsidian, sincronização, conflito e resolução.
+5. Ambiente de execução acessível: atendido com ressalvas.
+   - O projeto não expõe um SaaS público, mas define um ambiente equivalente self-hosted via Docker Hub: `riedelgab/ifsces2:latest`.
+   - A imagem documentada funcionou localmente e permitiu validar a API.
+   - A release `v0.4.0` possui artefatos instaláveis do plugin (`markupp-plugin-v0.4.0.zip`, `main.js`, `manifest.json`, `styles.css`).
+   - `DEPLOY.md` documenta Docker, instalação do plugin, smoke test por `curl`, build local e aviso de segurança.
+   - Ressalvas: o comando principal usa `latest`, não uma tag versionada, reduzindo reprodutibilidade do marco; e não há credenciais porque não há autenticação.
+6. Revisão final da documentação: parcial.
+   - README, `DEPLOY.md`, `arquitetura-c4.md`, ADRs, métricas e contribuições da Sprint 4 existem e cobrem boa parte da visão técnica.
+   - A documentação ainda está estruturada como fechamento da Sprint 4/Entrega 8, não como revisão final da entrega 9/Release Candidate.
+   - `riscos.md` não registra acompanhamento final por sprint ou fechamento dos riscos até a entrega 9; mantém essencialmente o registro inicial e plano de resposta.
+   - As métricas foram separadas em fichas, mas seguem muito baseadas em imagens, com pouca explicação textual, datas, valores numéricos e análise de tendência/decisão.
+   - Não há documento final de limitações conhecidas do RC; as limitações aparecem dispersas em README/DEPLOY/ADRs.
+7. Release Candidate: não atendido.
+   - Existe tag/release `v0.4.0` (“Sprint 4”), com resumo de funcionalidades, deploy, reengenharia e changelog, além de artefatos do plugin.
+   - A entrega 9 exige explicitamente `v1.0.0-rc.1`, que não existe.
+   - A release publicada é uma release de Sprint 4/Entrega 8, não uma Release Candidate final; também não há indicação formal de ambiente de teste versionado como RC além do Docker `latest`.
+
+Notas individuais:
+   - Gabriela: contribuição relevante em Dockerfile, publicação da imagem e documentação de deploy. A nota é limitada pelo menor volume técnico relativo no fechamento do MVP e pouca participação direta nos itens críticos de CI/testes/RC/aceite.
+   - Luiz Renato: contribuição forte em reengenharia de persistência, isolamento de erros, normalização de timestamps, testes, métricas e consolidação do marco `v0.4.0`. Nota alta, limitada pela ausência do RC formal, documentação final incompleta e falha local do `golangci-lint` por desalinhamento de toolchain.
+   - Nícolas Arthur: contribuição mais central no incremento do plugin, Source Control View, sincronização, CD do plugin, ADR-0011 e documentação de instalação. Maior nota da entrega pela centralidade no MVP visível, limitada pela falta de teste de aceitação no Obsidian e ausência de RC.
+   - Nicolas Pitz: contribuição relevante em sincronização do servidor, correções, OpenAPI, testes, baseline e métricas. Nota intermediária porque as métricas/documentação final ficaram pouco analíticas e a entrega não fechou os requisitos processuais da entrega 9.
