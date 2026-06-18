@@ -25,6 +25,16 @@ Excesso de informação descentralizada e dados desestruturados sem métodos de 
 - Expor uma API REST que permita integração com clientes
 - Processar documentos automaticamente para busca semântica
 
+## MVP entregue (Release Candidate)
+
+As seções acima são a visão do produto. O MVP entregue cobre CRUD de notas via
+plugin e API REST, listagem, busca por substring e sincronização com detecção de
+conflito e sobrescrita forçada.
+
+Fora do MVP: versionamento, organização hierárquica, busca semântica e
+autenticação. Ver [requisitos do MVP](docs/requisitos-mvp.md) e
+[limitações conhecidas](docs/limitacoes-conhecidas.md).
+
 ## Instalação do plugin (Obsidian)
 1. Baixe o artefato da release `v0.4.0`: `markupp-plugin-v0.4.0.zip` (ou os arquivos `main.js`, `manifest.json` e `styles.css` anexados à release).
 2. Crie a pasta `<seu-vault>/.obsidian/plugins/obsidian-markupp-plugin/` e coloque os três arquivos nela (extraia o zip aqui).
@@ -54,6 +64,7 @@ Excesso de informação descentralizada e dados desestruturados sem métodos de 
 
 ## Critérios de Qualidade
 - [Critérios de Qualidade](docs/qualidade.md)
+- [Testes de Aceitação](docs/testes-aceitacao.md)
 
 ## Riscos
 - [Tabelas de Riscos](docs/riscos.md)
