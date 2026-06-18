@@ -109,3 +109,16 @@ Ações contínuas para reduzir a probabilidade ou o impacto antes que o risco s
   - Presença e atividade dos membros no board: sinaliza REQ-1.
   - Falhas em builds/integração: sinaliza RTE-1.
 - **Escalonamento**: riscos que migrem para a faixa Alta/Alta na matriz passam a ser discutidos em toda reunião semanal, até retornarem a um patamar aceitável.
+
+## 4 Fechamento dos riscos (Release Candidate)
+
+Status de cada risco ao fim do MVP.
+
+| ID | Status | Observação |
+| --- | --- | --- |
+| RES-1 | Materializado, mitigado | Complexidade da interface reduzida pela migração de interface web para plugin do Obsidian (ADR-0004) |
+| RPR-1 | Materializado | Backlog x horas gerou atrasos e a recuperação da Entrega 7; mitigado com sprints temáticas |
+| REQ-1 | Não ocorreu | - |
+| REQ-2 | Não ocorreu | - |
+| RTE-1 | Não ocorreu | - |
+| RQP-1 | Não ocorreu | - |
