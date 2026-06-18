@@ -26,7 +26,7 @@
 | 9       | Luiz Renato Freitas de Almeida  | af1e784 | 09/06/26 | 14/06/26 | 7,0  | 10   |
 | 9       | Nícolas Arthur Raulino Oliveira | af1e784 | 09/06/26 | 14/06/26 | 7,2  | 10   |
 | 9       | Nicolas Pitz                    | af1e784 | 09/06/26 | 14/06/26 | 6,8  | 10   |
-| 10      |                                 |         |          |          |      | 10   |
+| 10      | equipe                          | --      | 15/06/26 | 15/06/26 | 7,3  | 10   |
 | 11/12   |                                 |         |          |          |      | 30   |
 
 ## Nota parcial
@@ -34,7 +34,7 @@
 | aluno                           | nota parcial |
 | ------------------------------- | ------------ |
 | Gabriela Riedel                 | 7,2          |
-| Luiz Renato Freitas de Almeida  | 7,7          |
+| Luiz Renato Freitas de Almeida  | 7,6          |
 | Nícolas Arthur Raulino Oliveira | 7,5          |
 | Nicolas Pitz                    | 7,2          |
 
@@ -192,10 +192,10 @@
 8. Registro de contribuição individual: parcial.
    - Não há relatório específico da Sprint 3 consolidando o que cada integrante implementou, revisou, testou ou documentou com links para commits/PRs.
    - Como `main` não recebeu commits da equipe depois de `v0.2.0`, as contribuições foram inferidas principalmente pelos PRs em `dev` e branches remotas.
-    - Gabriela: contribuiu tecnicamente no PR `#74` com busca `GET /notes/search`, paginação, testes e correção do Makefile, além de commits de ajuste/review. A nota fica abaixo de 6 por estar fora de `main`, sem tag/release.
-    - Luiz Renato: contribuiu no PR `#73` com refatoração de nomenclatura `backend` -> `markupp`, ajustes em CI, Docker, docs e plugin, além de revisão de PRs. A contribuição é relevante para reengenharia/manutenibilidade, mas não substitui a ausência de arquitetura/métricas/release consolidadas.
-    - Nícolas Oliveira: aparece em merge tardio do PR `#76` e em PRs abertos de plugin/source control (`#79`) e sincronização, mas as principais evidências da Sprint 3 ficaram abertas, com mudanças solicitadas ou depois do prazo. A nota é limitada porque houve menos entrega integrada e aceita no marco.
-    - Nicolas Pitz: contribuiu com PR `#72` de CI/lint/formatação e tentou documentar C4 no PR `#75`, além de atualizar baseline no PR `#76`. A nota reconhece contribuição em qualidade/documentação, mas penaliza a arquitetura não integrada, métricas insuficientes e fechamento posterior ao prazo.
+   - Gabriela: contribuiu tecnicamente no PR `#74` com busca `GET /notes/search`, paginação, testes e correção do Makefile, além de commits de ajuste/review. A nota fica abaixo de 6 por estar fora de `main`, sem tag/release.
+   - Luiz Renato: contribuiu no PR `#73` com refatoração de nomenclatura `backend` -> `markupp`, ajustes em CI, Docker, docs e plugin, além de revisão de PRs. A contribuição é relevante para reengenharia/manutenibilidade, mas não substitui a ausência de arquitetura/métricas/release consolidadas.
+   - Nícolas Oliveira: aparece em merge tardio do PR `#76` e em PRs abertos de plugin/source control (`#79`) e sincronização, mas as principais evidências da Sprint 3 ficaram abertas, com mudanças solicitadas ou depois do prazo. A nota é limitada porque houve menos entrega integrada e aceita no marco.
+   - Nicolas Pitz: contribuiu com PR `#72` de CI/lint/formatação e tentou documentar C4 no PR `#75`, além de atualizar baseline no PR `#76`. A nota reconhece contribuição em qualidade/documentação, mas penaliza a arquitetura não integrada, métricas insuficientes e fechamento posterior ao prazo.
 
 ### Entrega 8
 
@@ -232,11 +232,11 @@
    - `contribuicoes-sprint4.md` registra contribuições por membro.
    - O histórico `v0.3.0..v0.4.0` confirma participação dos quatro integrantes, embora com aliases diferentes.
    - O documento é curto e não vincula todas as contribuições a PRs/commits, mas é suficiente para diferenciar responsabilidades principais.
-Notas individuais:
-    - Gabriela: contribuição relevante em deploy, Dockerfile e documentação operacional. A nota é limitada pelo menor volume relativo de evidências técnicas no incremento principal e pela release após o prazo.
-    - Luiz Renato: contribuição forte em reengenharia de persistência, ADR-0010, testes, consolidação do marco e revisões. Recebe a maior nota por protagonismo técnico e integração da entrega, com ressalva pela falha do lint local e atraso da release.
-    - Nícolas Arthur: contribuição forte no incremento principal do plugin, Source Control View, reorganização de sincronização, ADR-0011, CD do plugin e documentação de instalação. Nota alta, limitada por dependência de validação manual no Obsidian e pela entrega tardia do marco.
-    - Nicolas Pitz: contribuição relevante em sincronização do servidor, testes, baseline e métricas. A nota reconhece sustentação de qualidade, mas é limitada porque as métricas da Sprint 4 ficaram pouco analíticas e baseadas quase só em imagens.
+     Notas individuais:
+   - Gabriela: contribuição relevante em deploy, Dockerfile e documentação operacional. A nota é limitada pelo menor volume relativo de evidências técnicas no incremento principal e pela release após o prazo.
+   - Luiz Renato: contribuição forte em reengenharia de persistência, ADR-0010, testes, consolidação do marco e revisões. Recebe a maior nota por protagonismo técnico e integração da entrega, com ressalva pela falha do lint local e atraso da release.
+   - Nícolas Arthur: contribuição forte no incremento principal do plugin, Source Control View, reorganização de sincronização, ADR-0011, CD do plugin e documentação de instalação. Nota alta, limitada por dependência de validação manual no Obsidian e pela entrega tardia do marco.
+   - Nicolas Pitz: contribuição relevante em sincronização do servidor, testes, baseline e métricas. A nota reconhece sustentação de qualidade, mas é limitada porque as métricas da Sprint 4 ficaram pouco analíticas e baseadas quase só em imagens.
 
 ### Entrega 9
 
@@ -281,7 +281,18 @@ Notas individuais:
    - A release publicada é uma release de Sprint 4/Entrega 8, não uma Release Candidate final; também não há indicação formal de ambiente de teste versionado como RC além do Docker `latest`.
 
 Notas individuais:
-   - Gabriela: contribuição relevante em Dockerfile, publicação da imagem e documentação de deploy. A nota é limitada pelo menor volume técnico relativo no fechamento do MVP e pouca participação direta nos itens críticos de CI/testes/RC/aceite.
-   - Luiz Renato: contribuição forte em reengenharia de persistência, isolamento de erros, normalização de timestamps, testes, métricas e consolidação do marco `v0.4.0`. Nota alta, limitada pela ausência do RC formal, documentação final incompleta e falha local do `golangci-lint` por desalinhamento de toolchain.
-   - Nícolas Arthur: contribuição mais central no incremento do plugin, Source Control View, sincronização, CD do plugin, ADR-0011 e documentação de instalação. Maior nota da entrega pela centralidade no MVP visível, limitada pela falta de teste de aceitação no Obsidian e ausência de RC.
-   - Nicolas Pitz: contribuição relevante em sincronização do servidor, correções, OpenAPI, testes, baseline e métricas. Nota intermediária porque as métricas/documentação final ficaram pouco analíticas e a entrega não fechou os requisitos processuais da entrega 9.
+
+- Gabriela: contribuição relevante em Dockerfile, publicação da imagem e documentação de deploy. A nota é limitada pelo menor volume técnico relativo no fechamento do MVP e pouca participação direta nos itens críticos de CI/testes/RC/aceite.
+- Luiz Renato: contribuição forte em reengenharia de persistência, isolamento de erros, normalização de timestamps, testes, métricas e consolidação do marco `v0.4.0`. Nota alta, limitada pela ausência do RC formal, documentação final incompleta e falha local do `golangci-lint` por desalinhamento de toolchain.
+- Nícolas Arthur: contribuição mais central no incremento do plugin, Source Control View, sincronização, CD do plugin, ADR-0011 e documentação de instalação. Maior nota da entrega pela centralidade no MVP visível, limitada pela falta de teste de aceitação no Obsidian e ausência de RC.
+- Nicolas Pitz: contribuição relevante em sincronização do servidor, correções, OpenAPI, testes, baseline e métricas. Nota intermediária porque as métricas/documentação final ficaram pouco analíticas e a entrega não fechou os requisitos processuais da entrega 9.
+
+### Entrega 10
+
+| critério                  | peso | nota |
+| ------------------------- | ---- | ---- |
+| Identificação do projeto  | 1    | 10   |
+| Resumo do MVP             | 2    | 10   |
+| Demonstração do sistema   | 4    | 4    |
+| Situação final do projeto | 1,5  | 10   |
+| Objetividade e perguntas  | 0,5  | 10   |
