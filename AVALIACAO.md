@@ -27,16 +27,19 @@
 | 9       | Nícolas Arthur Raulino Oliveira | af1e784 | 09/06/26 | 14/06/26 | 7,2  | 10   |
 | 9       | Nicolas Pitz                    | af1e784 | 09/06/26 | 14/06/26 | 6,8  | 10   |
 | 10      | equipe                          | --      | 15/06/26 | 15/06/26 | 7,3  | 10   |
-| 11/12   |                                 |         |          |          |      | 30   |
+| 11/12   | Gabriela Riedel                 | --      | 18/06/26 | 24/06/26 | 7    | 30   |
+| 11/12   | Luiz Renato Freitas de Almeida  | --      | 18/06/26 | 24/06/26 | 7,5  | 30   |
+| 11/12   | Nícolas Arthur Raulino Oliveira | --      | 18/06/26 | 24/06/26 | 8    | 30   |
+| 11/12   | Nicolas Pitz                    | --      | 18/06/26 | 24/06/26 | 6    | 30   |
 
-## Nota parcial
+## Nota final
 
-| aluno                           | nota parcial |
-| ------------------------------- | ------------ |
-| Gabriela Riedel                 | 7,2          |
-| Luiz Renato Freitas de Almeida  | 7,6          |
-| Nícolas Arthur Raulino Oliveira | 7,5          |
-| Nicolas Pitz                    | 7,2          |
+| aluno                           | nota |
+| ------------------------------- | ---- |
+| Gabriela Riedel                 | 7,1  |
+| Luiz Renato Freitas de Almeida  | 7,6  |
+| Nícolas Arthur Raulino Oliveira | 7,7  |
+| Nicolas Pitz                    | 6,8  |
 
 ## Comentários
 
@@ -296,3 +299,84 @@ Notas individuais:
 | Demonstração do sistema   | 4    | 4    |
 | Situação final do projeto | 1,5  | 10   |
 | Objetividade e perguntas  | 0,5  | 10   |
+
+### Entrega 11/12
+
+1. Produto e MVP: parcial.
+   - O MVP final é plausível e funcional para o domínio self-hosted: servidor Go, API REST, SQLite persistente em volume Docker e plugin Obsidian com Source Control View.
+   - O produto entrega CRUD de notas, busca, sincronização, detecção de conflitos via `lastModifiedAt`/`force`, ações `fetch`, `pull`, `push` e `sync`, e artefatos instaláveis do plugin na release `v0.4.0`.
+   - Há divergência entre parte da proposta do README, que ainda fala em versionamento/controle de versões, e o produto entregue, que implementa sincronização com detecção de conflito, mas não histórico real de versões.
+   - Não há Release Candidate formal `v1.0.0-rc.1` nem documento final de aceite do MVP; a defesa deve esclarecer escopo entregue, itens fora do escopo e critérios de aceitação realmente satisfeitos.
+2. Arquitetura e decisões técnicas: atendido com ressalvas.
+   - A arquitetura está documentada em `docs/arquitetura-c4.md`, com contexto, contêineres e componentes do servidor.
+   - Os ADRs registram decisões relevantes: Go no servidor, arquitetura multiprocesso, SQLite, plugin Obsidian, API REST, segurança fora do MVP, isolamento da persistência e Source Control View.
+   - A separação plugin/API/SQLite é coerente com a natureza desktop/self-hosted do produto e preserva desacoplamento entre cliente e persistência.
+   - A decisão de deixar autenticação fora do MVP é aceitável se o servidor for local, mas aumenta o risco operacional caso o usuário exponha a porta fora de `localhost`.
+3. Projeto orientado a objetos e padrões: parcial.
+   - A restrição de OO foi atendida de forma indireta e heterogênea: o plugin TypeScript usa classes/componentes do ecossistema Obsidian e separa API client, storage local, core de operações/status e UI; o servidor Go usa separação por pacotes, interfaces e serviços, embora Go não seja OO clássico.
+   - Há boas práticas de design: camadas `api -> notes -> storage`, isolamento de `database/sql` na camada de persistência (`ADR-0010`) e centralização da sincronização no `core` do plugin (`ADR-0011`).
+   - A documentação fala mais em arquitetura e reengenharia do que em padrões OO nomeados; faltou justificar explicitamente padrões de projeto ou princípios OO aplicados, como Adapter/API Client, Repository/Storage ou Service Layer.
+4. Qualidade, testes e pipeline: atendido com ressalvas.
+   - Verificação local em 18/06/2026: `go test ./... -race -count=1` passou no servidor.
+   - Verificação local em 18/06/2026: no plugin, `npm run lint`, `npm run build` e `npm test --if-present` passaram; a suíte executou 55 testes em 4 arquivos.
+   - O CI de `main` cobre servidor e plugin, incluindo testes, build e lint do plugin; há evidência de checks verdes em PRs finais, como `#92`.
+   - A principal lacuna é a ausência de testes de aceitação formalizados para o fluxo completo dentro do Obsidian; os testes automatizados usam mocks e validam bem lógica interna, mas não substituem execução ponta a ponta no aplicativo real.
+   - O alerta anterior sobre `golangci-lint` local por incompatibilidade de toolchain deve ser explicado: é uma questão de alinhamento de versões, mas afeta reprodutibilidade da validação estática fora do GitHub Actions.
+5. Deploy, staging e reprodutibilidade: atendido com ressalvas.
+   - `docs/DEPLOY.md` documenta execução do servidor via Docker Hub (`riedelgab/ifsces2:latest`), instalação do plugin no Obsidian, smoke test por `curl` e build local.
+   - A solução de staging equivalente é adequada ao domínio self-hosted, já que o produto não é SaaS público.
+   - A imagem Docker e o volume SQLite tornam a execução do servidor reprodutível, mas o uso de `latest` em vez de tag versionada reduz rastreabilidade do marco.
+   - A validação completa do plugin depende do Obsidian instalado e de passos manuais, o que deveria estar acompanhado por roteiro de aceite mais formal.
+6. Métricas, riscos e acompanhamento: parcial.
+   - As métricas foram separadas em fichas e há imagens de acompanhamento por sprint, incluindo cobertura, MVP planejado/entregue, reviews, PRs revisados, commits e burndown.
+   - A análise ainda é fraca como processo de gestão: várias fichas usam imagens sem valores textuais, datas de coleta, interpretação objetiva, fonte dos dados e decisão tomada a partir da métrica.
+   - `docs/riscos.md` tem registro inicial, matriz e plano de resposta, mas não mostra acompanhamento final por sprint, riscos concretizados, riscos encerrados ou revisão para a RC.
+   - O risco de segurança sem autenticação está documentado em ADR/DEPLOY, mas não aparece como acompanhamento final em `riscos.md`.
+7. Manutenção e reengenharia: atendido.
+   - `ADR-0010` registra reengenharia relevante: detalhes de `database/sql`, `sql.ErrNoRows` e montagem de `LIKE` foram isolados em `storage`, reduzindo acoplamento das camadas superiores.
+   - `ADR-0011` registra reengenharia importante no plugin: comandos avulsos de sincronização foram substituídos por `core/operations.ts`, `core/status.ts` e Source Control View.
+   - A comparação antes/depois da `ADR-0011` é uma boa evidência de engenharia: 5 arquivos de comando com 413 LOC duplicadas removidos, persistência de metadados reduzida de 5 pontos para 1 helper e `forcePush` reaproveitando operações existentes.
+   - O impacto na qualidade é claro: maior coesão, menor duplicação e melhor visibilidade do estado de sincronização para o usuário.
+8. Colaboração e contribuição individual: parcial.
+   - Gabriela Riedel: a documentação da Sprint 4 aponta deploy, Dockerfile e publicação da imagem; commits confirmam Dockerfile, Docker Hub/release e documentação (`dabab0c`, `c54659e`, `ef30f2a`, além de PRs/merges). A contribuição é relevante para entrega/reprodutibilidade, mas menor no núcleo de sincronização e testes.
+   - Luiz Renato Freitas de Almeida: histórico mostra maior volume e centralidade técnica, desde fundação do backend até reengenharia, ADRs, métricas, normalização de timestamps, isolamento de persistência e consolidação de releases. A contribuição documentada está bem alinhada com commits e papel de arquitetura.
+   - Nícolas Arthur Raulino Oliveira: commits e PRs confirmam protagonismo no plugin, Source Control View, motor de status, operações de sincronização, CD do plugin e ADR-0011. É a contribuição mais visível no MVP entregue ao usuário final.
+   - Nicolas Pitz: commits confirmam participação em backend, sincronização do servidor, testes, OpenAPI, baseline, métricas e CI/lint. Contribuição relevante para qualidade e suporte funcional, mas métricas e documentação final ficaram menos analíticas do que o esperado para o papel de qualidade.
+
+#### Perguntas para a defesa
+
+Gabriela Riedel:
+
+1. Como o Dockerfile e a imagem Docker publicada contribuem para reprodutibilidade da release, e por que usar `latest` no `DEPLOY.md` é uma limitação de governança?
+   - Resposta esperada: o Dockerfile empacota servidor, dependências e configuração mínima, permitindo executar o backend com um comando e persistir SQLite em volume. A imagem publicada reduz dependência do ambiente local e ajuda a evitar o problema de "funciona na minha máquina". Usar `latest` é frágil porque o conteúdo pode mudar sem corresponder ao commit/tag avaliado; a prática melhor seria documentar uma tag versionada e imutável, por exemplo associada a `v0.4.0`, com release notes e critérios de qualidade.
+2. Como o papel de Scrum Master aparece nas evidências do repositório, e quais lacunas de Scrum/DoD ainda ficaram na Release Candidate?
+   - Resposta esperada: deve citar organização de PRs, documentação de deploy/contribuições e apoio ao fechamento da Sprint 4. Deve reconhecer lacunas: ausência de tag `v1.0.0-rc.1`, falta de documento final de RC, falta de roteiro formal de aceite, definição de pronto sem evidência completa de testes/review para a release e riscos sem acompanhamento final por sprint, retrospective ou risk backlog.
+3. O servidor não tem autenticação por decisão de escopo. Como essa decisão afeta a qualidade ISO 25010 e quais controles mínimos você exigiria para evitar uso inseguro em produção?
+   - Resposta esperada: a decisão está em ADR e em `DEPLOY.md`, com aviso para não expor fora de `localhost`. Pela ISO 25010, afeta segurança, confidencialidade, integridade, autenticidade e responsabilidade. Para produção, seria necessário autenticação, TLS/reverse proxy, restrição de rede, configuração de CORS/host, secrets, documentação explícita, testes de segurança básicos e registro do risco com mitigação/contingência.
+
+Luiz Renato Freitas de Almeida:
+
+1. Explique a reengenharia da `ADR-0010`: que acoplamento existia antes e como o isolamento da persistência melhora manutenibilidade e testabilidade?
+   - Resposta esperada: antes, API/domínio conheciam `database/sql`, `sql.ErrNoRows` e detalhes de SQL/LIKE. Depois, `storage` traduz erros de persistência para erros de domínio e monta queries, deixando API e serviço dependentes apenas do contrato de domínio. Isso permite trocar a persistência com menor impacto e testar camadas superiores sem detalhes do driver.
+2. Como a arquitetura `api -> notes -> storage -> sqlc/SQLite` ajuda a controlar responsabilidades e traduzir erros HTTP corretamente?
+   - Resposta esperada: handlers tratam HTTP, service/domínio valida regras e coordena casos de uso, storage acessa dados e sqlc encapsula queries geradas. Erros de domínio como inválido, conflito ou não encontrado são convertidos em respostas HTTP adequadas, sem vazar erro interno do banco.
+3. As métricas foram separadas em fichas, mas muitas evidências são imagens. Como você distinguiria medida, métrica e indicador para transformá-las em instrumentos reais de decisão de engenharia?
+   - Resposta esperada: deve explicar que medida é o valor coletado, métrica combina medidas por fórmula/modelo, e indicador interpreta métricas para decisão. Registraria data, valor numérico, fonte, método de coleta, tendência, meta, interpretação e decisão tomada. Exemplo: se cobertura cair, abrir tarefa de testes; se PRs sem review aumentarem, ajustar política; se burndown indicar atraso, reduzir escopo ou redistribuir tarefas.
+
+Nícolas Arthur Raulino Oliveira:
+
+1. Explique a `ADR-0011`: por que substituir comandos avulsos por Source Control View e `core/operations.ts`/`core/status.ts` foi uma melhoria de engenharia?
+   - Resposta esperada: comandos avulsos duplicavam fluxo de buscar remoto, comparar, aplicar e persistir metadados. A nova arquitetura concentra sincronização em `core`, separa cálculo de status de operações, reduz duplicação, permite testar lógica isoladamente e dá ao usuário visão de diff antes de aplicar mudanças.
+2. Os testes do plugin usam mocks do Obsidian. Em termos de teste de unidade, integração, verificação e validação, o que eles garantem e o que ainda precisa ser validado por aceite?
+   - Resposta esperada: garantem, principalmente como testes de unidade/integração controlada, lógica de API client, índice local, status e operações de sync. Eles verificam componentes, mas não validam totalmente o produto no ambiente real do usuário. Não garantem comportamento real da UI no Obsidian, permissões do vault, instalação do plugin, eventos reais do aplicativo nem UX completa. Isso exige roteiro de aceite/manual ou automação em ambiente mais próximo do Obsidian.
+3. Como o tratamento de conflitos com `lastModifiedAt`, `force`, `skipped` e `finally saveData` protege dados do usuário durante sincronização?
+   - Resposta esperada: `lastModifiedAt` permite optimistic locking; se o servidor mudou, retorna conflito em vez de sobrescrever silenciosamente. `force` permite ação deliberada do usuário. Contar conflito como `skipped` evita abortar lote inteiro, e `saveData` no `finally` preserva metadados atualizados mesmo em falha parcial.
+
+Nicolas Pitz:
+
+1. Como as melhorias de CI/lint/formatação e testes se relacionam com o pipeline canônico de Integração Contínua e com o papel de Engenheiro de Qualidade?
+   - Resposta esperada: CI automatiza checkout/setup, instalação determinística, build, testes, race detector, lint/formatação e plugin, reduzindo regressões antes de merge e dando feedback rápido. Isso transforma critérios de qualidade em gates objetivos de DoD. Deve reconhecer que a validação do `golangci-lint` precisa de toolchain alinhado, que faltaram testes de aceite no Obsidian e que análise estática/segurança poderia ser explicitada.
+2. A documentação de métricas da Sprint 4 ficou muito visual. Que informações deveriam acompanhar cada métrica para que ela fosse auditável?
+   - Resposta esperada: valor numérico, data de coleta, fonte, comando ou consulta usada, responsável, meta, comparação com sprint anterior, interpretação e ação tomada. Imagem sozinha não basta para auditoria ou tomada de decisão.
+3. A API tem OpenAPI, testes e rotas de sincronização. Como você verificaria a rastreabilidade entre requisito, issue, PR, teste, endpoint e critério de aceitação da release?
+   - Resposta esperada: mapear cada funcionalidade do MVP para issue com critérios de aceitação, PR correspondente, commits, endpoint no OpenAPI e testes automatizados/manual de aceite. Exemplo: sincronização deve apontar para issue/PR, handlers/services, testes de conflito e documentação da rota; lacunas devem virar pendências explícitas. A release só deveria ser publicada quando os critérios de qualidade e conformidade definidos no DoD estivessem atendidos.
